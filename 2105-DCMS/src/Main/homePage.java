@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 public class homePage implements ActionListener
 {
 
@@ -161,26 +162,38 @@ public class homePage implements ActionListener
     }
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
-	{
-		// TODO Auto-generated method stub
-		
-		if (e.getSource() == aboutUsBtn) 
+    public void actionPerformed(ActionEvent e) 
+    {
+        // Handle button actions
+		if (e.getSource() == homeBtn) 
 		{
 			homepage.dispose();
-			new aboutUs();
+			new homePage();
 		}
 		else if(e.getSource() == appointmentBtn)
 		{
 			homepage.dispose();
 			new appointmentPage();
 		}
-		else if(e.getSource() == logOutBtn)
+		else if(e.getSource() == aboutUsBtn)
 		{
 			homepage.dispose();
-			new LogInPage();
+			new aboutUs();
+		}
+		else if(e.getSource() == servicesBtn)
+		{
+			homepage.dispose();
+			new BracesPage();
+		}
+		else if(e.getSource() == contactUsBtn )
+		{
+			homepage.dispose();
+			new ContactUs();
 		}
 		
-	}
+
+		
+		
+    }
 
 }

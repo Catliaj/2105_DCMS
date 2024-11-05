@@ -191,21 +191,32 @@ public class appointmentPage implements ActionListener
     public void actionPerformed(ActionEvent e) 
     {
         // Handle button actions
-        if (e.getSource() == homeBtn) 
-        {
-            appointmentPage.dispose();
-            new homePage();
-        }
-        else if(e.getSource() == aboutUsBtn )
-        {
-        	appointmentPage.dispose();
-        	new aboutUs();
-        }
-        else if(e.getSource() == bookBtn)
-        {
-        	new AppointmentForm();
-        }
-       
+		if (e.getSource() == homeBtn) 
+		{
+			appointmentPage.dispose();
+			new homePage();
+		}
+		else if(e.getSource() == appointmentBtn)
+		{
+			appointmentPage.dispose();
+			new appointmentPage();
+		}
+		else if(e.getSource() == aboutUsBtn)
+		{
+			appointmentPage.dispose();
+			new aboutUs();
+		}
+		else if(e.getSource() == servicesBtn)
+		{
+			appointmentPage.dispose();
+			new BracesPage();
+		}
+		else if(e.getSource() == contactUsBtn )
+		{
+			appointmentPage.dispose();
+			new ContactUs();
+		}
+		
     }
 
     // Custom JPanel for Background Image

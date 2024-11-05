@@ -31,7 +31,8 @@ public class LogInPage implements ActionListener
     JLabel MessageLabel = new JLabel();
 
     // Logo Label
-    JLabel logoLabel = new JLabel(new ImageIcon("C:\\Users\\AcerN\\eclipse-workspace\\Main\\src\\Main\\background.png")); // replace with your logo pathGUI\\src\\main\\java\\com\\mycompany
+    
+    JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("background.png"))); // replace with your logo pathGUI\\src\\main\\java\\com\\mycompany
 
     LogInPage(HashMap<String, String> userLogInfoOriginal) 
     {
@@ -98,7 +99,8 @@ public class LogInPage implements ActionListener
         LogInPage.add(ResetButton);
         LogInPage.add(signUpButton);
         // Frame settings
-        ImageIcon image = new ImageIcon("C:\\Users\\AcerN\\eclipse-workspace\\Main\\src\\Main\\Logo.jpg");
+       
+        ImageIcon image = new ImageIcon(getClass().getResource("Logo.jpg"));
         LogInPage.setIconImage(image.getImage());
         LogInPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         LogInPage.getContentPane().setBackground(new Color(2, 79, 90)); // Teal background matching the image
@@ -171,7 +173,8 @@ public class LogInPage implements ActionListener
         LogInPage.add(signUpButton);
         
         // Frame settings
-        ImageIcon image = new ImageIcon("C:\\Users\\AcerN\\eclipse-workspace\\Main\\src\\Main\\Logo.jpg");
+        
+        ImageIcon image =  new ImageIcon(getClass().getResource("Logo.jpg"));
         LogInPage.setIconImage(image.getImage());
         LogInPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         LogInPage.getContentPane().setBackground(new Color(2, 79, 90)); // Teal background matching the image
