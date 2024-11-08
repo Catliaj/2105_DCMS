@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class userRegistrationPage implements ActionListener 
+public class userRegistrationPage  implements ActionListener 
 {
 	
     HashMap<String, String> userData = new HashMap<String, String>();
@@ -40,7 +40,7 @@ public class userRegistrationPage implements ActionListener
     // Creating frame and components
     JFrame registrationFrame = new JFrame("Registration Page");
     JButton signUpButton = new JButton("Sign up");
-    
+    JOptionPane Message = new JOptionPane();
     JTextField userFirstNameField = new JTextField();
     JTextField userLastNameField = new JTextField();
     JTextField userAgeField = new JTextField();
@@ -231,11 +231,8 @@ public class userRegistrationPage implements ActionListener
 
                     if (rowsAffected > 0) 
                     {
-                        MessageLabel.setText("Registration successful!");
-                        registrationFrame.dispose();
-    
-                       
-                       
+                    	JOptionPane.showMessageDialog(null, "Registration successful!");
+                        registrationFrame.dispose();              
                     } 
                     else 
                     {
@@ -246,7 +243,7 @@ public class userRegistrationPage implements ActionListener
             	catch (Exception ex) 
             	{
                         ex.printStackTrace(); // Prints detailed error in the console
-                        MessageLabel.setText("Error while connecting to the database: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(null, "Error while connecting to the database: " + ex.getMessage());
                 }
             } 
             else 

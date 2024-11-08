@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -21,6 +22,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Main.appointmentPage.BackgroundPanel;
+
 
 public class homePage implements ActionListener
 {
@@ -35,7 +38,7 @@ public class homePage implements ActionListener
     JButton logOutBtn = new JButton("LOGOUT");
 
     JPanel header = new JPanel();
-    JPanel content = new JPanel();
+    JPanel content = new BackgroundPanel("Background (2).png"); 
 
     homePage() {
     	
@@ -102,7 +105,7 @@ public class homePage implements ActionListener
 
         // Content area
         content.setLayout(new BorderLayout());
-        content.setBackground(new Color(2, 98, 112));
+        content.setBackground(new Color(2, 98, 100));
 
         // Left side content (Main heading)
         JPanel textPanel = new JPanel();
@@ -190,10 +193,27 @@ public class homePage implements ActionListener
 			homepage.dispose();
 			new ContactUs();
 		}
-		
+		else if(e.getSource() == logOutBtn)
+		{
+			homepage.dispose();
+			new LogInPage();
+		}
+    }
+	
+    class BackgroundPanel extends JPanel {
+        private Image backgroundImage;
 
-		
-		
+        public BackgroundPanel(String imagePath) {
+            // Load the background image
+            backgroundImage = new ImageIcon(getClass().getResource("Background (2).png")).getImage();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            // Draw the background image, scaled to fit the panel size
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 
 }

@@ -216,7 +216,10 @@ public class appointmentPage implements ActionListener
 			appointmentPage.dispose();
 			new ContactUs();
 		}
-		
+		else if(e.getSource() == bookBtn)
+		{
+			new AppointmentForm();
+		}
     }
 
     // Custom JPanel for Background Image
