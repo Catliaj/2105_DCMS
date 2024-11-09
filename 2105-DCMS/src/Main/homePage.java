@@ -70,14 +70,14 @@ public class homePage implements ActionListener
   
         
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        logoPanel.setBackground(new Color(2, 79, 90));
+        logoPanel.setBackground(new Color(5, 59, 67));
         logoPanel.add(Header); 
        
         header.add(logoPanel, BorderLayout.WEST);
 
         // Navigation buttons
         JPanel navPanel = new JPanel(new GridLayout(1, 6, 10, 0)); // 1 row, 6 columns, 10px gap
-        navPanel.setBackground(new Color(2, 79, 90));
+        navPanel.setBackground(new Color(5, 59, 67));
         
         //style for home button
         homeBtn.setFont(new Font("Arial", Font.BOLD, 16));

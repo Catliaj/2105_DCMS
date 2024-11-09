@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.HashMap;
 
-
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,7 +37,7 @@ public class userRegistrationPage implements ActionListener
     }
     
 
-    // Creating frame and components
+ // Creating frame and components
     JFrame registrationFrame = new JFrame("Registration Page");
     JButton signUpButton = new JButton("Sign up");
     JOptionPane Message = new JOptionPane();
@@ -48,6 +48,7 @@ public class userRegistrationPage implements ActionListener
     JTextField userEmailField = new JTextField();
     JTextField userIdField = new JTextField();
     JPasswordField UserpasswordField = new JPasswordField();
+    JTextField userAddressField = new JTextField(); // Added address field
 
     JButton ResetButton = new JButton("Reset");
     JLabel userFirstNameLabel = new JLabel("First Name");
@@ -57,6 +58,7 @@ public class userRegistrationPage implements ActionListener
     JLabel userEmailLabel = new JLabel("Email");
     JLabel userIdLabel = new JLabel("Username");
     JLabel userPasswordLabel = new JLabel("Password");
+    JLabel userAddressLabel = new JLabel("Address"); // Added address label
     JLabel MessageLabel = new JLabel();
 
     // Logo Label
@@ -70,80 +72,91 @@ public class userRegistrationPage implements ActionListener
         logoLabel.setBounds(-220, 0, 1000, 1000); // Adjust size and position
         registrationFrame.add(logoLabel);
 
-        // Labels
-        userFirstNameLabel.setBounds(799, 100, 214, 38);
-        userFirstNameLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        // Labels (above text fields)
+        userFirstNameLabel.setBounds(799, 30, 200, 30); // Adjusted position above text field
+        userFirstNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userFirstNameLabel.setForeground(Color.WHITE);
 
-        userLastNameLabel.setBounds(799, 190, 214, 38);
-        userLastNameLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        userLastNameLabel.setBounds(799, 100, 200, 30); // Adjusted position above text field
+        userLastNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userLastNameLabel.setForeground(Color.WHITE);
+        
+        userAddressLabel.setBounds(799, 175, 200, 30); // Adjusted position above address text field
+        userAddressLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        userAddressLabel.setForeground(Color.WHITE);
 
-        userAgeLabel.setBounds(799, 275, 214, 38);
-        userAgeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+        userAgeLabel.setBounds(799, 240, 200, 30); // Adjusted position above text field
+        userAgeLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userAgeLabel.setForeground(Color.WHITE);
 
-        userContactNumberLabel.setBounds(799, 360, 214, 38);
-        userContactNumberLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        userContactNumberLabel.setBounds(799, 310, 200, 30); // Adjusted position above text field
+        userContactNumberLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userContactNumberLabel.setForeground(Color.WHITE);
 
-        userEmailLabel.setBounds(799, 440, 214, 38);
-        userEmailLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        userEmailLabel.setBounds(799, 380, 200, 30); // Adjusted position above text field
+        userEmailLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userEmailLabel.setForeground(Color.WHITE);
 
-        userIdLabel.setBounds(799, 515, 214, 38);
-        userIdLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        userIdLabel.setBounds(799, 450, 200, 30); // Adjusted position above text field
+        userIdLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userIdLabel.setForeground(Color.WHITE);
 
-        userPasswordLabel.setBounds(799, 600, 214, 38);
-        userPasswordLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        userPasswordLabel.setBounds(799, 525, 200, 30); // Adjusted position above text field
+        userPasswordLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userPasswordLabel.setForeground(Color.WHITE);
 
-        // Input Fields
-        userFirstNameField.setBounds(799, 140, 406, 50); // x y w h
-        userFirstNameField.setFont(new Font("Arial", Font.PLAIN, 18));
+      
+        // Input Fields (below the labels)
+        userFirstNameField.setBounds(799, 60, 406, 40); // Adjusted position below label
+        userFirstNameField.setFont(new Font("Arial", Font.PLAIN, 16));
         userFirstNameField.setBackground(Color.LIGHT_GRAY);
-        userFirstNameField.setBorder(null);
+        userFirstNameField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        userLastNameField.setBounds(799, 230, 406, 50);
-        userLastNameField.setFont(new Font("Arial", Font.PLAIN, 18));
+        userLastNameField.setBounds(799, 130, 406, 40); // Adjusted position below label
+        userLastNameField.setFont(new Font("Arial", Font.PLAIN, 16));
         userLastNameField.setBackground(Color.LIGHT_GRAY);
-        userLastNameField.setBorder(null);
+        userLastNameField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        userAgeField.setBounds(799, 310, 406, 50);
-        userAgeField.setFont(new Font("Arial", Font.PLAIN, 18));
+        userAgeField.setBounds(799, 200, 406, 40); // Adjusted position below label
+        userAgeField.setFont(new Font("Arial", Font.PLAIN, 16));
         userAgeField.setBackground(Color.LIGHT_GRAY);
-        userAgeField.setBorder(null);
+        userAgeField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        userContactNumberField.setBounds(799, 390, 406, 50);
-        userContactNumberField.setFont(new Font("Arial", Font.PLAIN, 18));
+        userAddressField.setBounds(799, 270, 406, 40); // Adjusted position below label
+        userAddressField.setFont(new Font("Arial", Font.PLAIN, 16));
+        userAddressField.setBackground(Color.LIGHT_GRAY);
+        userAddressField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        userContactNumberField.setBounds(799, 340, 406, 40); // Adjusted position below label
+        userContactNumberField.setFont(new Font("Arial", Font.PLAIN, 16));
         userContactNumberField.setBackground(Color.LIGHT_GRAY);
-        userContactNumberField.setBorder(null);
+        userContactNumberField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        userEmailField.setBounds(799, 470, 406, 50);
-        userEmailField.setFont(new Font("Arial", Font.PLAIN, 18));
+        userEmailField.setBounds(799, 410, 406, 40); // Adjusted position below label
+        userEmailField.setFont(new Font("Arial", Font.PLAIN, 16));
         userEmailField.setBackground(Color.LIGHT_GRAY);
-        userEmailField.setBorder(null);
+        userEmailField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        userIdField.setBounds(799, 550, 406, 50);
-        userIdField.setFont(new Font("Arial", Font.PLAIN, 18));
+        userIdField.setBounds(799, 480, 406, 40); // Adjusted position below label
+        userIdField.setFont(new Font("Arial", Font.PLAIN, 16));
         userIdField.setBackground(Color.LIGHT_GRAY);
-        userIdField.setBorder(null);
+        userIdField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        UserpasswordField.setBounds(799, 630, 406, 50);
-        UserpasswordField.setFont(new Font("Arial", Font.PLAIN, 18));
+        UserpasswordField.setBounds(799, 550, 406, 40); // Adjusted position below label
+        UserpasswordField.setFont(new Font("Arial", Font.PLAIN, 16));
         UserpasswordField.setBackground(Color.LIGHT_GRAY);
-        UserpasswordField.setBorder(null);
+        UserpasswordField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         
-        signUpButton.setBounds(799, 700, 404, 62);
+        signUpButton.setBounds(799, 600, 404, 62); // Adjusted position
         signUpButton.setFocusable(false);
         signUpButton.setFont(new Font("Arial", Font.BOLD, 18));
         signUpButton.setForeground(Color.WHITE);
-        signUpButton.setBackground(Color.BLACK); // Black button with white text
+        signUpButton.setBackground(new Color(0, 122, 204)); // Blue button with white text
         signUpButton.addActionListener(this);
         
         // Message Label
-        MessageLabel.setBounds(799, 50, 406, 50);
+        MessageLabel.setBounds(899, 20, 406, 50); // Adjusted position
         MessageLabel.setFont(new Font("Arial", Font.ITALIC, 20));
         MessageLabel.setForeground(Color.WHITE);
 
@@ -154,6 +167,8 @@ public class userRegistrationPage implements ActionListener
         registrationFrame.add(userLastNameField);
         registrationFrame.add(userAgeLabel);
         registrationFrame.add(userAgeField);
+        registrationFrame.add(userAddressLabel); // Added address label
+        registrationFrame.add(userAddressField); // Added address field
         registrationFrame.add(userContactNumberLabel);
         registrationFrame.add(userContactNumberField);
         registrationFrame.add(userEmailLabel);
@@ -248,7 +263,8 @@ public class userRegistrationPage implements ActionListener
             } 
             else 
             {
-                MessageLabel.setText("Please fill in all fields.");
+                
+                JOptionPane.showMessageDialog(null,"Please Fill in all field!!");
             }
         }
     }

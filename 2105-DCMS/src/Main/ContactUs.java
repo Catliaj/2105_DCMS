@@ -57,13 +57,19 @@ public class ContactUs implements ActionListener {
         JPanel navPanel = new JPanel(new GridLayout(1, 6, 10, 0));
         navPanel.setBackground(new Color(5, 59, 67));
 
-        // Set styles for buttons
+        // Set styles for 
+        contactUsBtn.setFont(new Font("Arial", Font.BOLD, 16));
+        contactUsBtn.setBackground(Color.WHITE);
+        contactUsBtn.setForeground(new Color(2, 79, 90));
+        contactUsBtn.setFocusable(false);
+        contactUsBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        
         setButtonStyles(homeBtn);
         setButtonStyles(aboutUsBtn);
         setButtonStyles(servicesBtn);
         setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
-        setButtonStyles(contactUsBtn);
+        
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);

@@ -97,9 +97,13 @@ public class TWPage implements ActionListener {
 	        navPanel.setBackground(new Color(5, 59, 67));
 
 	        // Set styles for buttons and add action listeners
+	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
+	        servicesBtn.setBackground(Color.WHITE);
+	        servicesBtn.setForeground(new Color(2, 79, 90));
+	        servicesBtn.setFocusable(false);
+	        servicesBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 	        setButtonStyles(homeBtn);
 	        setButtonStyles(aboutUsBtn);
-	        setButtonStyles(servicesBtn);
 	        setButtonStyles(appointmentBtn);
 	        setButtonStyles(productsBtn);
 	        setButtonStyles(contactUsBtn);
