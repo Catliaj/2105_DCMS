@@ -46,7 +46,7 @@ public class BracesPage implements ActionListener {
 
     BracesPage() {
         // Set window icon
-        ImageIcon image = new ImageIcon(getClass().getResource("Logo.png"));
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
         BracesPage.setIconImage(image.getImage());
 
         BracesPage.setLayout(new BorderLayout());
@@ -84,7 +84,7 @@ public class BracesPage implements ActionListener {
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
-        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
+        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -130,7 +130,7 @@ public class BracesPage implements ActionListener {
         titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
         titlePanel.setBackground(new Color(5, 59, 67)); 
 
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("Logo.png"));
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
         Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -171,8 +171,8 @@ public class BracesPage implements ActionListener {
         JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
         imagePanel.setBackground(new Color(2, 98, 112));
 
-        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("brace1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
-        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("brace2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/brace1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/brace2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 
         JLabel image1 = new JLabel(brace1);
         JLabel image2 = new JLabel(brace2);
@@ -305,7 +305,7 @@ public class BracesPage implements ActionListener {
 
         public BackgroundPanel(String imagePath) {
             // Load the background image
-            backgroundImage = new ImageIcon(getClass().getResource("AUBackG.png")).getImage();
+            backgroundImage = new ImageIcon(getClass().getResource("/Resources/AUBackG.png")).getImage();
         }
 
         @Override

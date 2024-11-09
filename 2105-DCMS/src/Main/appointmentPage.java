@@ -33,7 +33,7 @@ public class appointmentPage implements ActionListener
 
     appointmentPage() {
         // Set window icon
-        ImageIcon image = new ImageIcon(getClass().getResource("DCFlogo.png"));
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));
         appointmentPage.setIconImage(image.getImage());
 
         appointmentPage.setLayout(new BorderLayout());
@@ -46,7 +46,7 @@ public class appointmentPage implements ActionListener
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
-        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
+        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -104,7 +104,7 @@ public class appointmentPage implements ActionListener
         titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
         titlePanel.setBackground(new Color(5, 59, 67)); 
 
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("DCFlogo.png"));
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));
         Image scaledImage = originalIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH); 
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -228,7 +228,7 @@ public class appointmentPage implements ActionListener
 
         public BackgroundPanel(String imagePath) {
             // Load the background image
-            backgroundImage = new ImageIcon(getClass().getResource("Background (2).png")).getImage();
+            backgroundImage = new ImageIcon(getClass().getResource("/Resources/Background (2).png")).getImage();
         }
 
         @Override

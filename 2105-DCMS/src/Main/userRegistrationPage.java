@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class userRegistrationPage  implements ActionListener 
+public class userRegistrationPage implements ActionListener 
 {
 	
     HashMap<String, String> userData = new HashMap<String, String>();
@@ -60,7 +60,7 @@ public class userRegistrationPage  implements ActionListener
     JLabel MessageLabel = new JLabel();
 
     // Logo Label
-    JLabel logoLabel = new JLabel(new ImageIcon("C:\\Users\\AcerN\\eclipse-workspace\\Main\\src\\Main\\background.png")); // replace with your logo path
+    JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("/Resources/background.png"))); // replace with your logo path
 
     userRegistrationPage(HashMap<String, String> userDataOriginal) 
     {
@@ -167,7 +167,7 @@ public class userRegistrationPage  implements ActionListener
         registrationFrame.add(ResetButton);
 
         // Frame settings
-        ImageIcon image = new ImageIcon("C:\\Users\\AcerN\\eclipse-workspace\\Main\\src\\Main\\Logo.jpg");
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.jpg"));
         registrationFrame.setIconImage(image.getImage());
         registrationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         registrationFrame.getContentPane().setBackground(new Color(2, 79, 90)); // Teal background matching the image

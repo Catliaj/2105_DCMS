@@ -32,7 +32,7 @@ public class LogInPage implements ActionListener {
     JLabel userIdLabel = new JLabel("USERNAME");
     JLabel userPasswordLabel = new JLabel("PASSWORD");
     JLabel messageLabel = new JLabel();
-    JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("background.png"))); 
+    JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("/Resources/background.png"))); // logo
 
     // Constructor with user login info
     public LogInPage(HashMap<String, String> userLogInfoOriginal) {
@@ -104,10 +104,10 @@ public class LogInPage implements ActionListener {
         logInFrame.add(signUpButton);
 
         // Frame settings
-        ImageIcon image = new ImageIcon(getClass().getResource("Logo.jpg"));
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.jpg"));
         logInFrame.setIconImage(image.getImage());
         logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        logInFrame.getContentPane().setBackground(new Color(2, 79, 90));
+        logInFrame.getContentPane().setBackground(new Color(2, 79, 90)); 
         logInFrame.setSize(1440, 1024);
         logInFrame.setLayout(null);
         logInFrame.setVisible(true);

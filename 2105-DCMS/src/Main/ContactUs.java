@@ -27,11 +27,11 @@ public class ContactUs implements ActionListener {
     JButton contactUsBtn = new JButton("CONTACT US");
 
     JPanel header = new JPanel();
-    JPanel content = new BackgroundPanel("AUBackG.png"); // Use custom panel with background
+    JPanel content = new BackgroundPanel("/Resources/AUBackG.png"); // Use custom panel with background
 
     ContactUs() {
         // Set window icon
-        ImageIcon image = new ImageIcon(getClass().getResource("Logo.png"));
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
         ContactUs.setIconImage(image.getImage());
 
         ContactUs.setLayout(new BorderLayout());
@@ -44,7 +44,7 @@ public class ContactUs implements ActionListener {
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
-        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
+        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -83,9 +83,9 @@ public class ContactUs implements ActionListener {
         bottomPanel.setOpaque(false); // Make the bottom panel transparent
 
         // Create three smaller colored panels with two subtexts each
-        JPanel smallPanel1 = createSmallPanel("Contact1.png", "Give Us A Call", "Reach out to us directly.", "0912 345 6789");
-        JPanel smallPanel2 = createSmallPanel("Contact2.png", "We're On The Map", "Find us easily with our location.", "Malaruhatan, Lian, Batangas");
-        JPanel smallPanel3 = createSmallPanel("Contact3.png", "Write Us", "Send us a message anytime.", "support@DCFdentalclinic.com");
+        JPanel smallPanel1 = createSmallPanel("/Resources/Contact1.png", "Give Us A Call", "Reach out to us directly.", "0912 345 6789");
+        JPanel smallPanel2 = createSmallPanel("/Resources/Contact2.png", "We're On The Map", "Find us easily with our location.", "Malaruhatan, Lian, Batangas");
+        JPanel smallPanel3 = createSmallPanel("/Resources/Contact3.png", "Write Us", "Send us a message anytime.", "support@DCFdentalclinic.com");
 
         // Add the small panels to the bottom panel
         bottomPanel.add(smallPanel1);
@@ -231,12 +231,6 @@ public class ContactUs implements ActionListener {
 			ContactUs.dispose();
 			new BracesPage();
 		}
-		else if(e.getSource() == contactUsBtn )
-		{
-			ContactUs.dispose();
-			new ContactUs();
-		}
-		
 
 		
 		

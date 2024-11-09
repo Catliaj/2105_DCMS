@@ -38,22 +38,22 @@ public class homePage implements ActionListener
     JButton logOutBtn = new JButton("LOGOUT");
 
     JPanel header = new JPanel();
-    JPanel content = new BackgroundPanel("Background (2).png"); 
+    JPanel content = new BackgroundPanel("/Resources/Background (2).png"); 
 
     homePage() {
     	
     	//contentLogo
-    	ImageIcon logoIcon = new ImageIcon(getClass().getResource("DCFlogo.png"));  // Use relative path
+    	ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));  // Use relative path
         Image scaledLogo = logoIcon.getImage().getScaledInstance(300, 250, Image.SCALE_SMOOTH);  // Scale the image
         JLabel logoLabel = new JLabel(new ImageIcon(scaledLogo));  // Add scaled image to JLabel
           
         
         //header Logo
-    	ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));  // Use relative path
+    	ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));  // Use relative path
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);  // Scale the image
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));  // Add scaled image to JLabel
         // Set window icon (use a relative path)
-        ImageIcon image = new ImageIcon(getClass().getResource("Logo.jpg"));  // Corrected relative path
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.jpg"));  // Corrected relative path
         homepage.setIconImage(image.getImage());
 
         homepage.setLayout(new BorderLayout());
@@ -65,7 +65,7 @@ public class homePage implements ActionListener
        
         header.setLayout(new BorderLayout());
         header.setPreferredSize(new Dimension(100, 100));
-        header.setBackground(new Color(2, 79, 90));
+        header.setBackground(new Color(5,59,67));
 
   
         
@@ -138,8 +138,8 @@ public class homePage implements ActionListener
         imagePanel.setBackground(new Color(2, 98, 112));
 
         // Load and scale content images (new change)
-        ImageIcon contentImage1 = new ImageIcon(getClass().getResource("content1.png")); 
-        ImageIcon contentImage2 = new ImageIcon(getClass().getResource("content2.png"));  
+        ImageIcon contentImage1 = new ImageIcon(getClass().getResource("/Resources/content1.png")); 
+        ImageIcon contentImage2 = new ImageIcon(getClass().getResource("/Resources/content2.png"));  
         
         JLabel image1 = new JLabel(contentImage1);  // Placeholder image 1
         JLabel image2 = new JLabel(contentImage2);  // Placeholder image 2
@@ -152,6 +152,12 @@ public class homePage implements ActionListener
 
         // Make frame visible
         homepage.setVisible(true);
+        textPanel.setOpaque(false);
+        clinicName.setOpaque(false);
+        subText.setOpaque(false);
+        imagePanel.setOpaque(false);
+
+        
     }
 
     // Method to set button styles
@@ -200,20 +206,19 @@ public class homePage implements ActionListener
 		}
     }
 	
-    class BackgroundPanel extends JPanel {
-        private Image backgroundImage;
+	class BackgroundPanel extends JPanel {
+	    private Image backgroundImage;
 
-        public BackgroundPanel(String imagePath) {
-            // Load the background image
-            backgroundImage = new ImageIcon(getClass().getResource("Background (2).png")).getImage();
-        }
+	    public BackgroundPanel(String imagePath) {
+	        // Load the new background image
+	        backgroundImage = new ImageIcon(getClass().getResource("/Resources/Background (2).png")).getImage();
+	    }
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // Draw the background image, scaled to fit the panel size
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+	    }
+	}
 
 }

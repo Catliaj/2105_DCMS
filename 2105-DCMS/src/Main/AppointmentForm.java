@@ -12,7 +12,7 @@ public class AppointmentForm implements ActionListener
 {
     JFrame AppointmentForm = new JFrame("DCF Dental Clinic");
     JButton scheduleBtn = new JButton("SCHEDULE APPOINTMENT");
-    JPanel content = new BackgroundPanel("Background (2).png");  // Use custom panel with background
+    JPanel content = new BackgroundPanel("/Resources/Background (2).png");  // Use custom panel with background
     
     // Header components
     JButton homeBtn = new JButton("HOME");
@@ -37,7 +37,7 @@ public class AppointmentForm implements ActionListener
     AppointmentForm() 
     {
         // Set window icon
-        ImageIcon image = new ImageIcon(getClass().getResource("DCFlogo.png"));
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));
         AppointmentForm.setIconImage(image.getImage());
         AppointmentForm.setLayout(new BorderLayout());
         AppointmentForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +49,7 @@ public class AppointmentForm implements ActionListener
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
-        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
+        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 

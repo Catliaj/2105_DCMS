@@ -41,11 +41,11 @@ public class RCTPage implements ActionListener{
 	    };
 
 	    JPanel header = new JPanel();
-	    JPanel content = new BackgroundPanel("AUBackG.png");  // Use custom panel with background
+	    JPanel content = new BackgroundPanel("/Resources/AUBackG.png");  // Use custom panel with background
 
 	    RCTPage() {
 
-	        ImageIcon image = new ImageIcon(getClass().getResource("Logo.png"));
+	        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
 	        RCTPage.setIconImage(image.getImage());
 
 	        RCTPage.setLayout(new BorderLayout());
@@ -83,7 +83,7 @@ public class RCTPage implements ActionListener{
 	        header.setBackground(new Color(5, 59, 67));
 
 	        // Header logo
-	        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
+	        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
 	        Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
 	        JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -129,7 +129,7 @@ public class RCTPage implements ActionListener{
 	        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
 
-	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("Logo.png"));
+	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
 	        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
 	        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -170,8 +170,8 @@ public class RCTPage implements ActionListener{
 	        JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
 	        imagePanel.setBackground(new Color(2, 98, 112));
 
-	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("RTC1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
-	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("RTC2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/RTC1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/RTC2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 
 	        JLabel image1 = new JLabel(brace1);
 	        JLabel image2 = new JLabel(brace2);
