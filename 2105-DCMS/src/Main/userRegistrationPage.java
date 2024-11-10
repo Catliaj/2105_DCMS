@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.HashMap;
-
+import backend.userRegistrationPage_backend;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,21 +20,13 @@ import javax.swing.JTextField;
 
 public class userRegistrationPage implements ActionListener 
 {
-	
-    HashMap<String, String> userData = new HashMap<String, String>();
-    private String Username, userPassword;
+	userRegistrationPage_backend backend = new userRegistrationPage_backend();
+
+
 
 
 	// Constructor to store key-value pair
-    userRegistrationPage() 
-    {
-        userData.put("Admin", "Admin");
-    }
 
-    protected HashMap userLoginInfo() 
-    {
-        return userData;
-    }
     
 
  // Creating frame and components
@@ -64,9 +56,9 @@ public class userRegistrationPage implements ActionListener
     // Logo Label
     JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("/Resources/background.png"))); // replace with your logo path
 
-    userRegistrationPage(HashMap<String, String> userDataOriginal) 
+    userRegistrationPage() 
     {
-        userData = userDataOriginal;
+      
         
         // Setting logo on the left side
         logoLabel.setBounds(-220, 0, 1000, 1000); // Adjust size and position
@@ -118,12 +110,12 @@ public class userRegistrationPage implements ActionListener
         userLastNameField.setBackground(Color.LIGHT_GRAY);
         userLastNameField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        userAgeField.setBounds(799, 200, 406, 40); // Adjusted position below label
+        userAgeField.setBounds(799, 270, 406, 40); // Adjusted position below label
         userAgeField.setFont(new Font("Arial", Font.PLAIN, 16));
         userAgeField.setBackground(Color.LIGHT_GRAY);
         userAgeField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-        userAddressField.setBounds(799, 270, 406, 40); // Adjusted position below label
+        userAddressField.setBounds(799, 200, 406, 40); // Adjusted position below label
         userAddressField.setFont(new Font("Arial", Font.PLAIN, 16));
         userAddressField.setBackground(Color.LIGHT_GRAY);
         userAddressField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -207,21 +199,25 @@ public class userRegistrationPage implements ActionListener
             MessageLabel.setText("");
         }
         if (action.getSource() == signUpButton) {
-            // Gather form data
-            String firstName = userFirstNameField.getText();
-            String lastName = userLastNameField.getText();
-            String age = userAgeField.getText();
-            String contactNumber = userContactNumberField.getText();
-            String email = userEmailField.getText();
-            String username = userIdField.getText();
-            String password = String.valueOf(UserpasswordField.getPassword());           
-            String Address = "Lian"; 
+            // Gather form data        
+            
+            backend.setFirstName(userFirstNameField.getText());
+            backend.setLastName(userLastNameField.getText());
+            backend.setAge(userAgeField.getText());
+            backend.setAddress(userAddressField.getText());
+            backend.setContactNumber(userContactNumberField.getText());
+            backend.setEmail(userEmailField.getText());
+            backend.setUsername(userIdField.getText());
+            backend.setPassword(String.valueOf(UserpasswordField.getPassword()));
+            
 
+        
+            
             // Simulate saving user information (for simplicity, we just print it)
-            if (!firstName.isEmpty() && !lastName.isEmpty() && !age.isEmpty() && !contactNumber.isEmpty() && !email.isEmpty() && !username.isEmpty() && !password.isEmpty()) 
+            if (!backend.getFirstName().isEmpty() && !backend.getLastName().isEmpty() && !backend.getAge().isEmpty() && !backend.getContactNumber().isEmpty() && !backend.getEmail().isEmpty() && !backend.getAddress().isEmpty()&& !backend.getUsername().isEmpty() && !backend.getPassword().isEmpty()) 
             {
                 // Database connection
-               userData.put(username, password);         	
+             	
             	try {               	
                     Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -233,15 +229,15 @@ public class userRegistrationPage implements ActionListener
                     );
                     PreparedStatement ps = con.prepareStatement("INSERT INTO userdata (FirstName, LastName, age, Address, ContactNumber, Email, userName, Password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-                    ps.setString(1, firstName);
-                    ps.setString(2, lastName);
-                    ps.setInt(3, Integer.parseInt(age)); 
-                    ps.setString(4, Address);  // Adjust this if you add the address field in the form
-                    ps.setString(5, contactNumber);
-                    ps.setString(6, email);
-                    ps.setString(7, username);
-                    ps.setString(8, password);
-                            
+                    ps.setString(1, backend.getFirstName());
+                    ps.setString(2, backend.getLastName());
+                    ps.setString(3, backend.getAge());
+                    ps.setString(4, backend.getAddress());  // Adjust this if you add the address field in the form
+                    ps.setString(5, backend.getContactNumber());
+                    ps.setString(6, backend.getEmail());
+                    ps.setString(7, backend.getUsername());
+                    ps.setString(8, backend.getPassword());
+                       
                     int rowsAffected = ps.executeUpdate();
 
                     if (rowsAffected > 0) 

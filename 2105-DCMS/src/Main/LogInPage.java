@@ -1,5 +1,6 @@
 package Main;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -8,7 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,8 +18,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
-public class LogInPage implements ActionListener {
-    HashMap<String, String> userLogInfo = new HashMap<>();
+public class LogInPage implements ActionListener 
+{
+    
 
     // Creating frame and components
     JOptionPane Message = new JOptionPane();
@@ -35,17 +36,11 @@ public class LogInPage implements ActionListener {
     JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("/Resources/background.png"))); // logo
 
     // Constructor with user login info
-    public LogInPage(HashMap<String, String> userLogInfoOriginal) {
-        userLogInfo = userLogInfoOriginal;
-        setupUI();
-    }
 
-    // Default constructor
-    public LogInPage() {
-        setupUI();
-    }
 
-    private void setupUI() {
+
+    public LogInPage() 
+    {
         // Logo settings
         logoLabel.setBounds(-220, 0, 1000, 1000);
         logInFrame.add(logoLabel);
@@ -109,6 +104,7 @@ public class LogInPage implements ActionListener {
         logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logInFrame.getContentPane().setBackground(new Color(2, 79, 90)); 
         logInFrame.setSize(1440, 1024);
+        logInFrame.setLayout(new BorderLayout());
         logInFrame.setLayout(null);
         logInFrame.setVisible(true);
     }
@@ -153,7 +149,13 @@ public class LogInPage implements ActionListener {
                 messageLabel.setText("Error: " + ex.getMessage());
             }
         } else if (action.getSource() == signUpButton) {
-            new userRegistrationPage(userLogInfo); // Assuming a userRegistrationPage class exists
+        	logInFrame.dispose();
+            new userRegistrationPage(); // Assuming a userRegistrationPage class exists
         }
+    }
+    
+    public static void main(String[] args)
+    {
+    	new LogInPage();
     }
 }
