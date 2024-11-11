@@ -25,6 +25,7 @@ public class ContactUs implements ActionListener {
     JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
+    JButton logOutBtn = new JButton("LOG OUT");
 
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/AUBackG.png"); // Use custom panel with background
@@ -69,6 +70,7 @@ public class ContactUs implements ActionListener {
         setButtonStyles(servicesBtn);
         setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
+        setButtonStyles(logOutBtn);
         
 
         navPanel.add(homeBtn);
@@ -77,6 +79,7 @@ public class ContactUs implements ActionListener {
         navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
+        navPanel.add(logOutBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         ContactUs.add(header, BorderLayout.NORTH);
@@ -105,7 +108,7 @@ public class ContactUs implements ActionListener {
         centerText.setHorizontalAlignment(JLabel.CENTER);
         centerText.setVerticalAlignment(JLabel.CENTER);
         content.add(centerText, BorderLayout.CENTER);
-        centerText.setBorder(BorderFactory.createEmptyBorder(100, 20, 10, 20));
+        centerText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
         // Create a separate panel for subtext
         JPanel subTextPanel = new JPanel();
@@ -118,7 +121,7 @@ public class ContactUs implements ActionListener {
         subText.setFont(new Font("Arial", Font.PLAIN, 30));
         subText.setHorizontalAlignment(JLabel.CENTER);
         subTextPanel.add(subText, BorderLayout.NORTH);
-        subText.setBorder(BorderFactory.createEmptyBorder(50, 20, 10, 20));
+        subText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
         // Create a panel to hold additional text and the new additional text
         JPanel textPanel = new JPanel();
@@ -131,7 +134,7 @@ public class ContactUs implements ActionListener {
         additionalText.setFont(new Font("Arial", Font.BOLD, 50));
         additionalText.setHorizontalAlignment(JLabel.CENTER);
         textPanel.add(additionalText, BorderLayout.NORTH);
-        additionalText.setBorder(BorderFactory.createEmptyBorder(50, 20, 10, 20));
+        additionalText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
         // New text below "WE WOULD BE HAPPY TO MEET YOU!"
         JLabel newAdditionalText = new JLabel("<html>We’re ready to help to book you in or with any questions you may have about seeing our dental team.");
@@ -139,7 +142,7 @@ public class ContactUs implements ActionListener {
         newAdditionalText.setFont(new Font("Arial", Font.PLAIN, 25));
         newAdditionalText.setHorizontalAlignment(JLabel.CENTER);
         textPanel.add(newAdditionalText, BorderLayout.CENTER);
-        newAdditionalText.setBorder(BorderFactory.createEmptyBorder(50, 20, 20, 20)); // Padding for new text
+        newAdditionalText.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding for new text
 
         // Now add the textPanel to the subTextPanel
         subTextPanel.add(textPanel, BorderLayout.CENTER);

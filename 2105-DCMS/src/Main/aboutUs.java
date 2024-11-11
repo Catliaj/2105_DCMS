@@ -16,6 +16,7 @@ public class aboutUs implements ActionListener {
     JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
+    JButton logOutBtn = new JButton("LOG OUT");
 
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("Background (2).png");  // Use custom panel with background
@@ -53,11 +54,13 @@ public class aboutUs implements ActionListener {
         aboutUsBtn.setForeground(new Color(2, 79, 90));
         aboutUsBtn.setFocusable(false);
         aboutUsBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        
         setButtonStyles(homeBtn);
         setButtonStyles(servicesBtn);
         setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
+        setButtonStyles(logOutBtn);
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
@@ -65,6 +68,7 @@ public class aboutUs implements ActionListener {
         navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
+        navPanel.add(logOutBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         aboutpage.add(header, BorderLayout.NORTH);

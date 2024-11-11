@@ -28,6 +28,7 @@ public class ExtractionPage implements ActionListener{
 	    JButton appointmentBtn = new JButton("APPOINTMENT");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
+	    JButton logOutBtn = new JButton("LOG OUT");
 
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
@@ -102,11 +103,13 @@ public class ExtractionPage implements ActionListener{
 	        servicesBtn.setForeground(new Color(2, 79, 90));
 	        servicesBtn.setFocusable(false);
 	        servicesBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+	        
 	        setButtonStyles(homeBtn);
 	        setButtonStyles(aboutUsBtn);
 	        setButtonStyles(appointmentBtn);
 	        setButtonStyles(productsBtn);
 	        setButtonStyles(contactUsBtn);
+	        setButtonStyles(logOutBtn);
 
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
@@ -114,6 +117,7 @@ public class ExtractionPage implements ActionListener{
 	        navPanel.add(appointmentBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
+	        navPanel.add(logOutBtn);
 
 	        header.add(navPanel, BorderLayout.CENTER);
 	        ExtractionPage.add(header, BorderLayout.NORTH);

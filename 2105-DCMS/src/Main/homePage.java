@@ -35,7 +35,7 @@ public class homePage implements ActionListener
     JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton logOutBtn = new JButton("LOGOUT");
+    JButton logOutBtn = new JButton("LOG OUT");
 
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/Background (2).png"); 
@@ -82,9 +82,10 @@ public class homePage implements ActionListener
         //style for home button
         homeBtn.setFont(new Font("Arial", Font.BOLD, 16));
         homeBtn.setBackground(Color.WHITE);
-        homeBtn.setForeground(new Color(2, 79, 90));
+        homeBtn.setForeground(new Color(5, 59, 67));
         homeBtn.setFocusable(false);
         homeBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        
         setButtonStyles(aboutUsBtn);
         setButtonStyles(servicesBtn);
         setButtonStyles(appointmentBtn);
@@ -110,18 +111,18 @@ public class homePage implements ActionListener
         // Left side content (Main heading)
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-        textPanel.setBackground(new Color(2, 98, 112));
+        textPanel.setBackground(new Color(5, 59, 67));
         
         // Loading and scaling the logo image (new change)
       
         
         JLabel clinicName = new JLabel("DCF DENTAL CLINIC");
         clinicName.setForeground(Color.WHITE);
-        clinicName.setFont(new Font("Arial", Font.BOLD, 48));
+        clinicName.setFont(new Font("Arial", Font.BOLD, 52));
         
         JLabel subText = new JLabel("Your Convenient, Accommodating, and Affordable Dental Partner.");
         subText.setForeground(Color.WHITE);
-        subText.setFont(new Font("Arial", Font.PLAIN, 20));
+        subText.setFont(new Font("Arial", Font.PLAIN, 25));
         
         textPanel.add(Box.createVerticalStrut(150));  // Spacing
         textPanel.add(logoLabel);  // Add logo label (with new image)
@@ -164,7 +165,7 @@ public class homePage implements ActionListener
     private void setButtonStyles(JButton button) {
         button.setFont(new Font("Arial", Font.BOLD, 16));
         button.setForeground(Color.WHITE);
-        button.setBackground(new Color(2, 79, 90));
+        button.setBackground(new Color(5, 59, 67));
         button.setFocusable(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         button.addActionListener(this);

@@ -28,6 +28,7 @@ public class ImplantsPage implements ActionListener{
 	    JButton appointmentBtn = new JButton("APPOINTMENT");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
+	    JButton logOutBtn = new JButton("LOG OUT");
 
 	  
 	    JPanel sidePanel = new JPanel();
@@ -107,6 +108,7 @@ public class ImplantsPage implements ActionListener{
 	        setButtonStyles(appointmentBtn);
 	        setButtonStyles(productsBtn);
 	        setButtonStyles(contactUsBtn);
+	        setButtonStyles(logOutBtn);
 
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
@@ -114,6 +116,7 @@ public class ImplantsPage implements ActionListener{
 	        navPanel.add(appointmentBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
+	        navPanel.add(logOutBtn);
 
 	        header.add(navPanel, BorderLayout.CENTER);
 	        homepage.add(header, BorderLayout.NORTH);
