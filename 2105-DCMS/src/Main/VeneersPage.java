@@ -25,10 +25,9 @@ public class VeneersPage implements ActionListener {
 	    JButton homeBtn = new JButton("HOME");
 	    JButton aboutUsBtn = new JButton("ABOUT US");
 	    JButton servicesBtn = new JButton("SERVICES");
-	    JButton appointmentBtn = new JButton("APPOINTMENT");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton logOutBtn = new JButton("LOG OUT");
+	    JButton feedbackBtn = new JButton("FEEDBACK");
 
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
@@ -105,18 +104,16 @@ public class VeneersPage implements ActionListener {
 	        servicesBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 	        setButtonStyles(homeBtn);
 	        setButtonStyles(aboutUsBtn);
-	        setButtonStyles(appointmentBtn);
 	        setButtonStyles(productsBtn);
 	        setButtonStyles(contactUsBtn);
-	        setButtonStyles(logOutBtn);
+	        setButtonStyles(feedbackBtn);
 
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
-	        navPanel.add(appointmentBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
-	        navPanel.add(logOutBtn);
+	        navPanel.add(feedbackBtn);
 
 	        header.add(navPanel, BorderLayout.CENTER);
 	        homepage.add(header, BorderLayout.NORTH);
@@ -220,12 +217,7 @@ public class VeneersPage implements ActionListener {
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	homepage.dispose();
 	            new aboutUs();
-	        } else if (e.getSource() == appointmentBtn) {
-	        	homepage.dispose();
-	        	new appointmentPage();
-	            
-	            
-	        } else if (e.getSource() == productsBtn) {
+	        }  else if (e.getSource() == productsBtn) {
 	        	
 	            System.out.println("Products button clicked");
 	            
@@ -234,6 +226,12 @@ public class VeneersPage implements ActionListener {
 	            new  ContactUs();
 	          
 	        }
+	        else if(e.getSource() == feedbackBtn)
+	        {
+	        	homepage.dispose();
+	        	new FeedbackForm();
+	        }
+
 
 	        // Handle side button actions if needed
 	        for (int i = 0; i < sideButtons.length; i++) {
@@ -320,10 +318,6 @@ public class VeneersPage implements ActionListener {
 	            super.paintComponent(g);
 	            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	        }
-	    }
-
-	    public static void main(String[] args) {
-	        new VeneersPage(); // Instantiate homepage
 	    }
 	}
 

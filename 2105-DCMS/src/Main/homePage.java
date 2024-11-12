@@ -22,7 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Main.appointmentPage.BackgroundPanel;
+import Main.aboutUs.BackgroundPanel;
 
 
 public class homePage implements ActionListener
@@ -32,11 +32,9 @@ public class homePage implements ActionListener
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-    JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton logOutBtn = new JButton("LOG OUT");
-
+    JButton feedbackBtn = new JButton("FEEDBACK");
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/Background (2).png"); 
 
@@ -88,18 +86,17 @@ public class homePage implements ActionListener
         
         setButtonStyles(aboutUsBtn);
         setButtonStyles(servicesBtn);
-        setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
-        setButtonStyles(logOutBtn);
+        setButtonStyles(feedbackBtn);
         
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-        navPanel.add(appointmentBtn);
+
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
-        navPanel.add(logOutBtn);
+        navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         homepage.add(header, BorderLayout.NORTH);
@@ -180,11 +177,6 @@ public class homePage implements ActionListener
 			homepage.dispose();
 			new homePage();
 		}
-		else if(e.getSource() == appointmentBtn)
-		{
-			homepage.dispose();
-			new appointmentPage();
-		}
 		else if(e.getSource() == aboutUsBtn)
 		{
 			homepage.dispose();
@@ -200,11 +192,11 @@ public class homePage implements ActionListener
 			homepage.dispose();
 			new ContactUs();
 		}
-		else if(e.getSource() == logOutBtn)
-		{
-			homepage.dispose();
-			new LogInPage();
-		}
+        else if(e.getSource() == feedbackBtn)
+        {
+        	homepage.dispose();
+        	new FeedbackForm();
+        }
     }
 	
 	class BackgroundPanel extends JPanel {
@@ -222,4 +214,8 @@ public class homePage implements ActionListener
 	    }
 	}
 
+	public static void main(String[] args)
+	{
+		new homePage();
+	}
 }

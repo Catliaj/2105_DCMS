@@ -8,10 +8,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import backend.ApointmentForm_backend;
 
 
 public class AppointmentForm implements ActionListener 
 {
+	ApointmentForm_backend backend = new ApointmentForm_backend();
     JFrame AppointmentForm = new JFrame("DCF Dental Clinic");
     JButton scheduleBtn = new JButton("SCHEDULE APPOINTMENT");
     JPanel content = new BackgroundPanel("/Resources/Background (2).png");
@@ -19,10 +21,9 @@ public class AppointmentForm implements ActionListener
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-    JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton logOutBtn = new JButton("LOG OUT");
+    JButton feedbackBtn = new JButton("FEEDBACK");
     JPanel header = new JPanel();
 
     JTextField nameField = new JTextField(20);
@@ -67,18 +68,16 @@ public class AppointmentForm implements ActionListener
         setButtonStyles(homeBtn);
         setButtonStyles(aboutUsBtn);
         setButtonStyles(servicesBtn);
-        setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
-        setButtonStyles(logOutBtn);
+        setButtonStyles(feedbackBtn);
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-        navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
-        navPanel.add(logOutBtn);
+        navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         AppointmentForm.add(header, BorderLayout.NORTH);
@@ -112,7 +111,9 @@ public class AppointmentForm implements ActionListener
             "Root Canal", "Dental Surgery", "Cavity Filling", "Teeth Whitening", "Braces", 
             "Periodontal Care", "Consultation", "Other"
         };
+        reasonDropdown = new JComboBox<>(reasons);
         formPanel.add(createDropdownField("REASON", reasonDropdown, reasons));
+
 
         scheduleBtn.setFont(new Font("Arial", Font.BOLD, 18));
         scheduleBtn.setForeground(Color.WHITE);
@@ -253,7 +254,6 @@ public class AppointmentForm implements ActionListener
         label.setFont(new Font("Arial", Font.BOLD, 14));
         label.setForeground(Color.BLACK);
 
-        dropdown = new JComboBox<>(options);
         dropdown.setPreferredSize(new Dimension(300, 30));
         dropdown.setBackground(Color.WHITE);
         dropdown.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
@@ -264,23 +264,21 @@ public class AppointmentForm implements ActionListener
 
         return fieldPanel;
     }
-
     @Override
     public void actionPerformed(ActionEvent e) 
     {
         if (e.getSource() == scheduleBtn) 
-        {
-            String name = nameField.getText();
-            String email = emailField.getText();
-            String phoneNumber = phoneNumberField.getText();
-            String date = (String) monthDropdown.getSelectedItem() + " " + 
-                          (String) dayDropdown.getSelectedItem() + ", " + 
-                          yearDropdown.getSelectedItem();
-            String time = (String) hourDropdown.getSelectedItem() + ":" + 
-                          (String) minuteDropdown.getSelectedItem() + " " + 
-                          amPmDropdown.getSelectedItem();
-            String reason = (String) reasonDropdown.getSelectedItem();
-
+        {          
+            backend.setName(nameField.getText());
+            backend.setEmail(emailField.getText());
+            backend.setPhoneNumber(phoneNumberField.getText());
+            backend.setDate((String) monthDropdown.getSelectedItem() + " " + 
+                    		(String) dayDropdown.getSelectedItem() + ", " + 
+                    		yearDropdown.getSelectedItem());
+            backend.setTime((String) hourDropdown.getSelectedItem() + ":" + 
+                    		(String) minuteDropdown.getSelectedItem() + " " + 
+                    		amPmDropdown.getSelectedItem());
+            backend.setReason((String) reasonDropdown.getSelectedItem());
             try 
             {               	
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -292,12 +290,12 @@ public class AppointmentForm implements ActionListener
                 );
                 
                 PreparedStatement ps = con.prepareStatement("INSERT INTO appointments (Name, Email, PhoneNumber, Date, Time, Reason) VALUES (?, ?, ?, ?, ?, ?)");
-                ps.setString(1, name);
-                ps.setString(2, email);
-                ps.setString(3, phoneNumber);
-                ps.setString(4, date);
-                ps.setString(5, time);
-                ps.setString(6, reason);
+                ps.setString(1, backend.getName());
+                ps.setString(2, backend.getEmail());
+                ps.setString(3, backend.getPhoneNumber());
+                ps.setString(4, backend.getDate());
+                ps.setString(5, backend.getTime());
+                ps.setString(6, backend.getReason());
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) 
@@ -327,12 +325,13 @@ public class AppointmentForm implements ActionListener
             AppointmentForm.dispose();
             new aboutUs();
         }
+
+
     }
 
     class BackgroundPanel extends JPanel 
     {
         private Image backgroundImage;
-
         public BackgroundPanel(String imagePath) 
         {
             backgroundImage = new ImageIcon(getClass().getResource(imagePath)).getImage();

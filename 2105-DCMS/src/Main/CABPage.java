@@ -24,10 +24,9 @@ public class CABPage implements ActionListener {
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-    JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton logOutBtn = new JButton("LOG OUT");
+    JButton feedbackBtn = new JButton("FEEDBACK");
 
     // Create a side panel with 13 buttons
     JPanel sidePanel = new JPanel();
@@ -105,18 +104,16 @@ public class CABPage implements ActionListener {
         
         setButtonStyles(homeBtn);
         setButtonStyles(aboutUsBtn);
-        setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
-        setButtonStyles(logOutBtn);
+        setButtonStyles(feedbackBtn);
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-        navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
-        navPanel.add(logOutBtn);
+        navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         CABPage.add(header, BorderLayout.NORTH);
@@ -218,12 +215,7 @@ public class CABPage implements ActionListener {
         } else if (e.getSource() == aboutUsBtn) {
         	CABPage.dispose();
             new aboutUs();
-        } else if (e.getSource() == appointmentBtn) {
-        	CABPage.dispose();
-        	new appointmentPage();
-            
-            
-        } else if (e.getSource() == productsBtn) {
+        }  else if (e.getSource() == productsBtn) {
         	
             System.out.println("Products button clicked");
             
@@ -232,6 +224,13 @@ public class CABPage implements ActionListener {
             new  ContactUs();
           
         }
+        else if(e.getSource() == feedbackBtn)
+        {
+        	CABPage.dispose();
+        	new FeedbackForm();
+        }
+
+
 
         // Handle side button actions if needed
         for (int i = 0; i < sideButtons.length; i++) {
@@ -318,9 +317,5 @@ public class CABPage implements ActionListener {
             super.paintComponent(g);
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
-    }
-
-    public static void main(String[] args) {
-        new CABPage(); // Instantiate CABPage
     }
 }
