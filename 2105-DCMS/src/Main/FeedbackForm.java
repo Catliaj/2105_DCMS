@@ -3,22 +3,32 @@ package Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import DCMS_DB_CONNECTION.DB_DCMSConnection;
+import backend.feedback_backend;
 
 public class FeedbackForm implements ActionListener {
-
+	feedback_backend backend =new  feedback_backend();
+	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
+	
+	private Connection connection;
+	
+	
+	JOptionPane message = new JOptionPane();
     JFrame AppointmentForm = new JFrame("DCF Dental Clinic");
-    JButton scheduleBtn = new JButton("SUBMIT");
+    JButton sumbitBtn = new JButton("SUBMIT");
     JPanel content = new BackgroundPanel("/Resources/Background (2).png");
 
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-    JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton logOutBtn = new JButton("LOG OUT");
+    JButton feedbackBtn = new JButton("FEEDBACK");
+    
     JPanel header = new JPanel();
 
     JTextField nameField = new JTextField(15);  // Smaller size for name field
@@ -32,6 +42,7 @@ public class FeedbackForm implements ActionListener {
 
     FeedbackForm() {
         // Frame setup
+    	connection = dcmsConnection.getConnection();
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));
         AppointmentForm.setIconImage(image.getImage());
         AppointmentForm.setLayout(new BorderLayout());
@@ -58,18 +69,21 @@ public class FeedbackForm implements ActionListener {
         setButtonStyles(homeBtn);
         setButtonStyles(aboutUsBtn);
         setButtonStyles(servicesBtn);
-        setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
-        setButtonStyles(logOutBtn);
+        feedbackBtn.setFont(new Font("Arial", Font.BOLD, 16));
+        feedbackBtn.setForeground(Color.BLACK);
+        feedbackBtn.setBackground(Color.white); 
+        feedbackBtn.setFocusPainted(false);
+        feedbackBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        feedbackBtn.addActionListener(this);
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-        navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
-        navPanel.add(logOutBtn);
+        navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         AppointmentForm.add(header, BorderLayout.NORTH);
@@ -118,14 +132,14 @@ public class FeedbackForm implements ActionListener {
 
         formPanel.add(messagePanel);
 
-        scheduleBtn.setFont(new Font("Arial", Font.BOLD, 18));
-        scheduleBtn.setForeground(Color.WHITE);
-        scheduleBtn.setBackground(new Color(5, 59, 67));  
-        scheduleBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        scheduleBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        scheduleBtn.addActionListener(this);
+        sumbitBtn.setFont(new Font("Arial", Font.BOLD, 18));
+        sumbitBtn.setForeground(Color.WHITE);
+        sumbitBtn.setBackground(new Color(5, 59, 67));  
+        sumbitBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        sumbitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sumbitBtn.addActionListener(this);
         formPanel.add(Box.createVerticalStrut(20));  
-        formPanel.add(scheduleBtn);
+        formPanel.add(sumbitBtn);
 
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         formPanel.add(messageLabel);
@@ -155,6 +169,7 @@ public class FeedbackForm implements ActionListener {
         button.setBackground(new Color(5, 59, 67)); 
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        button.addActionListener(this);
     }
 
     private void updateDateTime() {
@@ -183,13 +198,41 @@ public class FeedbackForm implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == scheduleBtn) {
-            String name = nameField.getText();
-            String email = emailField.getText();
-            String phoneNumber = phoneNumberField.getText();
-            String reason = reasonField.getText();
+        if (e.getSource() == sumbitBtn) {
+            backend.setName(nameField.getText());
+            backend.setEmail(emailField.getText());
+            backend.setContactNumber(phoneNumberField.getText());
+            backend.setFeedback(reasonField.getText());
+            try 
+            {               	
+                
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO feedback (Name, Email, PhoneNumber, Feedback) VALUES (?, ?, ?, ?)");
+                ps.setString(1, backend.getName());
+                ps.setString(2, backend.getEmail());
+                ps.setString(3, backend.getContactNumber());
+                ps.setString(4, backend.getFeedback());
+                
+                int rowsAffected = ps.executeUpdate();
 
+                if (rowsAffected > 0) 
+                {
+                    JOptionPane.showMessageDialog( null, "Appointment scheduled successfully!");
+                    nameField.setText("");
+                    emailField.setText("");
+                    phoneNumberField.setText("");
+                    reasonField.setText("");
+                } 
+                else 
+                {
+                    JOptionPane.showMessageDialog( null, "Failed to Feedback. Please try again.");
+                }
 
+            } 
+            catch (Exception ex) 
+            {
+                ex.printStackTrace(); 
+                JOptionPane.showMessageDialog( null,"Error: " + ex.getMessage() );
+            }
             nameField.setText("");
             emailField.setText("");
             phoneNumberField.setText("");
@@ -201,6 +244,18 @@ public class FeedbackForm implements ActionListener {
             AppointmentForm.dispose();
             new aboutUs();
         }
+		else if(e.getSource() == servicesBtn)
+		{
+			AppointmentForm.dispose();
+			new BracesPage();
+		}
+		else if(e.getSource() == contactUsBtn)
+		{
+			AppointmentForm.dispose();
+			new ContactUs();
+		}
+
+
     }
 
     class BackgroundPanel extends JPanel {
@@ -215,9 +270,5 @@ public class FeedbackForm implements ActionListener {
             super.paintComponent(g);
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
-    }
-
-    public static void main(String[] args) {
-        new FeedbackForm();
     }
 }

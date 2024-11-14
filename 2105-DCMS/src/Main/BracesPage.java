@@ -26,10 +26,10 @@ public class BracesPage implements ActionListener {
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-    JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton logOutBtn = new JButton("LOG OUT");
+    JButton feedbackBtn = new JButton("FEEDBACK");
+
 
     // Create a side panel with 13 buttons
     JPanel sidePanel = new JPanel();
@@ -107,18 +107,16 @@ public class BracesPage implements ActionListener {
         
         setButtonStyles(homeBtn);
         setButtonStyles(aboutUsBtn);
-        setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
-        setButtonStyles(logOutBtn);
+        setButtonStyles(feedbackBtn);
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-        navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
-        navPanel.add(logOutBtn);
+        navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         BracesPage.add(header, BorderLayout.NORTH);
@@ -221,10 +219,6 @@ public class BracesPage implements ActionListener {
         } else if (e.getSource() == aboutUsBtn) {
             BracesPage.dispose();
             new aboutUs();
-        } else if (e.getSource() == appointmentBtn) {
-            BracesPage.dispose();
-            new appointmentPage();
-            
         } else if (e.getSource() == productsBtn) {
             
             System.out.println("Products button clicked");
@@ -232,6 +226,11 @@ public class BracesPage implements ActionListener {
         } else if (e.getSource() == contactUsBtn) {
             BracesPage.dispose();
             new ContactUs();
+        }
+        else if(e.getSource() == feedbackBtn)
+        {
+        	BracesPage.dispose();
+        	new FeedbackForm();
         }
         // Handle side button actions if needed
         for (int i = 0; i < sideButtons.length; i++) {
@@ -322,9 +321,5 @@ public class BracesPage implements ActionListener {
             // Draw the background image, scaled to fit the panel size
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
-    }
-
-    public static void main(String[] args) {
-        new BracesPage();
     }
 }

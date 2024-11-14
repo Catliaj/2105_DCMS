@@ -22,11 +22,10 @@ public class ContactUs implements ActionListener {
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-    JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton logOutBtn = new JButton("LOG OUT");
-
+    JButton feedbackBtn = new JButton("FEEDBACK");
+    
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/AUBackG.png"); // Use custom panel with background
 
@@ -68,18 +67,16 @@ public class ContactUs implements ActionListener {
         setButtonStyles(homeBtn);
         setButtonStyles(aboutUsBtn);
         setButtonStyles(servicesBtn);
-        setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
-        setButtonStyles(logOutBtn);
+        setButtonStyles(feedbackBtn);
         
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-        navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
-        navPanel.add(logOutBtn);
+        navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         ContactUs.add(header, BorderLayout.NORTH);
@@ -225,11 +222,7 @@ public class ContactUs implements ActionListener {
 			ContactUs.dispose();
 			new homePage();
 		}
-		else if(e.getSource() == appointmentBtn)
-		{
-			ContactUs.dispose();
-			new appointmentPage();
-		}
+
 		else if(e.getSource() == aboutUsBtn)
 		{
 			ContactUs.dispose();
@@ -240,6 +233,13 @@ public class ContactUs implements ActionListener {
 			ContactUs.dispose();
 			new BracesPage();
 		}
+        else if(e.getSource() == feedbackBtn)
+        {
+        	ContactUs.dispose();
+        	new FeedbackForm();
+        }
+
+
 
 		
 		
@@ -259,9 +259,5 @@ public class ContactUs implements ActionListener {
             // Draw the background image, scaled to fit the panel size
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
-    }
-
-    public static void main(String[] args) {
-        new ContactUs();
     }
 }
