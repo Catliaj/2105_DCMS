@@ -35,7 +35,7 @@ public class UpdatePatient extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    NewPatient frame = new NewPatient();
+                    UpdatePatient frame = new UpdatePatient();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
