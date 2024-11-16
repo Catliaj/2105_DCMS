@@ -20,6 +20,10 @@ import DCMS_DB_CONNECTION.DB_DCMSConnection;
 import java.sql.*;
 import backend.ApointmentForm_backend;
 import backend.newPatient_Backend;
+import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 public class LogInPage implements ActionListener 
 {
@@ -36,81 +40,101 @@ public class LogInPage implements ActionListener
     JLabel userIdLabel = new JLabel("USERNAME");
     JLabel userPasswordLabel = new JLabel("PASSWORD");
     JLabel messageLabel = new JLabel();
-    JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("/Resources/background.png"))); // logo
 
     // Constructor with user login info
     newPatient_Backend backend = new newPatient_Backend();
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection(); 
 	private Connection connection;
+	private final JLabel lblNewLabel = new JLabel("");
+	private final JPanel panel = new JPanel();
+	private final JLabel lblNewLabel_1 = new JLabel("LOG IN");
+	private final JLabel linetxt = new JLabel("");
 
 
     public LogInPage() 
     {
-        // Logo settings
-        logoLabel.setBounds(-220, 0, 1000, 1000);
-        logInFrame.add(logoLabel);
 
         // Labels
-        userIdLabel.setBounds(813, 200, 214, 38);
+        userIdLabel.setBounds(499, 177, 214, 38);
         userIdLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        userIdLabel.setForeground(Color.WHITE);
-        userPasswordLabel.setBounds(813, 300, 214, 38);
+        userIdLabel.setForeground(new Color(0, 0, 0));
+        userPasswordLabel.setBounds(499, 256, 214, 38);
         userPasswordLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        userPasswordLabel.setForeground(Color.WHITE);
+        userPasswordLabel.setForeground(new Color(0, 0, 0));
         messageLabel.setBounds(813, 100, 406, 50);
         messageLabel.setFont(new Font("Arial", Font.ITALIC, 20));
         messageLabel.setForeground(Color.WHITE);
 
         // Input Fields
-        userIdField.setBounds(812, 250, 406, 50);
+        userIdField.setBounds(510, 214, 280, 32);
         userIdField.setFont(new Font("Arial", Font.PLAIN, 18));
-        userIdField.setBackground(Color.LIGHT_GRAY);
-        userIdField.setBorder(null);
-        userPasswordField.setBounds(812, 350, 406, 50);
+        userIdField.setBackground(new Color(226, 226, 226));
+        userIdField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        userPasswordField.setBounds(510, 294, 280, 32);
         userPasswordField.setFont(new Font("Arial", Font.PLAIN, 18));
-        userPasswordField.setBackground(Color.LIGHT_GRAY);
-        userPasswordField.setBorder(null);
+        userPasswordField.setBackground(new Color(226, 226, 226));
+        userPasswordField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
         // Buttons
-        logInButton.setBounds(812, 450, 404, 62);
+        logInButton.setBounds(551, 357, 199, 38);
         logInButton.setFocusable(false);
         logInButton.setFont(new Font("Arial", Font.BOLD, 18));
         logInButton.setForeground(Color.WHITE);
         logInButton.setBackground(Color.BLACK);
         logInButton.addActionListener(this);
 
-        resetButton.setBounds(812, 550, 404, 62);
+        resetButton.setBounds(551, 408, 199, 38);
         resetButton.setFocusable(false);
         resetButton.setFont(new Font("Arial", Font.BOLD, 18));
         resetButton.setForeground(Color.WHITE);
         resetButton.setBackground(Color.DARK_GRAY);
         resetButton.addActionListener(this);
 
-        signUpButton.setBounds(812, 650, 404, 62);
+        signUpButton.setBounds(552, 456, 198, 38);
         signUpButton.setFocusable(false);
         signUpButton.setFont(new Font("Arial", Font.BOLD, 18));
         signUpButton.setForeground(Color.WHITE);
         signUpButton.setBackground(Color.DARK_GRAY);
         signUpButton.addActionListener(this);
+        logInFrame.getContentPane().setLayout(null);
 
         // Adding components to the frame
-        logInFrame.add(userIdLabel);
-        logInFrame.add(userIdField);
-        logInFrame.add(userPasswordLabel);
-        logInFrame.add(userPasswordField);
-        logInFrame.add(messageLabel);
-        logInFrame.add(logInButton);
-        logInFrame.add(resetButton);
-        logInFrame.add(signUpButton);
+        logInFrame.getContentPane().add(userIdLabel);
+        logInFrame.getContentPane().add(userIdField);
+        logInFrame.getContentPane().add(userPasswordLabel);
+        logInFrame.getContentPane().add(userPasswordField);
+        logInFrame.getContentPane().add(messageLabel);
+        logInFrame.getContentPane().add(logInButton);
+        logInFrame.getContentPane().add(resetButton);
+        logInFrame.getContentPane().add(signUpButton);
 
         // Frame settings
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.jpg"));
         logInFrame.setIconImage(image.getImage());
         logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logInFrame.getContentPane().setBackground(new Color(2, 79, 90)); 
-        logInFrame.setSize(1440, 1024);
-        logInFrame.setLayout(new BorderLayout());
-        logInFrame.setLayout(null);
+        logInFrame.setSize(924, 659);
+        logInFrame.getContentPane().setLayout(null);
+        panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        panel.setBackground(new Color(194, 192, 192));
+        panel.setBounds(480, 114, 337, 396);
+        
+        logInFrame.getContentPane().add(panel);
+        panel.setLayout(null);
+        lblNewLabel_1.setForeground(new Color(86, 86, 86));
+        lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 30));
+        lblNewLabel_1.setBounds(20, 21, 136, 25);
+        
+        panel.add(lblNewLabel_1);
+        linetxt.setForeground(new Color(137, 137, 137));
+        linetxt.setBounds(20, 43, 375, 13);
+        
+        panel.add(linetxt);
+        lblNewLabel.setBackground(new Color(194, 192, 192));
+        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\DCF\\LogInBackG.png"));
+        lblNewLabel.setBounds(0, 0, 910, 622);
+        
+        logInFrame.getContentPane().add(lblNewLabel);
         logInFrame.setVisible(true);
     }
 
