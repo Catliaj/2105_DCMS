@@ -9,19 +9,17 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JTextPane;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class PatientRecord extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField txtAravheiylBFelicisimo;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_5;
-	private JTextField textField_4;
-	private JTextField textField_6;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -58,13 +56,13 @@ public class PatientRecord extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("PATIENT DETAILS:");
+		lblNewLabel.setBounds(17, 10, 246, 60);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		lblNewLabel.setBounds(23, 10, 246, 60);
 		panel.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(290, 81, 537, 260);
 		panel_1.setBackground(new Color(165, 165, 165));
-		panel_1.setBounds(290, 81, 537, 255);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -73,30 +71,15 @@ public class PatientRecord extends JFrame {
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		panel_1.add(lblNewLabel_1_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(41, 52, 234, 27);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
 		JLabel lblNewLabel_1_1_1 = new JLabel("AGE");
 		lblNewLabel_1_1_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblNewLabel_1_1_1.setBounds(359, 22, 178, 21);
 		panel_1.add(lblNewLabel_1_1_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(359, 52, 63, 27);
-		panel_1.add(textField_2);
-		
 		JLabel lblNewLabel_1_1_2 = new JLabel("EMAIL");
 		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblNewLabel_1_1_2.setBounds(42, 89, 178, 21);
 		panel_1.add(lblNewLabel_1_1_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(42, 120, 286, 27);
-		panel_1.add(textField_3);
 		
 		JLabel lblNewLabel_1_1_2_1 = new JLabel("ADDRESS");
 		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -108,46 +91,118 @@ public class PatientRecord extends JFrame {
 		lblNewLabel_1_1_2_2.setBounds(359, 89, 178, 21);
 		panel_1.add(lblNewLabel_1_1_2_2);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(359, 120, 123, 27);
-		panel_1.add(textField_5);
-		
 		JLabel lblNewLabel_1_1_2_1_1 = new JLabel("CONTACT NO.");
 		lblNewLabel_1_1_2_1_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblNewLabel_1_1_2_1_1.setBounds(359, 169, 178, 21);
 		panel_1.add(lblNewLabel_1_1_2_1_1);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(41, 196, 287, 27);
-		panel_1.add(textField_4);
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(42, 53, 286, 26);
+		panel_1.add(textPane);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(359, 196, 138, 27);
-		panel_1.add(textField_6);
+		JTextPane textPane_1 = new JTextPane();
+		textPane_1.setBounds(358, 53, 52, 26);
+		panel_1.add(textPane_1);
+		
+		JTextPane textPane_2 = new JTextPane();
+		textPane_2.setBounds(42, 120, 286, 26);
+		panel_1.add(textPane_2);
+		
+		JTextPane textPane_1_1 = new JTextPane();
+		textPane_1_1.setBounds(358, 120, 81, 26);
+		panel_1.add(textPane_1_1);
+		
+		JTextPane textPane_1_1_1 = new JTextPane();
+		textPane_1_1_1.setBounds(359, 196, 147, 26);
+		panel_1.add(textPane_1_1_1);
+		
+		JTextPane textPane_2_1 = new JTextPane();
+		textPane_2_1.setBounds(42, 196, 286, 26);
+		panel_1.add(textPane_2_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("GENERAL INFORMATION");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblNewLabel_1.setBounds(290, 57, 210, 13);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		panel.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(108, 167, 96, 19);
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		txtAravheiylBFelicisimo = new JTextField();
-		txtAravheiylBFelicisimo.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		txtAravheiylBFelicisimo.setBackground(new Color(194, 192, 192));
-		txtAravheiylBFelicisimo.setText("ARAVHEIYL B. FELICISIMO");
-		txtAravheiylBFelicisimo.setBounds(21, 196, 259, 60);
-		panel.add(txtAravheiylBFelicisimo);
-		txtAravheiylBFelicisimo.setColumns(10);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(69, 294, 101, 34);
+		JButton btnNewButton = new JButton("DELETE");
+		btnNewButton.setForeground(new Color(194, 192, 192));
+		btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnNewButton.setBackground(new Color(5, 59, 67));
+		btnNewButton.setBounds(23, 307, 117, 34);
 		panel.add(btnNewButton);
+		
+		JTextPane textPane_2_1_1 = new JTextPane();
+		textPane_2_1_1.setBounds(96, 189, 101, 26);
+		panel.add(textPane_2_1_1);
+		
+		JTextPane textPane_2_1_1_1 = new JTextPane();
+		textPane_2_1_1_1.setBounds(23, 225, 240, 72);
+		panel.add(textPane_2_1_1_1);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(80, 78, 137, 101);
+		panel.add(panel_2);
+		
+		JButton btnNewButton_1 = new JButton("SAVE");
+		btnNewButton_1.setForeground(new Color(194, 192, 192));
+		btnNewButton_1.setBackground(new Color(5, 59, 67));
+		btnNewButton_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnNewButton_1.setBounds(161, 307, 101, 34);
+		panel.add(btnNewButton_1);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(25, 395, 792, 221);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		table.setBackground(new Color(226, 224, 224));
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+			},
+			new String[] {
+				"DATE", "TIME", "TREATMENT", "REMARKS"
+			}
+		));
+		
+		   // Set row height and column widths
+        table.setRowHeight(30); // Set to a larger value as needed
+        table.getColumnModel().getColumn(0).setPreferredWidth(100); // Patient ID
+        table.getColumnModel().getColumn(1).setPreferredWidth(150); // First Name
+        table.getColumnModel().getColumn(2).setPreferredWidth(50);  // M.I
+        table.getColumnModel().getColumn(3).setPreferredWidth(150); // Last Name
+        
+		scrollPane.setViewportView(table);
+		
+		JLabel lblNewLabel_2 = new JLabel("PATIENT HISTORY");
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblNewLabel_2.setBounds(25, 365, 244, 26);
+		panel.add(lblNewLabel_2);
 	}
 }
