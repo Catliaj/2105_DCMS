@@ -1,6 +1,6 @@
 package backend;
 
-public class ApointmentForm_backend 
+public class ApointmentForm_backend extends newPatient_Backend
 {
 	private String Name, Email, PhoneNumber, Date, Time, Reason;
 

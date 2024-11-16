@@ -187,5 +187,10 @@ public class UpdatePatient extends JFrame {
         SaveBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
         SaveBtn.setBounds(361, 455, 154, 38);
         panel.add(SaveBtn);
+        
+        JLabel lblNewLabel = new JLabel("");
+        lblNewLabel.setIcon(new ImageIcon(NewPatient.class.getResource("/Resources/PopupBackg.png")));
+        lblNewLabel.setBounds(0, 0, 657, 519);
+        panel.add(lblNewLabel);
     }
 }

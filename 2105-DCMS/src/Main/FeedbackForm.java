@@ -13,7 +13,6 @@ import backend.feedback_backend;
 public class FeedbackForm implements ActionListener {
 	feedback_backend backend =new  feedback_backend();
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
-	
 	private Connection connection;
 	
 	
@@ -201,7 +200,7 @@ public class FeedbackForm implements ActionListener {
         if (e.getSource() == sumbitBtn) {
             backend.setName(nameField.getText());
             backend.setEmail(emailField.getText());
-            backend.setContactNumber(phoneNumberField.getText());
+            backend.setPhoneNumber(phoneNumberField.getText());
             backend.setFeedback(reasonField.getText());
             try 
             {               	
@@ -209,7 +208,7 @@ public class FeedbackForm implements ActionListener {
                 PreparedStatement ps = connection.prepareStatement("INSERT INTO feedback (Name, Email, PhoneNumber, Feedback) VALUES (?, ?, ?, ?)");
                 ps.setString(1, backend.getName());
                 ps.setString(2, backend.getEmail());
-                ps.setString(3, backend.getContactNumber());
+                ps.setString(3, backend.getPhoneNumber());
                 ps.setString(4, backend.getFeedback());
                 
                 int rowsAffected = ps.executeUpdate();

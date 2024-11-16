@@ -318,4 +318,8 @@ public class CABPage implements ActionListener {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
+	public static void main(String[] args)
+	{
+		new CABPage();
+	}
 }

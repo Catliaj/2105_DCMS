@@ -7,25 +7,35 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import com.toedter.calendar.JDateChooser;
+
+import DCMS_DB_CONNECTION.DB_DCMSConnection;
+import backend.newPatient_Backend;
+import java.sql.*;
+
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
-public class NewPatient extends JFrame {
+public class NewPatient extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField FirstNameTxtField;
     private JTextField LastNameTxtField;
-    private JTextField AgeTxtField;
+    private JTextField AgeTxtField ;
     private JTextField ContactTxtField;
     private JTextField EmailTxtField;
     private JTextField AddressTxtField;
     private JTextField MITxtField;
+    private JDateChooser dateChooser;
 
     /**
      * Launch the application.
@@ -46,7 +56,16 @@ public class NewPatient extends JFrame {
     /**
      * Create the frame.
      */
-    public NewPatient() {
+    private String selectedGender = "";
+    private JButton CancelBtn;
+    private JButton SaveBtn;
+	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
+	newPatient_Backend backend =new newPatient_Backend();
+	private Connection connection;
+
+    public NewPatient() 
+    {
+    	
         setBackground(new Color(128, 128, 128));
         setForeground(new Color(0, 0, 0));
         setTitle("NEW PATIENT");
@@ -116,7 +135,7 @@ public class NewPatient extends JFrame {
         ContactLabel.setBounds(429, 181, 108, 13);
         panel.add(ContactLabel);
         
-        JDateChooser dateChooser = new JDateChooser();
+        dateChooser = new JDateChooser();
         dateChooser.getCalendarButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
@@ -162,11 +181,13 @@ public class NewPatient extends JFrame {
         JRadioButton MaleRdBtn = new JRadioButton("MALE");
         MaleRdBtn.setFont(new Font("Segoe UI", Font.BOLD, 15));
         MaleRdBtn.setBounds(167, 200, 79, 29);
+        MaleRdBtn.addActionListener(this);
         panel.add(MaleRdBtn);
         
         JRadioButton FemaleRdBtn = new JRadioButton("FEMALE");
         FemaleRdBtn.setFont(new Font("Segoe UI", Font.BOLD, 15));
         FemaleRdBtn.setBounds(264, 200, 97, 29);
+        FemaleRdBtn.addActionListener(this);
         panel.add(FemaleRdBtn);
         
         // Group the radio buttons to allow only one selection
@@ -174,23 +195,100 @@ public class NewPatient extends JFrame {
         genderGroup.add(MaleRdBtn);
         genderGroup.add(FemaleRdBtn);
         
-        JButton CancelBtn = new JButton("CANCEL");
+        CancelBtn = new JButton("CANCEL");
         CancelBtn.setForeground(new Color(194, 192, 192));
         CancelBtn.setBackground(new Color(5, 59, 67));
         CancelBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
         CancelBtn.setBounds(135, 455, 154, 38);
+        CancelBtn.addActionListener(this);
         panel.add(CancelBtn);
         
-        JButton SaveBtn = new JButton("SAVE");
+        SaveBtn = new JButton("SAVE");
         SaveBtn.setForeground(new Color(194, 192, 192));
         SaveBtn.setBackground(new Color(5, 59, 67));
         SaveBtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
         SaveBtn.setBounds(361, 455, 154, 38);
+        SaveBtn.addActionListener(this);
         panel.add(SaveBtn);
         
         JLabel lblNewLabel = new JLabel("");
-        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\PopupBackg.png"));
+        lblNewLabel.setIcon(new ImageIcon(NewPatient.class.getResource("/Resources/PopupBackg.png")));
         lblNewLabel.setBounds(0, 0, 657, 519);
         panel.add(lblNewLabel);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == CancelBtn) {
+            dispose();
+        } else if (e.getSource() == SaveBtn) {
+            // Extract data from the form
+            String firstName = FirstNameTxtField.getText();
+            String lastName = LastNameTxtField.getText();
+            String mi = MITxtField.getText();
+            String contact = ContactTxtField.getText();
+            String email = EmailTxtField.getText();
+            String address = AddressTxtField.getText();
+            String ageText = AgeTxtField.getText();
+            Integer age = 0;
+
+            
+            try {
+                age = Integer.parseInt(ageText);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid number for age.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+            String dateOfBirth = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()) : "Not Selected";
+
+            
+            backend.setFirstName(firstName);
+            backend.setMiddleInitial(mi);
+            backend.setLastName(lastName);
+            backend.setAge(age);
+            backend.setGender(selectedGender);
+            backend.setContactNumber(contact);
+            backend.setEmail(email);
+            backend.setAddress(address);
+
+           
+            try {
+            	connection = dcmsConnection.getConnection();
+                PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO patientdata (FirstName, LastName, MiddleInitial, Age, Gender, ContactNumber, Email, Address, DateOfBirth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                );
+                ps.setString(1, backend.getFirstName());
+                ps.setString(2, backend.getLastName());
+                ps.setString(3, backend.getMiddleInitial());
+                ps.setInt(4, backend.getAge());
+                ps.setString(5, backend.getGender());
+                ps.setString(6, backend.getContactNumber());
+                ps.setString(7, backend.getEmail());
+                ps.setString(8, backend.getAddress());
+                ps.setString(9, dateOfBirth);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Patient record saved successfully!");
+                    FirstNameTxtField.setText("");
+                    LastNameTxtField.setText("");
+                    MITxtField.setText("");
+                    ContactTxtField.setText("");
+                    EmailTxtField.setText("");
+                    AddressTxtField.setText("");
+                    AgeTxtField.setText("");
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to save patient record. Please try again.");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            }
+        }
     }
 }

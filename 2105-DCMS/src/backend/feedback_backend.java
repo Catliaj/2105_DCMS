@@ -1,34 +1,9 @@
 package backend;
 
 
-public class feedback_backend 
+public class feedback_backend extends ApointmentForm_backend
 {
-	private String feedback, Name, Email, contactNumber;
-
-
-	public String getName() {
-		return Name;
-	}
-
-	public void setName(String name) {
-		Name = name;
-	}
-
-	public String getEmail() {
-		return Email;
-	}
-
-	public void setEmail(String email) {
-		Email = email;
-	}
-
-	public String getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
+	private String feedback;
 
 	public String getFeedback() 
 	{

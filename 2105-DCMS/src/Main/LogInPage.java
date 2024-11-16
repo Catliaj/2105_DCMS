@@ -16,7 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
+import DCMS_DB_CONNECTION.DB_DCMSConnection;
+import java.sql.*;
+import backend.ApointmentForm_backend;
+import backend.newPatient_Backend;
 
 public class LogInPage implements ActionListener 
 {
@@ -36,7 +39,9 @@ public class LogInPage implements ActionListener
     JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("/Resources/background.png"))); // logo
 
     // Constructor with user login info
-
+    newPatient_Backend backend = new newPatient_Backend();
+	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection(); 
+	private Connection connection;
 
 
     public LogInPage() 
@@ -148,10 +153,7 @@ public class LogInPage implements ActionListener
                 ex.printStackTrace();
                 messageLabel.setText("Error: " + ex.getMessage());
             }
-        } else if (action.getSource() == signUpButton) {
-        	logInFrame.dispose();
-            new userRegistrationPage(); // Assuming a userRegistrationPage class exists
-        }
+        } 
     }
     
     public static void main(String[] args)

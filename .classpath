@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="2105-DCMS/src"/>
 	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-j-9.0.0.jar"/>
 	<classpathentry kind="output" path="2105-DCMS/bin"/>
 </classpath>

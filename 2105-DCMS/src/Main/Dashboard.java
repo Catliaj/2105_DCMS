@@ -15,7 +15,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
+import Main.Dashboard.BackgroundPanel;
 
 public class Dashboard extends JFrame {
 
@@ -59,18 +63,18 @@ public class Dashboard extends JFrame {
 
         JPanel HeaderPanel = new JPanel();
         HeaderPanel.setBackground(new Color(5, 59, 67));
-        HeaderPanel.setBounds(0, 0, 1286, 107);
+        HeaderPanel.setBounds(0, 0, 1286, 121);
         panel.add(HeaderPanel);
         HeaderPanel.setLayout(null);
 
         JLabel lblNewLabel_2 = new JLabel("");
-        lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\ClinicLogo.png"));
-        lblNewLabel_2.setBounds(386, 28, 406, 50);
+        lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/Resources/haederLogo.png")));
+        lblNewLabel_2.setBounds(469, 0, 450, 187);
         HeaderPanel.add(lblNewLabel_2);
 
         JPanel SidePanel = new JPanel();
         SidePanel.setBackground(new Color(5, 59, 67));
-        SidePanel.setBounds(0, 126, 229, 587);
+        SidePanel.setBounds(0, 131, 229, 582);
         panel.add(SidePanel);
         SidePanel.setLayout(null);
 
@@ -118,7 +122,7 @@ public class Dashboard extends JFrame {
 
         JPanel panel_3 = new JPanel();
         panel_3.setBackground(new Color(194, 192, 192));
-        panel_3.setBounds(0, 107, 1286, 20);
+        panel_3.setBounds(-16, 113, 1312, 20);
         panel.add(panel_3);
 
         JPanel panel_1 = new JPanel();
@@ -128,7 +132,7 @@ public class Dashboard extends JFrame {
         panel_1.setLayout(null);
         
         JLabel lblNewLabel = new JLabel("");
-        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Personicon.png"));
+        lblNewLabel.setIcon(new ImageIcon(Dashboard.class.getResource("/Resources/Personicon.png")));
         lblNewLabel.setBounds(-264, 10, 395, 162);
         panel_1.add(lblNewLabel);
         
@@ -145,7 +149,7 @@ public class Dashboard extends JFrame {
         JLabel lblNewLabel_3 = new JLabel("");
         lblNewLabel_3.setBounds(-260, 20, 375, 148);
         panel_1_1.add(lblNewLabel_3);
-        lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Personicon.png"));
+        lblNewLabel_3.setIcon(new ImageIcon(Dashboard.class.getResource("/Resources/Personicon.png")));
 
         JPanel panel_2 = new JPanel();
         panel_2.setBackground(new Color(5, 59, 67));
@@ -170,15 +174,29 @@ public class Dashboard extends JFrame {
         });
         timer.start();
 
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\backG.png"));
-        lblNewLabel_1.setBounds(10, 72, 1286, 743);
-        panel.add(lblNewLabel_1);
+     // Background panel instantiation
+        BackgroundPanel content = new BackgroundPanel("/Resources/AUBackG.png");
+        content.setBounds(0, 0, 1286, 713);
+        panel.add(content);
     }
 
     // Method to get the current date and time with day and full month name
     private String getCurrentDateTime() {
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM dd, yyyy HH:mm:ss");
         return formatter.format(new Date());
+    }
+    
+    static class BackgroundPanel extends JPanel {
+        private Image backgroundImage;
+ 
+        public BackgroundPanel(String imagePath) {
+            backgroundImage = new ImageIcon(getClass().getResource(imagePath)).getImage();
+        }
+
+        @Override 
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }
