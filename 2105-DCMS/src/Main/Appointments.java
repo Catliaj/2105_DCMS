@@ -228,17 +228,24 @@ public class Appointments extends JFrame implements ActionListener{
         btnBookAppointment.setBackground(new Color(194, 192, 192));
         btnBookAppointment.setForeground(new Color(0, 0, 0));
         btnBookAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnBookAppointment.setBounds(561, 628, 442, 50);
+        btnBookAppointment.setBounds(350, 628, 359, 50);
         panel.add(btnBookAppointment);
-                                
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/Background (2).png")));
-        lblNewLabel_1.setBounds(10, 72, 1286, 743);
-        panel.add(lblNewLabel_1);
         
         JLabel lblNewLabel_3 = new JLabel("New label");
         lblNewLabel_3.setBounds(294, 351, 45, 13);
         panel.add(lblNewLabel_3);
+        
+        JButton btnRefresh = new JButton("REFRESH");
+        btnRefresh.setForeground(Color.BLACK);
+        btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        btnRefresh.setBackground(new Color(194, 192, 192));
+        btnRefresh.setBounds(809, 628, 359, 50);
+        panel.add(btnRefresh);
+        
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/Background (2).png")));
+        lblNewLabel_1.setBounds(10, 72, 1286, 743);
+        panel.add(lblNewLabel_1);
         loadAppointmentData();
     }
 

@@ -111,13 +111,23 @@ public class ServiceSales extends JFrame implements ActionListener {
 		btnBack.addActionListener(this);
 		btnBack.setBackground(new Color(194, 192, 192));
 		btnBack.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnBack.setBounds(900, 555, 175, 45);
+		btnBack.setBounds(606, 546, 175, 45);
 		panel.add(btnBack);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(5, 59, 67));
 		panel_1.setBounds(77, 69, 981, 458);
 		panel.add(panel_1);
+		
+		JButton btnRefresh = new JButton("REFRESH");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnRefresh.setBackground(new Color(194, 192, 192));
+		btnRefresh.setBounds(368, 546, 175, 45);
+		panel.add(btnRefresh);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(ServiceSales.class.getResource("/Resources/Background (2).png")));

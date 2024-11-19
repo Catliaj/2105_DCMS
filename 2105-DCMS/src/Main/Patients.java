@@ -222,17 +222,24 @@ public class Patients extends JFrame implements ActionListener{
         btnAddPatient.setBackground(new Color(194, 192, 192));
         btnAddPatient.setForeground(new Color(0, 0, 0));
         btnAddPatient.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnAddPatient.setBounds(488, 580, 217, 50);
+        btnAddPatient.setBounds(288, 580, 217, 50);
         panel.add(btnAddPatient);
                                 
         btnViewRecord = new JButton("VIEW RECORD");
         btnViewRecord.setForeground(Color.BLACK);
         btnViewRecord.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewRecord.setBackground(new Color(194, 192, 192));
-        btnViewRecord.setBounds(814, 580, 217, 50);
+        btnViewRecord.setBounds(645, 580, 217, 50);
         btnViewRecord.addActionListener(this);
         panel.add(btnViewRecord);
-                                
+        
+        JButton btnRefresh = new JButton("REFRESH");
+        btnRefresh.setForeground(Color.BLACK);
+        btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        btnRefresh.setBackground(new Color(194, 192, 192));
+        btnRefresh.setBounds(1007, 580, 217, 50);
+        panel.add(btnRefresh);
+        
         JLabel lblNewLabel_1 = new JLabel("");
         lblNewLabel_1.setIcon(new ImageIcon(Patients.class.getResource("/Resources/Background (2).png")));
         lblNewLabel_1.setBounds(10, 72, 1286, 743);
@@ -305,5 +312,4 @@ public class Patients extends JFrame implements ActionListener{
 	        model.addRow(row);
 	    }
 	}
-
 }
