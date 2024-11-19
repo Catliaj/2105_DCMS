@@ -205,7 +205,7 @@ public class FeedbackForm implements ActionListener {
             try 
             {               	
                 
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO feedback (Name, Email, PhoneNumber, Feedback) VALUES (?, ?, ?, ?)");
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO feedbackdata (Name, Email, PhoneNumber, Feedback) VALUES (?, ?, ?, ?)");
                 ps.setString(1, backend.getName());
                 ps.setString(2, backend.getEmail());
                 ps.setString(3, backend.getPhoneNumber());

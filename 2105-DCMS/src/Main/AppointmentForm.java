@@ -35,6 +35,7 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	private JComboBox<String> amPmComboBox;
 	private JComboBox<String> ReasoncomboBox;
 	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -56,7 +57,10 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
 	ApointmentForm_backend backend =new ApointmentForm_backend();
 	private Connection connection;
+	
 	public AppointmentForm() {
+		setVisible(true);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 576);
 		contentPane = new JPanel();

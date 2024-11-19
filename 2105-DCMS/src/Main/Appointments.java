@@ -2,14 +2,17 @@ package Main;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.Timer;
+import java.util.List;
 
+import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -20,13 +23,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Appointments extends JFrame {
+import backend.ApointmentForm_backend;
+
+public class Appointments extends JFrame implements ActionListener{
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTable table;
     private JTable table_1;
     private JTable table_2;
+    private JButton Dashboardbtn;
+    private JButton Patientsbtn;
+    private JButton Appointmentsbtn;
+    private JButton Productbtn;
+    private JButton Billingbtn;
+    private JButton Logoutbtn;
+    private JButton ProductSalesbtn;
+    private JButton btnBookAppointment;
 
     /**
      * Launch the application.
@@ -48,6 +61,7 @@ public class Appointments extends JFrame {
      * Create the frame.
      */
     public Appointments() {
+    	setVisible(true);
         setTitle("DASHBOARD");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1300, 750);
@@ -71,10 +85,10 @@ public class Appointments extends JFrame {
                 JLabel lblNewLabel_2 = new JLabel("");
                 lblNewLabel_2.setBounds(408, 28, 406, 50);
                 HeaderPanel.add(lblNewLabel_2);
-                lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\ClinicLogo.png"));
+                lblNewLabel_2.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/ClinicLogo.png")));
                 
                 JLabel lblNewLabel_4 = new JLabel("");
-                lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\DCF DENTAL CLINIC Your Convenient, Accommodating, and Affordable Dental Partner. (2)\\HeaderPanelBG.png"));
+                lblNewLabel_4.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/HeaderPanelBG.png")));
                 lblNewLabel_4.setBounds(0, 0, 1314, 107);
                 HeaderPanel.add(lblNewLabel_4);
 
@@ -84,50 +98,57 @@ public class Appointments extends JFrame {
         panel.add(SidePanel);
         SidePanel.setLayout(null);
 
-        JButton Dashboardbtn = new JButton("DASHBOARD");
+        Dashboardbtn = new JButton("DASHBOARD");
         Dashboardbtn.setBackground(new Color(194, 192, 192));
         Dashboardbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Dashboardbtn.setBounds(0, 85, 228, 57);
+        Dashboardbtn.addActionListener(this);
         SidePanel.add(Dashboardbtn);
 
-        JButton Patientsbtn = new JButton("PATIENTS");
+        Patientsbtn = new JButton("PATIENTS");
         Patientsbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Patientsbtn.setBackground(new Color(194, 192, 192));
         Patientsbtn.setBounds(0, 145, 228, 57);
+        Patientsbtn.addActionListener(this);
         SidePanel.add(Patientsbtn);
 
-        JButton Appointmentsbtn = new JButton("APPOINTMENTS");
-        Appointmentsbtn.setBackground(new Color(194, 192, 192));
+        Appointmentsbtn = new JButton("APPOINTMENTS");
+        Appointmentsbtn.setBackground( Color.white);
         Appointmentsbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Appointmentsbtn.setBounds(0, 205, 228, 57);
+        Appointmentsbtn.addActionListener(this);
         SidePanel.add(Appointmentsbtn);
 
-        JButton Productbtn = new JButton("PRODUCT");
+        Productbtn = new JButton("PRODUCT");
         Productbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Productbtn.setBackground(new Color(194, 192, 192));
         Productbtn.setBounds(0, 265, 228, 57);
+        Productbtn.addActionListener(this);
         SidePanel.add(Productbtn);
 
-        JButton Billingbtn = new JButton("POS");
+        Billingbtn = new JButton("POS");
         Billingbtn.setBackground(new Color(194, 192, 192));
         Billingbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Billingbtn.setBounds(0, 386, 228, 57);
+        Billingbtn.addActionListener(this);
         SidePanel.add(Billingbtn);
 
-        JButton Logoutbtn = new JButton("LOG OUT");
+        Logoutbtn = new JButton("LOG OUT");
         Logoutbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Logoutbtn.setBackground(new Color(194, 192, 192));
         Logoutbtn.setBounds(0, 529, 228, 57);
+        Logoutbtn.addActionListener(this);
         SidePanel.add(Logoutbtn);
 
-        JButton ProductSalesbtn = new JButton("SALES");
+        ProductSalesbtn = new JButton("SALES");
         ProductSalesbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         ProductSalesbtn.setBackground(new Color(194, 192, 192));
         ProductSalesbtn.setBounds(0, 325, 228, 57);
+        ProductSalesbtn.addActionListener(this);
         SidePanel.add(ProductSalesbtn);
         
         JLabel lblNewLabel_5 = new JLabel("");
-        lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\DCF DENTAL CLINIC Your Convenient, Accommodating, and Affordable Dental Partner. (2)\\SidePanelBG.png"));
+        lblNewLabel_5.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/SidePanelBG.png")));
         lblNewLabel_5.setBounds(0, 0, 228, 587);
         SidePanel.add(lblNewLabel_5);
 
@@ -202,25 +223,23 @@ public class Appointments extends JFrame {
         
         scrollPane.setViewportView(table_2);
                         
-        JButton btnNewButton = new JButton("BOOK NEW APPOINTMENT");
-        btnNewButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
-        btnNewButton.setBackground(new Color(194, 192, 192));
-        btnNewButton.setForeground(new Color(0, 0, 0));
-        btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnNewButton.setBounds(561, 628, 442, 50);
-        panel.add(btnNewButton);
+        btnBookAppointment = new JButton("BOOK NEW APPOINTMENT");
+        btnBookAppointment.addActionListener(this);
+        btnBookAppointment.setBackground(new Color(194, 192, 192));
+        btnBookAppointment.setForeground(new Color(0, 0, 0));
+        btnBookAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        btnBookAppointment.setBounds(561, 628, 442, 50);
+        panel.add(btnBookAppointment);
                                 
         JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\backG.png"));
+        lblNewLabel_1.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/Background (2).png")));
         lblNewLabel_1.setBounds(10, 72, 1286, 743);
         panel.add(lblNewLabel_1);
         
         JLabel lblNewLabel_3 = new JLabel("New label");
         lblNewLabel_3.setBounds(294, 351, 45, 13);
         panel.add(lblNewLabel_3);
+        loadAppointmentData();
     }
 
     // Method to get the current date and time with day and full month name
@@ -228,4 +247,61 @@ public class Appointments extends JFrame {
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM dd, yyyy HH:mm:ss");
         return formatter.format(new Date());
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		// TODO Auto-generated method stub
+		if(e.getSource() == Patientsbtn)
+		{
+			dispose();
+			new Patients();
+		}
+		else if(e.getSource() == Dashboardbtn )
+		{
+			dispose();
+			new Dashboard();
+		}
+		else if(e.getSource() == Productbtn)
+		{
+			System.out.println("click");
+		}
+		else if(e.getSource() == Billingbtn )
+		{
+			System.out.println("click");
+		}
+		else if(e.getSource() == ProductSalesbtn )
+		{
+			dispose();
+			new SALES();
+		}
+		else if(e.getSource() == Logoutbtn)
+		{
+			dispose();
+		}
+		else if(e.getSource() == btnBookAppointment)
+		{
+			new AppointmentForm();
+		}
+		
+	}
+	
+	private void loadAppointmentData() {
+		
+	    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
+	    model.setRowCount(0); // Clear existing data
+	   
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    List<String[]> appointmentData = backend.getAppointment();
+	    // Check if there is any data to display
+	    if (appointmentData.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No patient data found.");
+	        return;
+	    }
+	    // Loop through the list and add rows to the table
+	    for (String[] row : appointmentData) {
+	        model.addRow(row);
+	    }
+	}
+
 }

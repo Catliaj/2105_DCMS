@@ -65,7 +65,8 @@ public class NewPatient extends JFrame implements ActionListener {
 
     public NewPatient() 
     {
-    	
+    	setLocationRelativeTo(null);
+    	setVisible(true);
         setBackground(new Color(128, 128, 128));
         setForeground(new Color(0, 0, 0));
         setTitle("NEW PATIENT");
@@ -289,6 +290,7 @@ public class NewPatient extends JFrame implements ActionListener {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }
+            
         }
     }
 }

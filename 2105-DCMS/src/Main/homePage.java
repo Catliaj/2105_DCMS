@@ -37,8 +37,9 @@ public class homePage implements ActionListener
     JButton feedbackBtn = new JButton("FEEDBACK");
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/Background (2).png"); 
-
-    homePage() {
+    
+    homePage() 
+    {
     	
     	//contentLogo
     	ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));  // Use relative path

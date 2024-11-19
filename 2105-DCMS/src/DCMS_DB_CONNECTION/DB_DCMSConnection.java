@@ -25,7 +25,7 @@ public class DB_DCMSConnection
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Connection Error");
+			JOptionPane.showMessageDialog(null, "Connection Error"+ e.getMessage());
 		}
 		
 	}

@@ -15,11 +15,12 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ServiceSales extends JFrame {
+public class ServiceSales extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+	private JButton btnBack;
 
 	/**
 	 * Launch the application.
@@ -41,6 +42,8 @@ public class ServiceSales extends JFrame {
 	 * Create the frame.
 	 */
 	public ServiceSales() {
+		setVisible(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1150, 652);
 		contentPane = new JPanel();
@@ -104,15 +107,12 @@ public class ServiceSales extends JFrame {
 		lblNewLabel.setBounds(426, 10, 328, 49);
 		panel.add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("BACK");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setBackground(new Color(194, 192, 192));
-		btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnNewButton.setBounds(900, 555, 175, 45);
-		panel.add(btnNewButton);
+	    btnBack = new JButton("BACK");
+		btnBack.addActionListener(this);
+		btnBack.setBackground(new Color(194, 192, 192));
+		btnBack.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnBack.setBounds(900, 555, 175, 45);
+		panel.add(btnBack);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(5, 59, 67));
@@ -120,8 +120,18 @@ public class ServiceSales extends JFrame {
 		panel.add(panel_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\backG.png"));
+		lblNewLabel_1.setIcon(new ImageIcon(ServiceSales.class.getResource("/Resources/Background (2).png")));
 		lblNewLabel_1.setBounds(0, 0, 1136, 615);
 		panel.add(lblNewLabel_1);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == btnBack)
+		{
+			dispose();
+			new SALES();
+		}
 	}
 }
