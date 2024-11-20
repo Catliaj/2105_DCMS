@@ -153,6 +153,25 @@ public class aboutUs implements ActionListener {
 			aboutpage.dispose();
 			new appointmentPage();
 		}
+		else if(e.getSource() == aboutUsBtn)
+		{
+			aboutpage.dispose();
+			new aboutUs();
+		}
+		else if(e.getSource() == servicesBtn)
+		{
+			aboutpage.dispose();
+			new BracesPage();
+		}
+		else if(e.getSource() == contactUsBtn )
+		{
+			aboutpage.dispose();
+			new ContactUs();
+		}
+		
+
+		
+		
     }
 
     // Custom JPanel for Background Image
