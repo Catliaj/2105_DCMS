@@ -18,8 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class appointmentPage implements ActionListener
-{
+public class appointmentPage implements ActionListener {
     JFrame appointmentPage = new JFrame("DCF Dental Clinic");
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
@@ -27,13 +26,14 @@ public class appointmentPage implements ActionListener
     JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton bookBtn = new JButton("Book Now");
+    JButton logOutBtn = new JButton("LOG OUT");
+    JButton bookBtn = new JButton("BOOK NOW");
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("Background (2).png");  // Use custom panel with background
 
     appointmentPage() {
         // Set window icon
-        ImageIcon image = new ImageIcon(getClass().getResource("DCFlogo.png"));
+        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));
         appointmentPage.setIconImage(image.getImage());
 
         appointmentPage.setLayout(new BorderLayout());
@@ -46,7 +46,7 @@ public class appointmentPage implements ActionListener
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
-        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
+        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -71,12 +71,13 @@ public class appointmentPage implements ActionListener
         setButtonStyles(aboutUsBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
+        setButtonStyles(logOutBtn);
         
-        bookBtn.setFont(new Font("Arial", Font.BOLD, 30));
+        bookBtn.setFont(new Font("Arial", Font.BOLD, 25));
         bookBtn.setForeground(Color.BLACK);
         bookBtn.setBackground(Color.WHITE);
         bookBtn.setFocusable(false);
-        bookBtn.setBorder(BorderFactory.createEmptyBorder(50, 40, 50, 40));  // Adjust padding for better spacing
+        bookBtn.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));  // Adjust padding for better spacing
         bookBtn.addActionListener(this);
       
         
@@ -86,6 +87,7 @@ public class appointmentPage implements ActionListener
         navPanel.add(appointmentBtn);
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
+        navPanel.add(logOutBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
         appointmentPage.add(header, BorderLayout.NORTH);
@@ -104,7 +106,7 @@ public class appointmentPage implements ActionListener
         titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
         titlePanel.setBackground(new Color(5, 59, 67)); 
 
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("DCFlogo.png"));
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));
         Image scaledImage = originalIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH); 
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -150,23 +152,24 @@ public class appointmentPage implements ActionListener
         rightPanel.setLayout(new BorderLayout()); 
 
         JPanel titlePanel1 = new JPanel();
-        titlePanel1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
+        titlePanel1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 50));  // Increased vertical spacing here
         titlePanel1.setBackground(new Color(5, 59, 67)); 
 
         JLabel imageLabel1 = new JLabel(new ImageIcon(scaledImage));
         imageLabel1.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
 
-        JLabel clinicName1 = new JLabel("BOOK YOUR APPOINTMENT REQUEST");
-        clinicName1.setForeground(Color.WHITE);
-        clinicName1.setFont(new Font("Arial", Font.BOLD, 30)); 
+        // Modify the label text with HTML and larger font size
+        String text = "<html><div style='font-size:30px; font-weight:bold; color:white; text-align:center;'>" +
+                "BOOK YOUR<br>APPOINTMENT REQUEST</div></html>";
+        JLabel clinicName1 = new JLabel(text);
+        clinicName1.setHorizontalAlignment(JLabel.CENTER);
         clinicName1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10)); 
-        
-        
+
         titlePanel1.add(clinicName1);  
-        titlePanel1.add(bookBtn);
-        
+        titlePanel1.add(bookBtn);  // Button will be positioned below the label
+
         rightPanel.add(imageLabel1, BorderLayout.NORTH);
-        rightPanel.add(titlePanel1,BorderLayout.CENTER); 
+        rightPanel.add(titlePanel1, BorderLayout.CENTER); 
         
         content.add(leftPanel);
         content.add(rightPanel);
@@ -228,7 +231,7 @@ public class appointmentPage implements ActionListener
 
         public BackgroundPanel(String imagePath) {
             // Load the background image
-            backgroundImage = new ImageIcon(getClass().getResource("Background (2).png")).getImage();
+            backgroundImage = new ImageIcon(getClass().getResource("/Resources/Background (2).png")).getImage();
         }
 
         @Override
