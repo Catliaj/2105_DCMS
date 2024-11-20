@@ -55,7 +55,7 @@ public class homePage implements ActionListener
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.jpg"));  // Corrected relative path
         homepage.setIconImage(image.getImage());
 
-        homepage.setLayout(new BorderLayout());
+        homepage.getContentPane().setLayout(new BorderLayout());
         homepage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         homepage.setSize(1440, 1024);
         
@@ -94,13 +94,20 @@ public class homePage implements ActionListener
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
+        productsBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		 homepage.dispose(); // Close the current frame
+        	        new product(); // Open the ProductForm
+        	}
+        });
+     
 
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
-        homepage.add(header, BorderLayout.NORTH);
+        homepage.getContentPane().add(header, BorderLayout.NORTH);
 
         // Content area
         content.setLayout(new BorderLayout());
@@ -147,7 +154,7 @@ public class homePage implements ActionListener
         imagePanel.add(image2);
 
         content.add(imagePanel);
-        homepage.add(content, BorderLayout.CENTER);
+        homepage.getContentPane().add(content, BorderLayout.CENTER);
 
         // Make frame visible
         homepage.setVisible(true);
@@ -182,6 +189,11 @@ public class homePage implements ActionListener
 		{
 			homepage.dispose();
 			new aboutUs();
+		}
+		else if(e.getSource() == productsBtn)
+		{
+			homepage.dispose();
+			new product();
 		}
 		else if(e.getSource() == servicesBtn)
 		{
