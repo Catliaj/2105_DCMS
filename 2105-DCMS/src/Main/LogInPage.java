@@ -23,9 +23,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
+import javax.swing.JCheckBox;
+import java.awt.Toolkit;
+import javax.swing.SwingConstants;
 
-public class LogInPage implements ActionListener 
-{
+public class LogInPage implements ActionListener {
     
 
     // Creating frame and components
@@ -34,8 +36,6 @@ public class LogInPage implements ActionListener
     JButton logInButton = new JButton("LOG IN");
     JTextField userIdField = new JTextField();
     JPasswordField userPasswordField = new JPasswordField();
-    JButton signUpButton = new JButton("Sign Up");
-    JButton resetButton = new JButton("Reset");
     JLabel userIdLabel = new JLabel("USERNAME");
     JLabel userPasswordLabel = new JLabel("PASSWORD");
     JLabel messageLabel = new JLabel();
@@ -44,14 +44,12 @@ public class LogInPage implements ActionListener
     newPatient_Backend backend = new newPatient_Backend();
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection(); 
 	private Connection connection;
-	private final JLabel lblNewLabel = new JLabel("");
+	private final JLabel ContentBackG = new JLabel("");
 	private final JPanel panel = new JPanel();
 	private final JLabel lblNewLabel_1 = new JLabel("LOG IN");
 	private final JLabel linetxt = new JLabel("");
 
-
-    public LogInPage() 
-    {
+    public LogInPage() {
         messageLabel.setBounds(813, 100, 406, 50);
         messageLabel.setFont(new Font("Arial", Font.ITALIC, 20));
         messageLabel.setForeground(Color.WHITE);
@@ -60,14 +58,17 @@ public class LogInPage implements ActionListener
 
         // Frame settings
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.jpg"));
-        logInFrame.setIconImage(image.getImage());
+        logInFrame.setResizable(false);
+        logInFrame.setTitle("LOG IN");
+        logInFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\ARAVHEIYL FELICISIMO\\AppData\\Local\\Microsoft\\Windows\\INetCache\\IE\\5423DAEL\\1[1].png"));
         logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logInFrame.getContentPane().setBackground(new Color(2, 79, 90)); 
         logInFrame.setSize(836, 589);
         logInFrame.getContentPane().setLayout(null);
         panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         panel.setBackground(new Color(194, 192, 192));
-        panel.setBounds(435, 99, 310, 376);
+        panel.setBounds(435, 109, 310, 320);
+        
         
         logInFrame.getContentPane().add(panel);
         panel.setLayout(null);
@@ -80,25 +81,13 @@ public class LogInPage implements ActionListener
         linetxt.setForeground(new Color(137, 137, 137));
         
         panel.add(linetxt);
-        signUpButton.setBounds(71, 312, 168, 35);
-        panel.add(signUpButton);
-        signUpButton.setFocusable(false);
-        signUpButton.setFont(new Font("Arial", Font.BOLD, 18));
-        signUpButton.setForeground(Color.WHITE);
-        signUpButton.setBackground(Color.DARK_GRAY);
-        logInButton.setBounds(71, 228, 167, 32);
+        logInButton.setBounds(70, 263, 167, 32);
         panel.add(logInButton);
         logInButton.setFocusable(false);
         logInButton.setFont(new Font("Arial", Font.BOLD, 18));
         logInButton.setForeground(Color.WHITE);
         logInButton.setBackground(Color.BLACK);
-        resetButton.setBounds(72, 270, 167, 32);
-        panel.add(resetButton);
-        resetButton.setFocusable(false);
-        resetButton.setFont(new Font("Arial", Font.BOLD, 18));
-        resetButton.setForeground(Color.WHITE);
-        resetButton.setBackground(Color.DARK_GRAY);
-        userPasswordField.setBounds(38, 169, 240, 32);
+        userPasswordField.setBounds(38, 176, 240, 32);
         panel.add(userPasswordField);
         userPasswordField.setFont(new Font("Arial", Font.PLAIN, 18));
         userPasswordField.setBackground(new Color(226, 226, 226));
@@ -108,7 +97,7 @@ public class LogInPage implements ActionListener
         userIdField.setFont(new Font("Arial", Font.PLAIN, 18));
         userIdField.setBackground(new Color(226, 226, 226));
         userIdField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-        userPasswordLabel.setBounds(38, 135, 214, 38);
+        userPasswordLabel.setBounds(38, 142, 214, 38);
         panel.add(userPasswordLabel);
         userPasswordLabel.setFont(new Font("Arial", Font.BOLD, 18));
         userPasswordLabel.setForeground(new Color(0, 0, 0));
@@ -116,24 +105,45 @@ public class LogInPage implements ActionListener
         panel.add(userIdLabel);
         userIdLabel.setFont(new Font("Arial", Font.BOLD, 18));
         userIdLabel.setForeground(new Color(0, 0, 0));
-        resetButton.addActionListener(this);
-        logInButton.addActionListener(this);
-        signUpButton.addActionListener(this);
-        lblNewLabel.setBackground(new Color(194, 192, 192));
-        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\DCF\\LogInBackG.png"));
-        lblNewLabel.setBounds(-20, -28, 910, 622);
         
-        logInFrame.getContentPane().add(lblNewLabel);
+        
+        JCheckBox ShowPasswordCheckbox = new JCheckBox("Show Password");
+        ShowPasswordCheckbox.setFont(new Font("Segoe UI", Font.BOLD, 10));
+        ShowPasswordCheckbox.setBackground(new Color(194, 192, 192));
+        ShowPasswordCheckbox.setBounds(184, 210, 126, 21);
+        panel.add(ShowPasswordCheckbox);
+        
+        
+        // ActionListener for the checkbox to show/hide password
+        ShowPasswordCheckbox.addActionListener(e -> {
+            if (ShowPasswordCheckbox.isSelected()) {
+                userPasswordField.setEchoChar((char) 0); // Show the password
+            } else {
+                userPasswordField.setEchoChar('•'); // Hide the password
+            }
+        });
+
+        
+        logInButton.addActionListener(this);
+        ContentBackG.setHorizontalAlignment(SwingConstants.CENTER);
+        ContentBackG.setBackground(new Color(194, 192, 192));
+        ContentBackG.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\DCF\\LogInBackG.png"));
+        ContentBackG.setBounds(-12, -23, 901, 622);
+        
+        logInFrame.setLocationRelativeTo(null);
+        
+        logInFrame.getContentPane().add(ContentBackG);
         logInFrame.setVisible(true);
+        
+     // Set initial echo character for password field
+        userPasswordField.setEchoChar('•');
     }
+    
 
     @Override
     public void actionPerformed(ActionEvent action) {
-        if (action.getSource() == resetButton) {
-            userIdField.setText("");
-            userPasswordField.setText("");
-            messageLabel.setText("");
-        } else if (action.getSource() == logInButton) {
+
+        if (action.getSource() == logInButton) {
             String userName = userIdField.getText();
             String userPassword = String.valueOf(userPasswordField.getPassword());
             try {

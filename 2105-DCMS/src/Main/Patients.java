@@ -61,12 +61,14 @@ public class Patients extends JFrame implements ActionListener{
      * Create the frame.
      */
     public Patients() {
+    	setResizable(false);
     	setVisible(true);
         setTitle("DASHBOARD");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1300, 750);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setLocationRelativeTo(null);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -166,7 +168,7 @@ public class Patients extends JFrame implements ActionListener{
         timeLabel = new JLabel();
         timeLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         timeLabel.setForeground(Color.WHITE);
-        timeLabel.setBounds(675, 10, 374, 30);
+        timeLabel.setBounds(653, 10, 481, 30);
         panel_2.add(timeLabel);
 
         // Set up timer to update the time label every second
@@ -192,7 +194,7 @@ public class Patients extends JFrame implements ActionListener{
         panel_1.add(lblNewLabel);
                 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(349, 203, 813, 353);
+        scrollPane.setBounds(350, 210, 813, 358);
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table_1);
@@ -222,14 +224,14 @@ public class Patients extends JFrame implements ActionListener{
         btnAddPatient.setBackground(new Color(194, 192, 192));
         btnAddPatient.setForeground(new Color(0, 0, 0));
         btnAddPatient.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnAddPatient.setBounds(288, 580, 217, 50);
+        btnAddPatient.setBounds(286, 600, 217, 50);
         panel.add(btnAddPatient);
                                 
         btnViewRecord = new JButton("VIEW RECORD");
         btnViewRecord.setForeground(Color.BLACK);
         btnViewRecord.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewRecord.setBackground(new Color(194, 192, 192));
-        btnViewRecord.setBounds(645, 580, 217, 50);
+        btnViewRecord.setBounds(643, 600, 217, 50);
         btnViewRecord.addActionListener(this);
         panel.add(btnViewRecord);
         
@@ -237,7 +239,7 @@ public class Patients extends JFrame implements ActionListener{
         btnRefresh.setForeground(Color.BLACK);
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnRefresh.setBackground(new Color(194, 192, 192));
-        btnRefresh.setBounds(1007, 580, 217, 50);
+        btnRefresh.setBounds(1005, 600, 217, 50);
         panel.add(btnRefresh);
         
         JLabel lblNewLabel_1 = new JLabel("");

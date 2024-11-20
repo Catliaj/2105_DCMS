@@ -56,12 +56,14 @@ public class Dashboard extends JFrame implements ActionListener{
      * Create the frame.
      */
     public Dashboard() {
+    	setResizable(false);
     	setVisible(true);
         setTitle("DASHBOARD");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1300, 750);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setLocationRelativeTo(null);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
