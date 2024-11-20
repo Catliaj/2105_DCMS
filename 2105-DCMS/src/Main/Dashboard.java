@@ -20,6 +20,8 @@ import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.ImageIcon;
+import DCMS_DB_CONNECTION.DB_DCMSConnection;
+import backend.ApointmentForm_backend;
 
 public class Dashboard extends JFrame implements ActionListener{
 
@@ -35,6 +37,9 @@ public class Dashboard extends JFrame implements ActionListener{
     private JButton Billingbtn;
     private JButton Logoutbtn;
     private JButton ProductSalesbtn;
+	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
+	ApointmentForm_backend backend =new ApointmentForm_backend();
+	private Connection connection;
 
     /**
      * Launch the application.
@@ -60,17 +65,17 @@ public class Dashboard extends JFrame implements ActionListener{
     	setVisible(true);
         setTitle("DASHBOARD");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1300, 750);
+        setBounds(150, 50, 1300, 750);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setLocationRelativeTo(null);
-
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 1286, 713);
         contentPane.add(panel);
+        
         panel.setLayout(null);
 
         JPanel HeaderPanel = new JPanel();
@@ -252,14 +257,16 @@ public class Dashboard extends JFrame implements ActionListener{
 		{
 			dispose();
 			new Appointments();
+		
 		}
 		else if(e.getSource() == Productbtn)
 		{
-			System.out.println("click");
+			dispose();
+			new ProductAdmin();
 		}
-		else if(e.getSource() == Billingbtn )
+		else if(e.getSource() == Billingbtn)
 		{
-			System.out.println("click");
+			new POS();
 		}
 		else if(e.getSource() == ProductSalesbtn )
 		{
@@ -269,11 +276,14 @@ public class Dashboard extends JFrame implements ActionListener{
 		else if(e.getSource() == Logoutbtn)
 		{
 			dispose();
+			new LogInPage();
 		}
+
 		
 	}
 	// Method to get total number of patients from the database
-	private int getTotalPatients() {
+	private int getTotalPatients() 
+	{
 	    int totalPatients = 0;
 	    try {
 	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "admin", "admin");
@@ -295,7 +305,7 @@ public class Dashboard extends JFrame implements ActionListener{
 	    int patientsToday = 0;
 	    try {
 	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "admin", "admin");
-	        String query = "SELECT COUNT(*) AS patients_today FROM patientdata WHERE DATE(registrationdate) = CURDATE()";
+	        String query = "SELECT COUNT(*) AS patients_today FROM appointments WHERE DATE(date) = CURDATE()";
 	        PreparedStatement pst = con.prepareStatement(query);
 	        ResultSet rs = pst.executeQuery();
 	        if (rs.next()) {

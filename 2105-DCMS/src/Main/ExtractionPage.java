@@ -29,6 +29,7 @@ public class ExtractionPage implements ActionListener{
 	    JButton contactUsBtn = new JButton("CONTACT US");
 	    JButton feedbackBtn = new JButton("FEEDBACK");
 
+
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
 	    JButton[] sideButtons = new JButton[13];
@@ -97,6 +98,13 @@ public class ExtractionPage implements ActionListener{
 	        navPanel.setBackground(new Color(5, 59, 67));
 
 	        // Set styles for buttons and add action listeners
+
+	        setButtonStyles(homeBtn);
+	        setButtonStyles(aboutUsBtn);
+	        setButtonStyles(servicesBtn);
+	        setButtonStyles(productsBtn);
+	        setButtonStyles(contactUsBtn);
+
 	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
 	        servicesBtn.setBackground(Color.WHITE);
 	        servicesBtn.setForeground(new Color(2, 79, 90));
@@ -109,9 +117,12 @@ public class ExtractionPage implements ActionListener{
 	        setButtonStyles(contactUsBtn);
 	        setButtonStyles(feedbackBtn);
 
+
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
+	        navPanel.add(productsBtn);
+	        navPanel.add(contactUsBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
@@ -133,6 +144,7 @@ public class ExtractionPage implements ActionListener{
 	        JPanel titlePanel = new JPanel();
 	        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
+
 
 	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
@@ -176,9 +188,9 @@ public class ExtractionPage implements ActionListener{
 	        // Image panel with smaller images
 	        JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
 	        imagePanel.setBackground(new Color(2, 98, 112));
-
 	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Extraction1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Extraction2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+
 
 	        JLabel image1 = new JLabel(brace1);
 	        JLabel image2 = new JLabel(brace2);
@@ -224,14 +236,14 @@ public class ExtractionPage implements ActionListener{
 	            
 	        } else if (e.getSource() == contactUsBtn) {
 	        	ExtractionPage.dispose();
-	            new  ContactUs();
-	          
+	            new  ContactUs(); 
 	        }
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	ExtractionPage.dispose();
 	        	new FeedbackForm();
 	        }
+
 
 
 	        // Handle side button actions if needed

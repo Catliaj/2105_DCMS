@@ -95,6 +95,13 @@ public class DenturesPage implements ActionListener{
 	        navPanel.setBackground(new Color(5, 59, 67));
 
 	        // Set styles for buttons and add action listeners
+
+	        setButtonStyles(homeBtn);
+	        setButtonStyles(aboutUsBtn);
+	        setButtonStyles(servicesBtn);
+	        setButtonStyles(productsBtn);
+	        setButtonStyles(contactUsBtn);
+
 	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
 	        servicesBtn.setBackground(Color.WHITE);
 	        servicesBtn.setForeground(new Color(2, 79, 90));
@@ -107,12 +114,18 @@ public class DenturesPage implements ActionListener{
 	        setButtonStyles(contactUsBtn);
 	        setButtonStyles(feedbackBtn);
 
+
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
+
+	        navPanel.add(productsBtn);
+	        navPanel.add(contactUsBtn);
+
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
+
 
 	        header.add(navPanel, BorderLayout.CENTER);
 	        DenturesPage.add(header, BorderLayout.NORTH);
@@ -132,7 +145,9 @@ public class DenturesPage implements ActionListener{
 	        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
 
+
 	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
+
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
 	        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
 	        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -178,6 +193,7 @@ public class DenturesPage implements ActionListener{
 	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Denture1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Denture2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 
+
 	        JLabel image1 = new JLabel(brace1);
 	        JLabel image2 = new JLabel(brace2);
 
@@ -216,6 +232,7 @@ public class DenturesPage implements ActionListener{
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	DenturesPage.dispose();
 	            new aboutUs();
+
 	        }  else if (e.getSource() == productsBtn) {
 	        	
 	            System.out.println("Products button clicked");

@@ -28,6 +28,7 @@ public class PediatricPage implements ActionListener {
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
 	    JButton feedbackBtn = new JButton("FEEDBACK");
+
 	  
 	    JPanel sidePanel = new JPanel();
 	    JButton[] sideButtons = new JButton[13];
@@ -107,12 +108,14 @@ public class PediatricPage implements ActionListener {
 	        setButtonStyles(contactUsBtn);
 	        setButtonStyles(feedbackBtn);
 
+
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
+
 
 	        header.add(navPanel, BorderLayout.CENTER);
 	        homepage.add(header, BorderLayout.NORTH);
@@ -132,7 +135,9 @@ public class PediatricPage implements ActionListener {
 	        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
 
+
 	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
+
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
 	        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
 	        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -178,6 +183,7 @@ public class PediatricPage implements ActionListener {
 	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Pediatric1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Pediatric2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 
+
 	        JLabel image1 = new JLabel(brace1);
 	        JLabel image2 = new JLabel(brace2);
 
@@ -216,6 +222,7 @@ public class PediatricPage implements ActionListener {
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	homepage.dispose();
 	            new aboutUs();
+
 	        } else if (e.getSource() == productsBtn) {
 	        	
 	            System.out.println("Products button clicked");
@@ -230,7 +237,6 @@ public class PediatricPage implements ActionListener {
 	        	homepage.dispose();
 	        	new FeedbackForm();
 	        }
-
 
 	        // Handle side button actions if needed
 	        for (int i = 0; i < sideButtons.length; i++) {

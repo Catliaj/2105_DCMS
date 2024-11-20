@@ -24,9 +24,12 @@ public class CABPage implements ActionListener {
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
+
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
+
     JButton feedbackBtn = new JButton("FEEDBACK");
+
 
     // Create a side panel with 13 buttons
     JPanel sidePanel = new JPanel();
@@ -82,6 +85,9 @@ public class CABPage implements ActionListener {
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
+
+    
+
         ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
@@ -96,6 +102,14 @@ public class CABPage implements ActionListener {
         navPanel.setBackground(new Color(5, 59, 67));
 
         // Set styles for buttons and add action listeners
+
+        setButtonStyles(homeBtn);
+        setButtonStyles(aboutUsBtn);
+        setButtonStyles(servicesBtn);
+ 
+        setButtonStyles(productsBtn);
+        setButtonStyles(contactUsBtn);
+
         servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
         servicesBtn.setBackground(Color.WHITE);
         servicesBtn.setForeground(new Color(2, 79, 90));
@@ -108,12 +122,19 @@ public class CABPage implements ActionListener {
         setButtonStyles(contactUsBtn);
         setButtonStyles(feedbackBtn);
 
+
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
+
+
+        navPanel.add(productsBtn);
+        navPanel.add(contactUsBtn);
+
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
+
 
         header.add(navPanel, BorderLayout.CENTER);
         CABPage.add(header, BorderLayout.NORTH);
@@ -132,8 +153,8 @@ public class CABPage implements ActionListener {
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
         titlePanel.setBackground(new Color(5, 59, 67)); 
-
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
+
         Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -174,8 +195,10 @@ public class CABPage implements ActionListener {
         JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
         imagePanel.setBackground(new Color(2, 98, 112));
 
+
         ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/CAB1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
         ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/CAB2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+
 
         JLabel image1 = new JLabel(brace1);
         JLabel image2 = new JLabel(brace2);
@@ -216,6 +239,7 @@ public class CABPage implements ActionListener {
         	CABPage.dispose();
             new aboutUs();
         }  else if (e.getSource() == productsBtn) {
+
         	
             System.out.println("Products button clicked");
             
@@ -229,9 +253,6 @@ public class CABPage implements ActionListener {
         	CABPage.dispose();
         	new FeedbackForm();
         }
-
-
-
         // Handle side button actions if needed
         for (int i = 0; i < sideButtons.length; i++) {
             if (e.getSource() == sideButtons[i]) {
@@ -318,8 +339,4 @@ public class CABPage implements ActionListener {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
-	public static void main(String[] args)
-	{
-		new CABPage();
-	}
 }

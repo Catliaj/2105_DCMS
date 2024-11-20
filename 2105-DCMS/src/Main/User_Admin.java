@@ -10,11 +10,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class User_Admin extends JFrame {
+public class User_Admin extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JButton userbtn;
+	private JButton adminbtn;
 
 	/**
 	 * Launch the application.
@@ -39,6 +43,7 @@ public class User_Admin extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 836, 589);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
@@ -52,18 +57,20 @@ public class User_Admin extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JButton userbtn = new JButton("");
+	    userbtn = new JButton("");
 		userbtn.setBackground(new Color(194, 192, 192));
 		userbtn.setVerticalAlignment(SwingConstants.TOP);
-		userbtn.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Usericon.png"));
+		userbtn.setIcon(new ImageIcon(User_Admin.class.getResource("/Resources/Usericon.png")));
 		userbtn.setBounds(168, 250, 198, 180);
+		userbtn.addActionListener(this);
 		panel.add(userbtn);
 		
-		JButton adminbtn = new JButton("");
+	    adminbtn = new JButton("");
 		adminbtn.setBackground(new Color(194, 192, 192));
 		adminbtn.setVerticalAlignment(SwingConstants.TOP);
-		adminbtn.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Adminicon.png"));
+		adminbtn.setIcon(new ImageIcon(User_Admin.class.getResource("/Resources/Adminicon.png")));
 		adminbtn.setBounds(444, 250, 198, 180);
+		adminbtn.addActionListener(this);
 		panel.add(adminbtn);
 		
 		JLabel userlbl = new JLabel("USER");
@@ -79,9 +86,25 @@ public class User_Admin extends JFrame {
 		panel.add(adminlbl);
 		
 		JLabel contentBackG = new JLabel("");
-		contentBackG.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\UABackG.png"));
+		contentBackG.setIcon(new ImageIcon(User_Admin.class.getResource("/Resources/UABackG.png")));
 		contentBackG.setBounds(0, 0, 822, 552);
 		panel.add(contentBackG);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == userbtn)
+		{
+			dispose();
+			new homePage();
+		}
+		else if(e.getSource() == adminbtn)
+		{
+			dispose();
+			new LogInPage();
+		}
+		
 	}
 
 }

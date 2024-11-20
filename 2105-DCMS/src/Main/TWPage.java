@@ -108,6 +108,7 @@ public class TWPage implements ActionListener {
 	        setButtonStyles(contactUsBtn);
 	        setButtonStyles(feedbackBtn);
 
+
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
@@ -132,6 +133,7 @@ public class TWPage implements ActionListener {
 	        JPanel titlePanel = new JPanel();
 	        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
+
 
 	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
@@ -176,9 +178,9 @@ public class TWPage implements ActionListener {
 	        // Image panel with smaller images
 	        JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
 	        imagePanel.setBackground(new Color(2, 98, 112));
-
 	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/TW1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/TW2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+
 
 	        JLabel image1 = new JLabel(brace1);
 	        JLabel image2 = new JLabel(brace2);
@@ -218,6 +220,7 @@ public class TWPage implements ActionListener {
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	homepage.dispose();
 	            new aboutUs();
+
 	        } else if (e.getSource() == productsBtn) {
 	        	
 	            System.out.println("Products button clicked");
@@ -232,7 +235,6 @@ public class TWPage implements ActionListener {
 	        	homepage.dispose();
 	        	new FeedbackForm();
 	        }
-
 
 	        // Handle side button actions if needed
 	        for (int i = 0; i < sideButtons.length; i++) {

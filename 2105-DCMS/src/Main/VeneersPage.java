@@ -41,6 +41,7 @@ public class VeneersPage implements ActionListener {
 	    };
 
 	    JPanel header = new JPanel();
+
 	    JPanel content = new BackgroundPanel("/Resources/AUBackG.png");  // Use custom panel with background
 
 	    VeneersPage() {
@@ -108,6 +109,7 @@ public class VeneersPage implements ActionListener {
 	        setButtonStyles(contactUsBtn);
 	        setButtonStyles(feedbackBtn);
 
+
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
@@ -134,6 +136,7 @@ public class VeneersPage implements ActionListener {
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
 
 	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
+
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
 	        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
 	        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -175,6 +178,7 @@ public class VeneersPage implements ActionListener {
 	        // Image panel with smaller images
 	        JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
 	        imagePanel.setBackground(new Color(2, 98, 112));
+
 
 	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Veneers1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Veneers2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
@@ -218,6 +222,7 @@ public class VeneersPage implements ActionListener {
 	        	homepage.dispose();
 	            new aboutUs();
 	        }  else if (e.getSource() == productsBtn) {
+
 	        	
 	            System.out.println("Products button clicked");
 	            

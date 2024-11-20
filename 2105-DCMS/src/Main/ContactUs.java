@@ -25,9 +25,9 @@ public class ContactUs implements ActionListener {
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
     JButton feedbackBtn = new JButton("FEEDBACK");
-    
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/AUBackG.png"); // Use custom panel with background
+
 
     ContactUs() {
         // Set window icon
@@ -44,7 +44,9 @@ public class ContactUs implements ActionListener {
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
+
         ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
+
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -56,6 +58,14 @@ public class ContactUs implements ActionListener {
         // Navigation buttons
         JPanel navPanel = new JPanel(new GridLayout(1, 6, 10, 0));
         navPanel.setBackground(new Color(5, 59, 67));
+
+
+        // Set styles for buttons
+        setButtonStyles(homeBtn);
+        setButtonStyles(aboutUsBtn);
+        setButtonStyles(servicesBtn);
+        setButtonStyles(productsBtn);
+        setButtonStyles(contactUsBtn);
 
         // Set styles for 
         contactUsBtn.setFont(new Font("Arial", Font.BOLD, 16));
@@ -69,7 +79,6 @@ public class ContactUs implements ActionListener {
         setButtonStyles(servicesBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(feedbackBtn);
-        
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
@@ -77,6 +86,7 @@ public class ContactUs implements ActionListener {
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
+
 
         header.add(navPanel, BorderLayout.CENTER);
         ContactUs.add(header, BorderLayout.NORTH);
@@ -89,9 +99,11 @@ public class ContactUs implements ActionListener {
         bottomPanel.setOpaque(false); // Make the bottom panel transparent
 
         // Create three smaller colored panels with two subtexts each
+
         JPanel smallPanel1 = createSmallPanel("/Resources/Contact1.png", "Give Us A Call", "Reach out to us directly.", "0912 345 6789");
         JPanel smallPanel2 = createSmallPanel("/Resources/Contact2.png", "We're On The Map", "Find us easily with our location.", "Malaruhatan, Lian, Batangas");
         JPanel smallPanel3 = createSmallPanel("/Resources/Contact3.png", "Write Us", "Send us a message anytime.", "support@DCFdentalclinic.com");
+
 
         // Add the small panels to the bottom panel
         bottomPanel.add(smallPanel1);
@@ -107,6 +119,7 @@ public class ContactUs implements ActionListener {
         content.add(centerText, BorderLayout.CENTER);
         centerText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
+
         // Create a separate panel for subtext
         JPanel subTextPanel = new JPanel();
         subTextPanel.setLayout(new BorderLayout());
@@ -119,6 +132,7 @@ public class ContactUs implements ActionListener {
         subText.setHorizontalAlignment(JLabel.CENTER);
         subTextPanel.add(subText, BorderLayout.NORTH);
         subText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
+
 
         // Create a panel to hold additional text and the new additional text
         JPanel textPanel = new JPanel();
@@ -133,13 +147,16 @@ public class ContactUs implements ActionListener {
         textPanel.add(additionalText, BorderLayout.NORTH);
         additionalText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
+
         // New text below "WE WOULD BE HAPPY TO MEET YOU!"
         JLabel newAdditionalText = new JLabel("<html>We’re ready to help to book you in or with any questions you may have about seeing our dental team.");
         newAdditionalText.setForeground(Color.WHITE);
         newAdditionalText.setFont(new Font("Arial", Font.PLAIN, 25));
         newAdditionalText.setHorizontalAlignment(JLabel.CENTER);
         textPanel.add(newAdditionalText, BorderLayout.CENTER);
+
         newAdditionalText.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding for new text
+
 
         // Now add the textPanel to the subTextPanel
         subTextPanel.add(textPanel, BorderLayout.CENTER);
@@ -222,7 +239,6 @@ public class ContactUs implements ActionListener {
 			ContactUs.dispose();
 			new homePage();
 		}
-
 		else if(e.getSource() == aboutUsBtn)
 		{
 			ContactUs.dispose();
@@ -232,6 +248,12 @@ public class ContactUs implements ActionListener {
 		{
 			ContactUs.dispose();
 			new BracesPage();
+		}
+
+		else if(e.getSource() == contactUsBtn )
+		{
+			ContactUs.dispose();
+			new ContactUs();
 		}
         else if(e.getSource() == feedbackBtn)
         {

@@ -84,6 +84,7 @@ public class CleaningPage implements ActionListener {
 	        header.setBackground(new Color(5, 59, 67));
 
 	        // Header logo
+
 	        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
 	        Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
 	        JLabel Header = new JLabel(new ImageIcon(scaledHeader));
@@ -98,6 +99,13 @@ public class CleaningPage implements ActionListener {
 	        navPanel.setBackground(new Color(5, 59, 67));
 
 	        // Set styles for buttons and add action listeners
+
+	        setButtonStyles(homeBtn);
+	        setButtonStyles(aboutUsBtn);
+	        setButtonStyles(servicesBtn);
+	        setButtonStyles(productsBtn);
+	        setButtonStyles(contactUsBtn);
+	        
 	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
 	        servicesBtn.setBackground(Color.WHITE);
 	        servicesBtn.setForeground(new Color(2, 79, 90));
@@ -111,12 +119,17 @@ public class CleaningPage implements ActionListener {
 	        setButtonStyles(feedbackBtn);
 	        
 
+
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
+
+	        navPanel.add(productsBtn);
+	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
+
 
 	        header.add(navPanel, BorderLayout.CENTER);
 	        CleaningPage.add(header, BorderLayout.NORTH);
@@ -137,6 +150,7 @@ public class CleaningPage implements ActionListener {
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
 
 	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
+
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
 	        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
 	        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -182,6 +196,7 @@ public class CleaningPage implements ActionListener {
 	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Cleaning1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/Cleaning2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 
+
 	        JLabel image1 = new JLabel(brace1);
 	        JLabel image2 = new JLabel(brace2);
 
@@ -220,15 +235,16 @@ public class CleaningPage implements ActionListener {
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	CleaningPage.dispose();
 	            new aboutUs();
+
 	        }  else if (e.getSource() == productsBtn) {
 	        	
 	            System.out.println("Products button clicked");
 	            
 	        } else if (e.getSource() == contactUsBtn) {
 	        	CleaningPage.dispose();
-	            new  ContactUs();
-	          
+	            new  ContactUs();  
 	        }
+
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	CleaningPage.dispose();
