@@ -61,6 +61,7 @@ public class Dashboard extends JFrame implements ActionListener{
      * Create the frame.
      */
     public Dashboard() {
+    	setResizable(false);
     	setVisible(true);
         setTitle("DASHBOARD");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -261,11 +262,7 @@ public class Dashboard extends JFrame implements ActionListener{
 		else if(e.getSource() == Productbtn)
 		{
 			dispose();
-<<<<<<< HEAD
-			System.out.println("click");
-=======
 			new ProductAdmin();
->>>>>>> 4cda911967b04eb95ed944befb035db630e0c9ea
 		}
 		else if(e.getSource() == Billingbtn)
 		{

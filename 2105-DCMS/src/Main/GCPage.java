@@ -25,16 +25,9 @@ public class GCPage implements ActionListener {
 	    JButton homeBtn = new JButton("HOME");
 	    JButton aboutUsBtn = new JButton("ABOUT US");
 	    JButton servicesBtn = new JButton("SERVICES");
-<<<<<<< HEAD
-	    JButton appointmentBtn = new JButton("APPOINTMENT");
-	    JButton productsBtn = new JButton("PRODUCTS");
-	    JButton contactUsBtn = new JButton("CONTACT US");
-
-=======
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
 	    JButton feedbackBtn = new JButton("FEEDBACK");
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
 	    JButton[] sideButtons = new JButton[13];
@@ -47,19 +40,11 @@ public class GCPage implements ActionListener {
 	    };
 
 	    JPanel header = new JPanel();
-<<<<<<< HEAD
-	    JPanel content = new BackgroundPanel("AUBackG.png");  // Use custom panel with background
-
-	    GCPage() {
-	        // Set window icon
-	        ImageIcon image = new ImageIcon(getClass().getResource("Logo.png"));
-=======
 	    JPanel content = new BackgroundPanel("/Resources/AUBackG.png");  // Use custom panel with background
 
 	    GCPage() {
 	        // Set window icon
 	        ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 	        GCPage.setIconImage(image.getImage());
 
 	        GCPage.setLayout(new BorderLayout());
@@ -97,11 +82,8 @@ public class GCPage implements ActionListener {
 	        header.setBackground(new Color(5, 59, 67));
 
 	        // Header logo
-<<<<<<< HEAD
-	        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
-=======
+
 	        ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 	        Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
 	        JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -115,14 +97,13 @@ public class GCPage implements ActionListener {
 	        navPanel.setBackground(new Color(5, 59, 67));
 
 	        // Set styles for buttons and add action listeners
-<<<<<<< HEAD
+
 	        setButtonStyles(homeBtn);
 	        setButtonStyles(aboutUsBtn);
 	        setButtonStyles(servicesBtn);
-	        setButtonStyles(appointmentBtn);
 	        setButtonStyles(productsBtn);
 	        setButtonStyles(contactUsBtn);
-=======
+
 	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
 	        servicesBtn.setBackground(Color.WHITE);
 	        servicesBtn.setForeground(new Color(2, 79, 90));
@@ -134,20 +115,19 @@ public class GCPage implements ActionListener {
 	        setButtonStyles(productsBtn);
 	        setButtonStyles(contactUsBtn);
 	        setButtonStyles(feedbackBtn);
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
-<<<<<<< HEAD
-	        navPanel.add(appointmentBtn);
+
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
-=======
+
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
 	        header.add(navPanel, BorderLayout.CENTER);
 	        GCPage.add(header, BorderLayout.NORTH);
@@ -167,11 +147,9 @@ public class GCPage implements ActionListener {
 	        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 	        titlePanel.setBackground(new Color(5, 59, 67)); 
 
-<<<<<<< HEAD
-	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("Logo.png"));
-=======
+
 	        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 	        Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
 	        JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
 	        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -213,13 +191,10 @@ public class GCPage implements ActionListener {
 	        JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
 	        imagePanel.setBackground(new Color(2, 98, 112));
 
-<<<<<<< HEAD
-	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("GC1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
-	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("GC2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
-=======
+
 	        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/GC1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
 	        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/GC2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
 	        JLabel image1 = new JLabel(brace1);
 	        JLabel image2 = new JLabel(brace2);
@@ -259,16 +234,8 @@ public class GCPage implements ActionListener {
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	GCPage.dispose();
 	            new aboutUs();
-<<<<<<< HEAD
-	        } else if (e.getSource() == appointmentBtn) {
-	        	GCPage.dispose();
-	        	new appointmentPage();
-	            
-	            
-	        } else if (e.getSource() == productsBtn) {
-=======
 	        }  else if (e.getSource() == productsBtn) {
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 	        	
 	            System.out.println("Products button clicked");
 	            
@@ -277,15 +244,12 @@ public class GCPage implements ActionListener {
 	            new  ContactUs();
 	          
 	        }
-<<<<<<< HEAD
-=======
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	GCPage.dispose();
 	        	new FeedbackForm();
 	        }
 
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
 	        // Handle side button actions if needed
 	        for (int i = 0; i < sideButtons.length; i++) {
@@ -373,11 +337,4 @@ public class GCPage implements ActionListener {
 	            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	        }
 	    }
-<<<<<<< HEAD
-
-	    public static void main(String[] args) {
-	        new GCPage(); // Instantiate GCPage
-	    }
-=======
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 }

@@ -54,13 +54,15 @@ public class SALES extends JFrame implements ActionListener{
      * Create the frame.
      */
     public SALES() {
+    	setResizable(false);
     	setVisible(true);
-        setTitle("DASHBOARD");
+        setTitle("SALES");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(150, 50, 1300, 750);
         setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setLocationRelativeTo(null);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);

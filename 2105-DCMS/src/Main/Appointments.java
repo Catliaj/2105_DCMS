@@ -61,6 +61,7 @@ public class Appointments extends JFrame implements ActionListener{
      * Create the frame.
      */
     public Appointments() {
+    	setResizable(false);
     	setVisible(true);
         setTitle("DASHBOARD");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,6 +69,7 @@ public class Appointments extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setLocationRelativeTo(null);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);

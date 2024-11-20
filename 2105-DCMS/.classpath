@@ -11,8 +11,14 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
+	<classpathentry kind="lib" path="/DCMS-2105/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="/DCMS-2105/jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="/DCMS-2105/mysql-connector-j-9.0.0.jar"/>
+=======
 	<classpathentry kind="lib" path="/DCMS-2105/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="/DCMS-2105/mysql-connector-j-9.0.0.jar"/>
 	<classpathentry kind="lib" path="/DCMS-2105/jcalendar-1.4.jar"/>
+>>>>>>> 75d26d0ec2c689818a7fb8d288680ed72ee22b8b
 	<classpathentry kind="output" path="bin"/>
 </classpath>

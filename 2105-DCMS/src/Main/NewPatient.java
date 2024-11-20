@@ -65,7 +65,8 @@ public class NewPatient extends JFrame implements ActionListener {
 
     public NewPatient() 
     {
-    	
+    	setResizable(false);
+    	setLocationRelativeTo(null);
     	setVisible(true);
         setBackground(new Color(128, 128, 128));
         setForeground(new Color(0, 0, 0));
@@ -76,6 +77,7 @@ public class NewPatient extends JFrame implements ActionListener {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setLocationRelativeTo(null);
+
         setContentPane(contentPane);
         contentPane.setLayout(null);
         

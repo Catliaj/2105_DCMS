@@ -48,6 +48,7 @@ public class UpdatePatient extends JFrame {
      * Create the frame.
      */
     public UpdatePatient() {
+    	setResizable(false);
         setBackground(new Color(128, 128, 128));
         setForeground(new Color(0, 0, 0));
         setTitle("UPDATE PATIENT");
@@ -57,6 +58,7 @@ public class UpdatePatient extends JFrame {
         setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setLocationRelativeTo(null);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);

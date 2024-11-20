@@ -31,8 +31,10 @@ import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Toolkit;
 import DCMS_DB_CONNECTION.DB_DCMSConnection;
 import backend.POS_backend;
+
 
 
 public class POS extends JFrame {
@@ -42,7 +44,6 @@ public class POS extends JFrame {
 	private JTextField Productpricetxtfield;
 	private JTextField totaltxtfield;
 	private JTextField subtotaltxtfield;
-	private JTextField BillNotxtfield;
 	private JTextField CustomerNametxtfield;
 	private JTextField textField;
 	private JTextArea addedItemsArea;
@@ -53,7 +54,6 @@ public class POS extends JFrame {
 	List<String> selectedProducts = new ArrayList<>();
 	List<Integer> productQuantities = new ArrayList<>();
 	List<Double> productPrices = new ArrayList<>();
-
 	List<String> selectedServices = new ArrayList<>();
 	List<Double> servicePrices = new ArrayList<>();
 	/**
@@ -76,8 +76,11 @@ public class POS extends JFrame {
 	 * Create the frame.
 	 */
 	public POS() {
+		setResizable(false);
+		setBackground(new Color(5, 59, 67));
+		setTitle("POS");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Adminiconlogo.png"));
 		setVisible(true);
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(150, 50, 1300, 750);
 		contentPane = new JPanel();
@@ -101,36 +104,28 @@ public class POS extends JFrame {
 		JLabel CustomerNamelbl = new JLabel("CUSTOMER NAME");
 		CustomerNamelbl.setForeground(new Color(194, 192, 192));
 		CustomerNamelbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		CustomerNamelbl.setBounds(280, 19, 250, 34);
+		CustomerNamelbl.setBounds(77, 19, 250, 34);
 		TopPanel.add(CustomerNamelbl);
 		
-		JLabel BillNolbl = new JLabel("BILL NO.");
-		BillNolbl.setForeground(new Color(194, 192, 192));
-		BillNolbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		BillNolbl.setBounds(37, 19, 122, 34);
-		TopPanel.add(BillNolbl);
+
 		
 		JLabel Datelbl = new JLabel("DATE");
 		Datelbl.setForeground(new Color(194, 192, 192));
 		Datelbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		Datelbl.setBounds(857, 19, 84, 34);
+		Datelbl.setBounds(815, 19, 84, 34);
 		TopPanel.add(Datelbl);
 		
-		BillNotxtfield = new JTextField();
-		BillNotxtfield.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		BillNotxtfield.setBounds(153, 15, 84, 45);
-		TopPanel.add(BillNotxtfield);
-		BillNotxtfield.setColumns(10);
 		
 		CustomerNametxtfield = new JTextField();
 		CustomerNametxtfield.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		CustomerNametxtfield.setColumns(10);
-		CustomerNametxtfield.setBounds(513, 15, 297, 45);
+		CustomerNametxtfield.setBounds(310, 15, 396, 45);
 		TopPanel.add(CustomerNametxtfield);
 		
 		JDateChooser Datefield = new JDateChooser();
-		Datefield.setBounds(938, 15, 242, 45);
+		Datefield.setBounds(896, 15, 242, 45);
 		TopPanel.add(Datefield);
+		Datefield.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JPanel ProductPanel = new JPanel();
 		ProductPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -146,34 +141,15 @@ public class POS extends JFrame {
 		ProductPanel.add(Productslbl);
 
 		
-
-		
 		JComboBox<String> Productcombobox = new JComboBox<>(new String[] {
-		"", "Product1", "Product2", "Product3", "Product4", "Product5", "Product6", "Product7", "Product8"});
-		Productcombobox.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		"", "Colgate Optic White", "Oral-B Pro Health", "Oral-B Toothbrush", "Colgate Plax Mouthwash", "Oral-B Floss Sticks", "Colgate Optic White Teeth Whitening Pen", "Colgate Kids Toothpaste", "Oral-B Pro 1000 Electric Toothbrush"});
+		Productcombobox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		Productcombobox.setBounds(61, 158, 276, 40);
 		ProductPanel.add(Productcombobox);
 		
 		
 		
 		Productpricetxtfield = new JTextField();
-		Productpricetxtfield.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		Productpricetxtfield.setBounds(227, 268, 110, 40);
-		ProductPanel.add(Productpricetxtfield);
-		Productpricetxtfield.setColumns(10);
-		
-		JLabel Productlbl = new JLabel("PRODUCT");
-		Productlbl.setForeground(new Color(194, 192, 192));
-		Productlbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		Productlbl.setBounds(61, 105, 149, 70);
-		ProductPanel.add(Productlbl);
-		
-		JLabel pricelbl = new JLabel("PRICE");
-		pricelbl.setForeground(new Color(194, 192, 192));
-		pricelbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		pricelbl.setBounds(227, 208, 149, 70);
-		ProductPanel.add(pricelbl);
-		
 		JSpinner Qtyspinner = new JSpinner();
 		Qtyspinner.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		Qtyspinner.setBounds(61, 268, 101, 40);
@@ -263,6 +239,7 @@ public class POS extends JFrame {
 		
 		JComboBox<String> Servicecombobox = new JComboBox<>(new String[] {
 		"", "Consultation", "Braces", "Crowns", "Bridges", "Cleaning", "Dentures", "Extraction", "Fillings", "Implants", "Root Canal", "Teeth Whitening", "Veneers", "X-Ray", "Pediatric Dentistry"});
+		Servicecombobox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		Servicecombobox.setBounds(55, 155, 276, 40);
 		ServicePanel.add(Servicecombobox);
 		
@@ -511,30 +488,30 @@ public class POS extends JFrame {
 							panel.add(ContentBackG);
 		
 		 Map<String, Double> productPrices = new HashMap<>();
-	        productPrices.put("Product1", 10.0);
-	        productPrices.put("Product2", 15.0);
-	        productPrices.put("Product3", 20.0);
-	        productPrices.put("Product4", 25.0);
-	        productPrices.put("Product5", 30.0);
-	        productPrices.put("Product6", 35.0);
-	        productPrices.put("Product7", 40.0);
-	        productPrices.put("Product8", 45.0);
+	        productPrices.put("Colgate Optic White", 170.0);
+	        productPrices.put("Oral-B Pro Health", 75.0);
+	        productPrices.put("Oral-B Toothbrush", 440.0);
+	        productPrices.put("Colgate Plax Mouthwash", 135.0);
+	        productPrices.put("Oral-B Floss Sticks", 60.0);
+	        productPrices.put("Colgate Optic white Teeth Whitening Pen", 1250.0);
+	        productPrices.put("Colgate Kids Toothbrush", 80.0);
+	        productPrices.put("Oral-B Pro 1000 Electric Toothbrush", 3137.0);
 
 	        Map<String, Double> servicePrices = new HashMap<>();
-	        servicePrices.put("Consultation", 50.0);
-	        servicePrices.put("Braces", 500.0);
+	        servicePrices.put("Consultation", 500.0);
+	        servicePrices.put("Braces", 1500.0);
 	        servicePrices.put("Crowns", 300.0);
 	        servicePrices.put("Bridges", 350.0);
-	        servicePrices.put("Cleaning", 100.0);
-	        servicePrices.put("Dentures", 400.0);
-	        servicePrices.put("Extraction", 150.0);
-	        servicePrices.put("Fillings", 200.0);
+	        servicePrices.put("Cleaning", 1000.0);
+	        servicePrices.put("Dentures", 3500.0);
+	        servicePrices.put("Extraction", 1000.0);
+	        servicePrices.put("Fillings", 1500.0);
 	        servicePrices.put("Implants", 1000.0);
 	        servicePrices.put("Root Canal", 350.0);
-	        servicePrices.put("Teeth Whitening", 250.0);
-	        servicePrices.put("Veneers", 600.0);
-	        servicePrices.put("X-Ray", 80.0);
-	        servicePrices.put("Pediatric Dentistry", 120.0);
+	        servicePrices.put("Teeth Whitening", 1500.0);
+	        servicePrices.put("Veneers", 15000.0);
+	        servicePrices.put("X-Ray", 500.0);
+	        servicePrices.put("Pediatric Dentistry (Consultation)", 300.0);
 
 	        // Product ComboBox Listener
 	        Productcombobox.addActionListener(new ActionListener() {
@@ -559,17 +536,33 @@ public class POS extends JFrame {
 	     // Reset Button ActionListener
 	        Resetbtn.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	                    selectedProducts.clear();
-	                    productQuantities.clear();
-	                    productPrices.clear();
-	                    selectedServices.clear();
-	                    servicePrices.clear();
-	                    CustomerNametxtfield.setText("");
-	                    BillNotxtfield.setText("");
-	                    subtotaltxtfield.setText("");
-	                    totaltxtfield.setText("");
-	                }
-	            });
+	                // Clear the lists of selected products and services
+	                selectedProducts.clear();
+	                productQuantities.clear();
+	                productPrices.clear();
+	                selectedServices.clear();
+	                servicePrices.clear();
+	                
+	                // Clear the text fields
+	                CustomerNametxtfield.setText("");
+	                subtotaltxtfield.setText("");
+	                totaltxtfield.setText("");
+	                
+	                // Clear the added items area
+	                addedItemsArea.setText("");
+	                
+	                // Reset the combo boxes to the default value
+	                Productcombobox.setSelectedIndex(0);
+	                Servicecombobox.setSelectedIndex(0);
+	                
+	                // Reset the quantity spinner to its default value
+	                Qtyspinner.setValue(1);
+	                
+	                // Clear the product price and service price text fields
+	                Productpricetxtfield.setText("");
+	                textField.setText("");
+	            }
+	        });
 	    }
 	public void generateReceipt(String customerName, String productName, String productPrice, String serviceName, String servicePrice, String subtotal, String total, String date) {
 	    StringBuilder receipt = new StringBuilder();
