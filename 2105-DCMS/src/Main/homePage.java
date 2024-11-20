@@ -22,7 +22,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+<<<<<<< HEAD
+import Main.appointmentPage.BackgroundPanel;
+=======
 import Main.aboutUs.BackgroundPanel;
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
 
 public class homePage implements ActionListener
@@ -36,10 +40,16 @@ public class homePage implements ActionListener
     JButton contactUsBtn = new JButton("CONTACT US");
     JButton feedbackBtn = new JButton("FEEDBACK");
     JPanel header = new JPanel();
+<<<<<<< HEAD
+    JPanel content = new BackgroundPanel("Background (2).png"); 
+
+    homePage() {
+=======
     JPanel content = new BackgroundPanel("/Resources/Background (2).png"); 
     
     homePage() 
     {
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
     	
     	//contentLogo
     	ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));  // Use relative path
@@ -55,7 +65,7 @@ public class homePage implements ActionListener
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.jpg"));  // Corrected relative path
         homepage.setIconImage(image.getImage());
 
-        homepage.setLayout(new BorderLayout());
+        homepage.getContentPane().setLayout(new BorderLayout());
         homepage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         homepage.setSize(1440, 1024);
         
@@ -94,13 +104,20 @@ public class homePage implements ActionListener
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
+        productsBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		 homepage.dispose(); // Close the current frame
+        	        new product(); // Open the ProductForm
+        	}
+        });
+     
 
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
-        homepage.add(header, BorderLayout.NORTH);
+        homepage.getContentPane().add(header, BorderLayout.NORTH);
 
         // Content area
         content.setLayout(new BorderLayout());
@@ -147,7 +164,7 @@ public class homePage implements ActionListener
         imagePanel.add(image2);
 
         content.add(imagePanel);
-        homepage.add(content, BorderLayout.CENTER);
+        homepage.getContentPane().add(content, BorderLayout.CENTER);
 
         // Make frame visible
         homepage.setVisible(true);
@@ -174,10 +191,24 @@ public class homePage implements ActionListener
     {
         // Handle button actions
 		if (e.getSource() == homeBtn) 
+<<<<<<< HEAD
+=======
 		{
 			homepage.dispose();
 			new homePage();
 		}
+		else if(e.getSource() == aboutUsBtn)
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+		{
+			homepage.dispose();
+			new homePage();
+		}
+		else if(e.getSource() == productsBtn)
+		{
+			homepage.dispose();
+			new product();
+		}
+<<<<<<< HEAD
 		else if(e.getSource() == aboutUsBtn)
 		{
 			homepage.dispose();
@@ -188,6 +219,39 @@ public class homePage implements ActionListener
 			homepage.dispose();
 			new BracesPage();
 		}
+		else if(e.getSource() == contactUsBtn )
+		{
+			homepage.dispose();
+			new ContactUs();
+		}
+		else if(e.getSource() == logOutBtn)
+=======
+		else if(e.getSource() == servicesBtn)
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+		{
+			homepage.dispose();
+			new BracesPage();
+		}
+<<<<<<< HEAD
+    }
+	
+    class BackgroundPanel extends JPanel {
+        private Image backgroundImage;
+
+        public BackgroundPanel(String imagePath) {
+            // Load the background image
+            backgroundImage = new ImageIcon(getClass().getResource("Background (2).png")).getImage();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            // Draw the background image, scaled to fit the panel size
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
+=======
 		else if(e.getSource() == contactUsBtn )
 		{
 			homepage.dispose();
@@ -219,4 +283,5 @@ public class homePage implements ActionListener
 	{
 		new homePage();
 	}
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 }

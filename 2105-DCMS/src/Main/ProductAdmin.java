@@ -13,6 +13,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import javax.swing.JOptionPane;
 
 public class ProductAdmin extends JFrame {
 
@@ -72,23 +76,23 @@ public class ProductAdmin extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Product Name");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1.setBounds(80, 107, 169, 31);
+		lblNewLabel_1.setBounds(102, 149, 169, 31);
 		panel_1.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Product ID");
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1_1.setBounds(101, 237, 129, 31);
+		lblNewLabel_1_1.setBounds(123, 107, 129, 31);
 		panel_1.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Price");
 		lblNewLabel_1_2.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1_2.setBounds(146, 149, 72, 31);
+		lblNewLabel_1_2.setBounds(168, 191, 72, 31);
 		panel_1.add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("QTY");
 		lblNewLabel_1_3.setToolTipText("");
 		lblNewLabel_1_3.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1_3.setBounds(146, 192, 72, 31);
+		lblNewLabel_1_3.setBounds(168, 234, 72, 31);
 		panel_1.add(lblNewLabel_1_3);
 		
 		JPanel panelImage = new JPanel();
@@ -102,53 +106,270 @@ public class ProductAdmin extends JFrame {
 		
 		JButton btnUpload = new JButton("Upload");
 		btnUpload.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
+		    public void actionPerformed(ActionEvent e) {
+		        JFileChooser fileChooser = new JFileChooser();
+		        
+		        // Set file filter to allow only PNG, JPG, and JPEG files
+		        FileNameExtensionFilter fnwf = new FileNameExtensionFilter("PNG, JPG, and JPEG", "png", "jpeg", "jpg");
+		        fileChooser.addChoosableFileFilter(fnwf);
+		        
+		        // Open file chooser dialog
+		        int load = fileChooser.showOpenDialog(null);
+
+		        if (load == JFileChooser.APPROVE_OPTION) {
+		            File f = fileChooser.getSelectedFile(); // Get selected file
+		            String path = f.getAbsolutePath(); // Get file path
+		            
+		            // Optional: Display the selected image in a JLabel
+		            ImageIcon icon = new ImageIcon(new ImageIcon(path).getImage()
+		                    .getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH));
+		            lblIMAGE.setIcon(icon); // Assuming lblIMAGE is a JLabel where the image will be displayed
+		            
+		            // Optional: Save the path or file for future use (like inserting into the database)
+		            System.out.println("File Selected: " + path); // Debugging
+		        } else {
+		            JOptionPane.showMessageDialog(null, "No file selected!");
+		        }
+		    }
 		});
+
 		btnUpload.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnUpload.setBounds(676, 245, 89, 23);
 		panel_1.add(btnUpload);
 		
-		JButton btnAdd = new JButton("ADD");
+		
+		
+		   JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
+		    public void actionPerformed(ActionEvent e) {
+		        // Get the input data
+		        String productName = textFieldProdName.getText();
+		        String price = textFieldPrice.getText();
+		        String quantity = textField_4.getText();
+		        String imagePath = lblIMAGE.getIcon() != null ? ((ImageIcon) lblIMAGE.getIcon()).toString() : null;
+
+		        // Input validation
+		        if (productName.isEmpty() || price.isEmpty() || quantity.isEmpty() || imagePath == null) {
+		            JOptionPane.showMessageDialog(null, "Please fill all fields and upload an image!");
+		            return;
+		        }
+
+		        // Database connection variables
+		        String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Change to your database name
+		        String username = "root"; // Change to your MySQL username
+		        String password = ""; // Change to your MySQL password
+
+		        // SQL insert query
+		        String query = "INSERT INTO products (ProductName, Price, Quantity, Image) VALUES (?, ?, ?, ?)";
+
+		        try (
+		            java.sql.Connection connection = java.sql.DriverManager.getConnection(url, username, password);
+		            java.sql.PreparedStatement preparedStatement = connection.prepareStatement(query)
+		        ) {
+		            // Set query parameters
+		            preparedStatement.setString(1, productName);
+		            preparedStatement.setDouble(2, Double.parseDouble(price));
+		            preparedStatement.setInt(3, Integer.parseInt(quantity));
+		            preparedStatement.setString(4, imagePath);
+
+		            // Execute the query
+		            int rowsInserted = preparedStatement.executeUpdate();
+
+		            if (rowsInserted > 0) {
+		                JOptionPane.showMessageDialog(null, "Product added successfully!");
+		                // Optionally, clear the input fields
+		                textFieldProdName.setText("");
+		                textFieldPrice.setText("");
+		                textField_4.setText("");
+		                lblIMAGE.setIcon(null);
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Error adding the product. Try again.");
+		            }
+		        } catch (Exception ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
+		        }
+		    }
 		});
+
 		btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnAdd.setBounds(80, 392, 117, 58);
 		panel_1.add(btnAdd);
 		
 		JButton btnUpdate = new JButton("UPDATE");
+		btnUpdate.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        // Get the input data
+		        String productId = textFieldProdID.getText().trim();
+		        String productName = textFieldProdName.getText().trim();
+		        String price = textFieldPrice.getText().trim();
+		        String quantity = textField_4.getText().trim();
+		        String image = lblIMAGE.getIcon() != null ? ((ImageIcon) lblIMAGE.getIcon()).toString() : null;
+
+		        // Check if ProductID is filled
+		        if (productId.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "Please fill in the Product ID to update.");
+		            return;
+		        }
+
+		        // Prepare the SQL query
+		        StringBuilder queryBuilder = new StringBuilder("UPDATE products SET ");
+		        boolean hasUpdates = false;
+
+		        if (!productName.isEmpty()) {
+		            queryBuilder.append("ProductName = ?, ");
+		            hasUpdates = true;
+		        }
+		        if (!price.isEmpty()) {
+		            queryBuilder.append("Price = ?, ");
+		            hasUpdates = true;
+		        }
+		        if (!quantity.isEmpty()) {
+		            queryBuilder.append("Quantity = ?, ");
+		            hasUpdates = true;
+		        }
+		        if (image != null) {
+		            queryBuilder.append("Image = ?, ");
+		            hasUpdates = true;
+		        }
+
+		        if (!hasUpdates) {
+		            JOptionPane.showMessageDialog(null, "No updates provided. Please fill at least one field to update.");
+		            return;
+		        }
+
+		        // Remove trailing comma and space, and add WHERE clause
+		        queryBuilder.setLength(queryBuilder.length() - 2); // Remove last ", "
+		        queryBuilder.append(" WHERE ProductID = ?");
+
+		        String query = queryBuilder.toString();
+
+		        // Database connection variables
+		        String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Change to your database name
+		        String username = "root"; // Change to your MySQL username
+		        String password = ""; // Change to your MySQL password
+
+		        try (
+		            java.sql.Connection connection = java.sql.DriverManager.getConnection(url, username, password);
+		            java.sql.PreparedStatement preparedStatement = connection.prepareStatement(query)
+		        ) {
+		            // Set parameters dynamically
+		            int parameterIndex = 1;
+
+		            if (!productName.isEmpty()) {
+		                preparedStatement.setString(parameterIndex++, productName);
+		            }
+		            if (!price.isEmpty()) {
+		                preparedStatement.setDouble(parameterIndex++, Double.parseDouble(price));
+		            }
+		            if (!quantity.isEmpty()) {
+		                preparedStatement.setInt(parameterIndex++, Integer.parseInt(quantity));
+		            }
+		            if (image != null) {
+		                preparedStatement.setString(parameterIndex++, image );
+		            }
+		            preparedStatement.setString(parameterIndex, productId); // Set ProductID as the last parameter
+
+		            // Execute the query
+		            int rowsUpdated = preparedStatement.executeUpdate();
+
+		            if (rowsUpdated > 0) {
+		                JOptionPane.showMessageDialog(null, "Product updated successfully!");
+		                // Optionally, clear the input fields
+		                textFieldProdID.setText("");
+		                textFieldProdName.setText("");
+		                textFieldPrice.setText("");
+		                textField_4.setText("");
+		                lblIMAGE.setIcon(null);
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Error updating the product. Product ID not found.");
+		            }
+		        } catch (Exception ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
+		        }
+		    }
+		});
+
 		btnUpdate.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnUpdate.setBounds(218, 393, 113, 57);
 		panel_1.add(btnUpdate);
 		
 		JButton btnDelete = new JButton("DELETE");
+		btnDelete.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        // Get the Product ID
+		        String productId = textFieldProdID.getText().trim();
+
+		        // Validate Product ID
+		        if (productId.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "Please enter the Product ID to delete.");
+		            return;
+		        }
+
+		        // Database connection variables
+		        String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Change to your database name
+		        String username = "root"; // Change to your MySQL username
+		        String password = ""; // Change to your MySQL password
+
+		        // SQL delete query
+		        String query = "DELETE FROM products WHERE ProductID = ?";
+
+		        try (
+		            java.sql.Connection connection = java.sql.DriverManager.getConnection(url, username, password);
+		            java.sql.PreparedStatement preparedStatement = connection.prepareStatement(query)
+		        ) {
+		            // Set the ProductID parameter
+		            preparedStatement.setString(1, productId);
+
+		            // Execute the query
+		            int rowsDeleted = preparedStatement.executeUpdate();
+
+		            if (rowsDeleted > 0) {
+		                JOptionPane.showMessageDialog(null, "Product deleted successfully!");
+		                // Optionally, clear the input fields
+		                textFieldProdID.setText("");
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Product not found. Please check the Product ID.");
+		            }
+		        } catch (Exception ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
+		        }
+		    }
+		});
+
 		btnDelete.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnDelete.setBounds(349, 393, 117, 58);
 		panel_1.add(btnDelete);
 		
 		textFieldProdName = new JTextField();
 		textFieldProdName.setColumns(10);
-		textFieldProdName.setBounds(260, 107, 151, 31);
+		textFieldProdName.setBounds(282, 149, 151, 31);
 		panel_1.add(textFieldProdName);
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setColumns(10);
-		textFieldPrice.setBounds(260, 149, 151, 29);
+		textFieldPrice.setBounds(282, 191, 151, 29);
 		panel_1.add(textFieldPrice);
 		
 		textFieldProdID = new JTextField();
 		textFieldProdID.setColumns(10);
-		textFieldProdID.setBounds(260, 237, 151, 29);
+		textFieldProdID.setBounds(282, 107, 151, 29);
 		panel_1.add(textFieldProdID);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(260, 192, 151, 29);
+		textField_4.setBounds(282, 234, 151, 29);
 		panel_1.add(textField_4);
 		
 		JButton btnBACK = new JButton("BACK");
+		btnBACK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Dashboard();
+			}
+		});
 		btnBACK.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnBACK.setBounds(849, 392, 117, 58);
 		panel_1.add(btnBACK);

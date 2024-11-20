@@ -26,10 +26,16 @@ public class BracesPage implements ActionListener {
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
+<<<<<<< HEAD
+    JButton appointmentBtn = new JButton("APPOINTMENT");
+    JButton productsBtn = new JButton("PRODUCTS");
+    JButton contactUsBtn = new JButton("CONTACT US");
+=======
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
     JButton feedbackBtn = new JButton("FEEDBACK");
 
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
     // Create a side panel with 13 buttons
     JPanel sidePanel = new JPanel();
@@ -47,7 +53,11 @@ public class BracesPage implements ActionListener {
 
     BracesPage() {
         // Set window icon
+<<<<<<< HEAD
+        ImageIcon image = new ImageIcon(getClass().getResource("Logo.png"));
+=======
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         BracesPage.setIconImage(image.getImage());
 
         BracesPage.setLayout(new BorderLayout());
@@ -85,7 +95,11 @@ public class BracesPage implements ActionListener {
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
+<<<<<<< HEAD
+        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
+=======
         ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -99,6 +113,14 @@ public class BracesPage implements ActionListener {
         navPanel.setBackground(new Color(5, 59, 67));
 
         // Set styles for buttons
+<<<<<<< HEAD
+        setButtonStyles(homeBtn);
+        setButtonStyles(aboutUsBtn);
+        setButtonStyles(servicesBtn);
+        setButtonStyles(appointmentBtn);
+        setButtonStyles(productsBtn);
+        setButtonStyles(contactUsBtn);
+=======
         servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
         servicesBtn.setBackground(Color.WHITE);
         servicesBtn.setForeground(new Color(2, 79, 90));
@@ -110,13 +132,20 @@ public class BracesPage implements ActionListener {
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
         setButtonStyles(feedbackBtn);
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
+<<<<<<< HEAD
+        navPanel.add(appointmentBtn);
+        navPanel.add(productsBtn);
+        navPanel.add(contactUsBtn);
+=======
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
         header.add(navPanel, BorderLayout.CENTER);
         BracesPage.add(header, BorderLayout.NORTH);
@@ -136,7 +165,11 @@ public class BracesPage implements ActionListener {
         titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
         titlePanel.setBackground(new Color(5, 59, 67)); 
 
+<<<<<<< HEAD
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("Logo.png"));
+=======
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
@@ -177,8 +210,13 @@ public class BracesPage implements ActionListener {
         JPanel imagePanel = new JPanel(new GridLayout(2, 1, 10, 50));
         imagePanel.setBackground(new Color(2, 98, 112));
 
+<<<<<<< HEAD
+        ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("brace1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+        ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("brace2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+=======
         ImageIcon brace1 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/brace1.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
         ImageIcon brace2 = new ImageIcon(new ImageIcon(getClass().getResource("/Resources/brace2.png")).getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH));
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
         JLabel image1 = new JLabel(brace1);
         JLabel image2 = new JLabel(brace2);
@@ -219,6 +257,13 @@ public class BracesPage implements ActionListener {
         } else if (e.getSource() == aboutUsBtn) {
             BracesPage.dispose();
             new aboutUs();
+<<<<<<< HEAD
+        } else if (e.getSource() == appointmentBtn) {
+            BracesPage.dispose();
+            new appointmentPage();
+            
+=======
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         } else if (e.getSource() == productsBtn) {
             
             System.out.println("Products button clicked");
@@ -227,11 +272,14 @@ public class BracesPage implements ActionListener {
             BracesPage.dispose();
             new ContactUs();
         }
+<<<<<<< HEAD
+=======
         else if(e.getSource() == feedbackBtn)
         {
         	BracesPage.dispose();
         	new FeedbackForm();
         }
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         // Handle side button actions if needed
         for (int i = 0; i < sideButtons.length; i++) {
             if (e.getSource() == sideButtons[i]) {
@@ -312,7 +360,11 @@ public class BracesPage implements ActionListener {
 
         public BackgroundPanel(String imagePath) {
             // Load the background image
+<<<<<<< HEAD
+            backgroundImage = new ImageIcon(getClass().getResource("AUBackG.png")).getImage();
+=======
             backgroundImage = new ImageIcon(getClass().getResource("/Resources/AUBackG.png")).getImage();
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         }
 
         @Override
@@ -322,4 +374,11 @@ public class BracesPage implements ActionListener {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
+<<<<<<< HEAD
+
+    public static void main(String[] args) {
+        new BracesPage();
+    }
+=======
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 }

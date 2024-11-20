@@ -2,16 +2,20 @@ package Main;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class product extends JFrame {
 
@@ -38,6 +42,7 @@ public class product extends JFrame {
 	 * Create the frame.
 	 */
 	public product() {
+setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 750);
 		contentPane = new JPanel();
@@ -65,14 +70,17 @@ public class product extends JFrame {
 		JLabel lblPRD1 = new JLabel("");
 		lblPRD1.setBounds(10, 5, 156, 127);
 		panelPRD1.add(lblPRD1);
+		lblPRD1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPRDname1 = new JTextArea();
-		textAreaPRDname1.setBounds(10, 158, 156, 22);
-		panelPRD1.add(textAreaPRDname1);
+		JLabel lblPRDNAME = new JLabel("");
+		lblPRDNAME.setBounds(20, 151, 132, 26);
+		panelPRD1.add(lblPRDNAME);
+		lblPRDNAME.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPrice1 = new JTextArea();
-		textAreaPrice1.setBounds(10, 191, 156, 22);
-		panelPRD1.add(textAreaPrice1);
+		JLabel lblPRDPRICE = new JLabel("");
+		lblPRDPRICE.setBounds(30, 188, 112, 26);
+		panelPRD1.add(lblPRDPRICE);
+		lblPRDPRICE.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		JPanel panelPRD2 = new JPanel();
 		panelPRD2.setBounds(363, 120, 176, 236);
@@ -82,14 +90,18 @@ public class product extends JFrame {
 		JLabel lblPRD2 = new JLabel("");
 		lblPRD2.setBounds(10, 11, 156, 127);
 		panelPRD2.add(lblPRD2);
+		lblPRD2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPrice2 = new JTextArea();
-		textAreaPrice2.setBounds(10, 191, 156, 22);
-		panelPRD2.add(textAreaPrice2);
 		
-		JTextArea textAreaPRDname2 = new JTextArea();
-		textAreaPRDname2.setBounds(10, 158, 156, 22);
-		panelPRD2.add(textAreaPRDname2);
+		JLabel lblPRDNAME_1 = new JLabel("");
+		lblPRDNAME_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDNAME_1.setBounds(20, 149, 132, 26);
+		panelPRD2.add(lblPRDNAME_1);
+		
+		JLabel lblPRDPRICE_1 = new JLabel("");
+		lblPRDPRICE_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDPRICE_1.setBounds(30, 186, 112, 26);
+		panelPRD2.add(lblPRDPRICE_1);
 		
 		JPanel panelPRD3 = new JPanel();
 		panelPRD3.setLayout(null);
@@ -99,14 +111,18 @@ public class product extends JFrame {
 		JLabel lblPRD3 = new JLabel("");
 		lblPRD3.setBounds(10, 11, 156, 127);
 		panelPRD3.add(lblPRD3);
+		lblPRD3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPrice3 = new JTextArea();
-		textAreaPrice3.setBounds(10, 192, 156, 22);
-		panelPRD3.add(textAreaPrice3);
+		JLabel lblPRDPRICE_1_1 = new JLabel("");
+		lblPRDPRICE_1_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDPRICE_1_1.setBounds(30, 186, 112, 26);
+		panelPRD3.add(lblPRDPRICE_1_1);
 		
-		JTextArea textAreaPRDname3 = new JTextArea();
-		textAreaPRDname3.setBounds(10, 159, 156, 22);
-		panelPRD3.add(textAreaPRDname3);
+		JLabel lblPRDNAME_1_1 = new JLabel("");
+		lblPRDNAME_1_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDNAME_1_1.setBounds(20, 149, 132, 26);
+		panelPRD3.add(lblPRDNAME_1_1);
+		
 		
 		JPanel panelPRD4 = new JPanel();
 		panelPRD4.setLayout(null);
@@ -116,14 +132,18 @@ public class product extends JFrame {
 		JLabel lblPRD4 = new JLabel("");
 		lblPRD4.setBounds(10, 11, 156, 127);
 		panelPRD4.add(lblPRD4);
+		lblPRD4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPrice4 = new JTextArea();
-		textAreaPrice4.setBounds(10, 192, 156, 22);
-		panelPRD4.add(textAreaPrice4);
 		
-		JTextArea textAreaPRDname4 = new JTextArea();
-		textAreaPRDname4.setBounds(10, 161, 156, 22);
-		panelPRD4.add(textAreaPRDname4);
+		JLabel lblPRDPRICE_1_2 = new JLabel("");
+		lblPRDPRICE_1_2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDPRICE_1_2.setBounds(30, 181, 112, 26);
+		panelPRD4.add(lblPRDPRICE_1_2);
+		
+		JLabel lblPRDNAME_1_2 = new JLabel("");
+		lblPRDNAME_1_2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDNAME_1_2.setBounds(20, 144, 132, 26);
+		panelPRD4.add(lblPRDNAME_1_2);
 		
 		JPanel panelPRD5 = new JPanel();
 		panelPRD5.setLayout(null);
@@ -133,14 +153,17 @@ public class product extends JFrame {
 		JLabel lblPRD5 = new JLabel("");
 		lblPRD5.setBounds(10, 11, 156, 127);
 		panelPRD5.add(lblPRD5);
+		lblPRD5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPRDname5 = new JTextArea();
-		textAreaPRDname5.setBounds(10, 159, 156, 22);
-		panelPRD5.add(textAreaPRDname5);
+		JLabel lblPRDPRICE_1_3 = new JLabel("");
+		lblPRDPRICE_1_3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDPRICE_1_3.setBounds(30, 186, 112, 26);
+		panelPRD5.add(lblPRDPRICE_1_3);
 		
-		JTextArea textAreaPrice5 = new JTextArea();
-		textAreaPrice5.setBounds(10, 192, 156, 22);
-		panelPRD5.add(textAreaPrice5);
+		JLabel lblPRDNAME_1_3 = new JLabel("");
+		lblPRDNAME_1_3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDNAME_1_3.setBounds(20, 149, 132, 26);
+		panelPRD5.add(lblPRDNAME_1_3);
 		
 		JPanel panelPRD6 = new JPanel();
 		panelPRD6.setLayout(null);
@@ -150,14 +173,17 @@ public class product extends JFrame {
 		JLabel lblPRD6 = new JLabel("");
 		lblPRD6.setBounds(10, 11, 156, 127);
 		panelPRD6.add(lblPRD6);
+		lblPRD6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPRDname6 = new JTextArea();
-		textAreaPRDname6.setBounds(10, 153, 156, 22);
-		panelPRD6.add(textAreaPRDname6);
+		JLabel lblPRDPRICE_1_4 = new JLabel("");
+		lblPRDPRICE_1_4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDPRICE_1_4.setBounds(30, 182, 112, 26);
+		panelPRD6.add(lblPRDPRICE_1_4);
 		
-		JTextArea textAreaPrice6 = new JTextArea();
-		textAreaPrice6.setBounds(10, 186, 156, 22);
-		panelPRD6.add(textAreaPrice6);
+		JLabel lblPRDNAME_1_4 = new JLabel("");
+		lblPRDNAME_1_4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDNAME_1_4.setBounds(20, 145, 132, 26);
+		panelPRD6.add(lblPRDNAME_1_4);
 		
 		JPanel panelPRD7 = new JPanel();
 		panelPRD7.setLayout(null);
@@ -167,14 +193,17 @@ public class product extends JFrame {
 		JLabel lblPRD7 = new JLabel("");
 		lblPRD7.setBounds(10, 11, 156, 127);
 		panelPRD7.add(lblPRD7);
+		lblPRD7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPRDname7 = new JTextArea();
-		textAreaPRDname7.setBounds(10, 149, 156, 22);
-		panelPRD7.add(textAreaPRDname7);
+		JLabel lblPRDPRICE_1_5 = new JLabel("");
+		lblPRDPRICE_1_5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDPRICE_1_5.setBounds(30, 186, 112, 26);
+		panelPRD7.add(lblPRDPRICE_1_5);
 		
-		JTextArea textAreaPrice7 = new JTextArea();
-		textAreaPrice7.setBounds(10, 182, 156, 22);
-		panelPRD7.add(textAreaPrice7);
+		JLabel lblPRDNAME_1_5 = new JLabel("");
+		lblPRDNAME_1_5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDNAME_1_5.setBounds(20, 149, 132, 26);
+		panelPRD7.add(lblPRDNAME_1_5);
 		
 		JPanel panelPRD8 = new JPanel();
 		panelPRD8.setLayout(null);
@@ -184,16 +213,26 @@ public class product extends JFrame {
 		JLabel lblPRD8 = new JLabel("");
 		lblPRD8.setBounds(10, 11, 156, 127);
 		panelPRD8.add(lblPRD8);
+		lblPRD8.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JTextArea textAreaPRDname8 = new JTextArea();
-		textAreaPRDname8.setBounds(10, 149, 156, 22);
-		panelPRD8.add(textAreaPRDname8);
+		JLabel lblPRDPRICE_1_6 = new JLabel("");
+		lblPRDPRICE_1_6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDPRICE_1_6.setBounds(30, 186, 112, 26);
+		panelPRD8.add(lblPRDPRICE_1_6);
 		
-		JTextArea textAreaPrice8 = new JTextArea();
-		textAreaPrice8.setBounds(10, 182, 156, 22);
-		panelPRD8.add(textAreaPrice8);
+		JLabel lblPRDNAME_1_6 = new JLabel("");
+		lblPRDNAME_1_6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblPRDNAME_1_6.setBounds(20, 149, 132, 26);
+		panelPRD8.add(lblPRDNAME_1_6);
 		
 		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new homePage();
+				
+			}
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.BOLD, 23));
 		btnBack.setBounds(1160, 652, 114, 48);
 		panel.add(btnBack);

@@ -156,6 +156,14 @@ public class aboutUs implements ActionListener {
 			aboutpage.dispose();
 			new aboutUs();
 		}
+<<<<<<< HEAD
+		else if(e.getSource() == aboutUsBtn)
+		{
+			aboutpage.dispose();
+			new aboutUs();
+		}
+=======
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 		else if(e.getSource() == servicesBtn)
 		{
 			aboutpage.dispose();
@@ -166,12 +174,16 @@ public class aboutUs implements ActionListener {
 			aboutpage.dispose();
 			new ContactUs();
 		}
+<<<<<<< HEAD
+		
+=======
         else if(e.getSource() == feedbackBtn)
         {
         	aboutpage.dispose();
         	new FeedbackForm();
         }
 
+>>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
 		
 		
