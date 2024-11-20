@@ -261,11 +261,7 @@ public class Dashboard extends JFrame implements ActionListener{
 		else if(e.getSource() == Productbtn)
 		{
 			dispose();
-<<<<<<< HEAD
-			System.out.println("click");
-=======
 			new ProductAdmin();
->>>>>>> 4cda911967b04eb95ed944befb035db630e0c9ea
 		}
 		else if(e.getSource() == Billingbtn)
 		{

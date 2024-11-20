@@ -1,9 +1,8 @@
 package Main;
 
-<<<<<<< HEAD
-=======
+
 import java.awt.BorderLayout;
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -11,11 +10,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-<<<<<<< HEAD
-import java.sql.ResultSet;
-import java.util.HashMap;
-=======
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,15 +27,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 
-<<<<<<< HEAD
 
-public class LogInPage implements ActionListener {
-    HashMap<String, String> userLogInfo = new HashMap<>();
-=======
 public class LogInPage implements ActionListener 
 {
     
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
     // Creating frame and components
     JOptionPane Message = new JOptionPane();
@@ -52,63 +43,6 @@ public class LogInPage implements ActionListener
     JLabel userIdLabel = new JLabel("USERNAME");
     JLabel userPasswordLabel = new JLabel("PASSWORD");
     JLabel messageLabel = new JLabel();
-<<<<<<< HEAD
-    JLabel logoLabel = new JLabel(new ImageIcon(getClass().getResource("background.png"))); 
-
-    // Constructor with user login info
-    public LogInPage(HashMap<String, String> userLogInfoOriginal) {
-        userLogInfo = userLogInfoOriginal;
-        setupUI();
-    }
-
-    // Default constructor
-    public LogInPage() {
-        setupUI();
-    }
-
-    private void setupUI() {
-        // Logo settings
-        logoLabel.setBounds(-220, 0, 1000, 1000);
-        logInFrame.add(logoLabel);
-
-        // Labels
-        userIdLabel.setBounds(813, 200, 214, 38);
-        userIdLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        userIdLabel.setForeground(Color.WHITE);
-        userPasswordLabel.setBounds(813, 300, 214, 38);
-        userPasswordLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        userPasswordLabel.setForeground(Color.WHITE);
-        messageLabel.setBounds(813, 100, 406, 50);
-        messageLabel.setFont(new Font("Arial", Font.ITALIC, 20));
-        messageLabel.setForeground(Color.WHITE);
-
-        // Input Fields
-        userIdField.setBounds(812, 250, 406, 50);
-        userIdField.setFont(new Font("Arial", Font.PLAIN, 18));
-        userIdField.setBackground(Color.LIGHT_GRAY);
-        userIdField.setBorder(null);
-        userPasswordField.setBounds(812, 350, 406, 50);
-        userPasswordField.setFont(new Font("Arial", Font.PLAIN, 18));
-        userPasswordField.setBackground(Color.LIGHT_GRAY);
-        userPasswordField.setBorder(null);
-
-        // Buttons
-        logInButton.setBounds(812, 450, 404, 62);
-        logInButton.setFocusable(false);
-        logInButton.setFont(new Font("Arial", Font.BOLD, 18));
-        logInButton.setForeground(Color.WHITE);
-        logInButton.setBackground(Color.BLACK);
-        logInButton.addActionListener(this);
-
-        resetButton.setBounds(812, 550, 404, 62);
-        resetButton.setFocusable(false);
-        resetButton.setFont(new Font("Arial", Font.BOLD, 18));
-        resetButton.setForeground(Color.WHITE);
-        resetButton.setBackground(Color.DARK_GRAY);
-        resetButton.addActionListener(this);
-
-        signUpButton.setBounds(812, 650, 404, 62);
-=======
 
     // Constructor with user login info
     newPatient_Backend backend = new newPatient_Backend();
@@ -152,37 +86,7 @@ public class LogInPage implements ActionListener
         linetxt.setForeground(new Color(137, 137, 137));
         
         panel.add(linetxt);
-<<<<<<< HEAD
-=======
-        signUpButton.setBounds(71, 312, 168, 35);
-        panel.add(signUpButton);
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
-        signUpButton.setFocusable(false);
-        signUpButton.setFont(new Font("Arial", Font.BOLD, 18));
-        signUpButton.setForeground(Color.WHITE);
-        signUpButton.setBackground(Color.DARK_GRAY);
-<<<<<<< HEAD
-        signUpButton.addActionListener(this);
 
-        // Adding components to the frame
-        logInFrame.add(userIdLabel);
-        logInFrame.add(userIdField);
-        logInFrame.add(userPasswordLabel);
-        logInFrame.add(userPasswordField);
-        logInFrame.add(messageLabel);
-        logInFrame.add(logInButton);
-        logInFrame.add(resetButton);
-        logInFrame.add(signUpButton);
-
-        // Frame settings
-        ImageIcon image = new ImageIcon(getClass().getResource("Logo.jpg"));
-        logInFrame.setIconImage(image.getImage());
-        logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        logInFrame.getContentPane().setBackground(new Color(2, 79, 90));
-        logInFrame.setSize(1440, 1024);
-        logInFrame.setLayout(null);
-=======
->>>>>>> 4cda911967b04eb95ed944befb035db630e0c9ea
         logInButton.setBounds(71, 228, 167, 32);
         panel.add(logInButton);
         logInButton.setFocusable(false);
@@ -219,9 +123,8 @@ public class LogInPage implements ActionListener
         lblNewLabel.setBackground(new Color(194, 192, 192));
         lblNewLabel.setIcon(new ImageIcon(LogInPage.class.getResource("/Resources/backgroundLogin.png")));
         lblNewLabel.setBounds(-20, -28, 855, 591);
-        
+  
         logInFrame.getContentPane().add(lblNewLabel);
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         logInFrame.setVisible(true);
     }
 
@@ -252,7 +155,7 @@ public class LogInPage implements ActionListener
                 {
                     JOptionPane.showMessageDialog(null, "Login Successfully");
                     logInFrame.dispose();
-                    new homePage(); // Assuming a homePage class exists
+                    new Dashboard();
                 } 
              
                 else 
@@ -264,17 +167,11 @@ public class LogInPage implements ActionListener
                 ex.printStackTrace();
                 messageLabel.setText("Error: " + ex.getMessage());
             }
-<<<<<<< HEAD
-        } else if (action.getSource() == signUpButton) {
-            new userRegistrationPage(userLogInfo); // Assuming a userRegistrationPage class exists
-        }
-=======
         } 
     }
     
     public static void main(String[] args)
     {
     	new LogInPage();
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
     }
 }

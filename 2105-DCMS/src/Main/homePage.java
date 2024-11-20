@@ -22,11 +22,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-<<<<<<< HEAD
-import Main.appointmentPage.BackgroundPanel;
-=======
+
 import Main.aboutUs.BackgroundPanel;
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
 
 public class homePage implements ActionListener
@@ -40,16 +38,12 @@ public class homePage implements ActionListener
     JButton contactUsBtn = new JButton("CONTACT US");
     JButton feedbackBtn = new JButton("FEEDBACK");
     JPanel header = new JPanel();
-<<<<<<< HEAD
-    JPanel content = new BackgroundPanel("Background (2).png"); 
 
-    homePage() {
-=======
     JPanel content = new BackgroundPanel("/Resources/Background (2).png"); 
     
     homePage() 
     {
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
     	
     	//contentLogo
     	ImageIcon logoIcon = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));  // Use relative path
@@ -191,24 +185,10 @@ public class homePage implements ActionListener
     {
         // Handle button actions
 		if (e.getSource() == homeBtn) 
-<<<<<<< HEAD
-=======
 		{
 			homepage.dispose();
 			new homePage();
 		}
-		else if(e.getSource() == aboutUsBtn)
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
-		{
-			homepage.dispose();
-			new homePage();
-		}
-		else if(e.getSource() == productsBtn)
-		{
-			homepage.dispose();
-			new product();
-		}
-<<<<<<< HEAD
 		else if(e.getSource() == aboutUsBtn)
 		{
 			homepage.dispose();
@@ -224,56 +204,27 @@ public class homePage implements ActionListener
 			homepage.dispose();
 			new ContactUs();
 		}
-		else if(e.getSource() == logOutBtn)
-=======
-		else if(e.getSource() == servicesBtn)
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
-		{
-			homepage.dispose();
-			new BracesPage();
-		}
-<<<<<<< HEAD
-    }
-	
-    class BackgroundPanel extends JPanel {
-        private Image backgroundImage;
-
-        public BackgroundPanel(String imagePath) {
-            // Load the background image
-            backgroundImage = new ImageIcon(getClass().getResource("Background (2).png")).getImage();
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // Draw the background image, scaled to fit the panel size
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
-
-=======
-		else if(e.getSource() == contactUsBtn )
-		{
-			homepage.dispose();
-			new ContactUs();
-		}
         else if(e.getSource() == feedbackBtn)
         {
         	homepage.dispose();
         	new FeedbackForm();
         }
+		
     }
 	
-	class BackgroundPanel extends JPanel {
+	class BackgroundPanel extends JPanel 
+	{
 	    private Image backgroundImage;
 
-	    public BackgroundPanel(String imagePath) {
+	    public BackgroundPanel(String imagePath) 
+	    {
 	        // Load the new background image
 	        backgroundImage = new ImageIcon(getClass().getResource("/Resources/Background (2).png")).getImage();
 	    }
 
 	    @Override
-	    protected void paintComponent(Graphics g) {
+	    protected void paintComponent(Graphics g) 
+	    {
 	        super.paintComponent(g);
 	        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	    }
@@ -283,5 +234,5 @@ public class homePage implements ActionListener
 	{
 		new homePage();
 	}
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+	
 }

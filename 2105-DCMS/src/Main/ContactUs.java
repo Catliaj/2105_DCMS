@@ -22,29 +22,16 @@ public class ContactUs implements ActionListener {
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-<<<<<<< HEAD
-    JButton appointmentBtn = new JButton("APPOINTMENT");
-    JButton productsBtn = new JButton("PRODUCTS");
-    JButton contactUsBtn = new JButton("CONTACT US");
-
-    JPanel header = new JPanel();
-    JPanel content = new BackgroundPanel("AUBackG.png"); // Use custom panel with background
-
-    ContactUs() {
-        // Set window icon
-        ImageIcon image = new ImageIcon(getClass().getResource("Logo.png"));
-=======
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
     JButton feedbackBtn = new JButton("FEEDBACK");
-    
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/AUBackG.png"); // Use custom panel with background
+
 
     ContactUs() {
         // Set window icon
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/Logo.png"));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
         ContactUs.setIconImage(image.getImage());
 
         ContactUs.setLayout(new BorderLayout());
@@ -57,11 +44,9 @@ public class ContactUs implements ActionListener {
         header.setBackground(new Color(5, 59, 67));
 
         // Header logo
-<<<<<<< HEAD
-        ImageIcon headerLogo = new ImageIcon(getClass().getResource("haederLogo.png"));
-=======
+
         ImageIcon headerLogo = new ImageIcon(getClass().getResource("/Resources/haederLogo.png"));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
         Image scaledHeader = headerLogo.getImage().getScaledInstance(250, 150, Image.SCALE_SMOOTH);
         JLabel Header = new JLabel(new ImageIcon(scaledHeader));
 
@@ -74,15 +59,14 @@ public class ContactUs implements ActionListener {
         JPanel navPanel = new JPanel(new GridLayout(1, 6, 10, 0));
         navPanel.setBackground(new Color(5, 59, 67));
 
-<<<<<<< HEAD
+
         // Set styles for buttons
         setButtonStyles(homeBtn);
         setButtonStyles(aboutUsBtn);
         setButtonStyles(servicesBtn);
-        setButtonStyles(appointmentBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(contactUsBtn);
-=======
+
         // Set styles for 
         contactUsBtn.setFont(new Font("Arial", Font.BOLD, 16));
         contactUsBtn.setBackground(Color.WHITE);
@@ -95,21 +79,14 @@ public class ContactUs implements ActionListener {
         setButtonStyles(servicesBtn);
         setButtonStyles(productsBtn);
         setButtonStyles(feedbackBtn);
-        
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-<<<<<<< HEAD
-        navPanel.add(appointmentBtn);
-        navPanel.add(productsBtn);
-        navPanel.add(contactUsBtn);
-=======
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
         header.add(navPanel, BorderLayout.CENTER);
         ContactUs.add(header, BorderLayout.NORTH);
@@ -122,15 +99,11 @@ public class ContactUs implements ActionListener {
         bottomPanel.setOpaque(false); // Make the bottom panel transparent
 
         // Create three smaller colored panels with two subtexts each
-<<<<<<< HEAD
-        JPanel smallPanel1 = createSmallPanel("Contact1.png", "Give Us A Call", "Reach out to us directly.", "0912 345 6789");
-        JPanel smallPanel2 = createSmallPanel("Contact2.png", "We're On The Map", "Find us easily with our location.", "Malaruhatan, Lian, Batangas");
-        JPanel smallPanel3 = createSmallPanel("Contact3.png", "Write Us", "Send us a message anytime.", "support@DCFdentalclinic.com");
-=======
+
         JPanel smallPanel1 = createSmallPanel("/Resources/Contact1.png", "Give Us A Call", "Reach out to us directly.", "0912 345 6789");
         JPanel smallPanel2 = createSmallPanel("/Resources/Contact2.png", "We're On The Map", "Find us easily with our location.", "Malaruhatan, Lian, Batangas");
         JPanel smallPanel3 = createSmallPanel("/Resources/Contact3.png", "Write Us", "Send us a message anytime.", "support@DCFdentalclinic.com");
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
         // Add the small panels to the bottom panel
         bottomPanel.add(smallPanel1);
@@ -144,11 +117,8 @@ public class ContactUs implements ActionListener {
         centerText.setHorizontalAlignment(JLabel.CENTER);
         centerText.setVerticalAlignment(JLabel.CENTER);
         content.add(centerText, BorderLayout.CENTER);
-<<<<<<< HEAD
-        centerText.setBorder(BorderFactory.createEmptyBorder(100, 20, 10, 20));
-=======
         centerText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
         // Create a separate panel for subtext
         JPanel subTextPanel = new JPanel();
@@ -161,11 +131,8 @@ public class ContactUs implements ActionListener {
         subText.setFont(new Font("Arial", Font.PLAIN, 30));
         subText.setHorizontalAlignment(JLabel.CENTER);
         subTextPanel.add(subText, BorderLayout.NORTH);
-<<<<<<< HEAD
-        subText.setBorder(BorderFactory.createEmptyBorder(50, 20, 10, 20));
-=======
         subText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
         // Create a panel to hold additional text and the new additional text
         JPanel textPanel = new JPanel();
@@ -178,11 +145,8 @@ public class ContactUs implements ActionListener {
         additionalText.setFont(new Font("Arial", Font.BOLD, 50));
         additionalText.setHorizontalAlignment(JLabel.CENTER);
         textPanel.add(additionalText, BorderLayout.NORTH);
-<<<<<<< HEAD
-        additionalText.setBorder(BorderFactory.createEmptyBorder(50, 20, 10, 20));
-=======
         additionalText.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
         // New text below "WE WOULD BE HAPPY TO MEET YOU!"
         JLabel newAdditionalText = new JLabel("<html>We’re ready to help to book you in or with any questions you may have about seeing our dental team.");
@@ -190,11 +154,9 @@ public class ContactUs implements ActionListener {
         newAdditionalText.setFont(new Font("Arial", Font.PLAIN, 25));
         newAdditionalText.setHorizontalAlignment(JLabel.CENTER);
         textPanel.add(newAdditionalText, BorderLayout.CENTER);
-<<<<<<< HEAD
-        newAdditionalText.setBorder(BorderFactory.createEmptyBorder(50, 20, 20, 20)); // Padding for new text
-=======
+
         newAdditionalText.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding for new text
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
+
 
         // Now add the textPanel to the subTextPanel
         subTextPanel.add(textPanel, BorderLayout.CENTER);
@@ -277,15 +239,6 @@ public class ContactUs implements ActionListener {
 			ContactUs.dispose();
 			new homePage();
 		}
-<<<<<<< HEAD
-		else if(e.getSource() == appointmentBtn)
-		{
-			ContactUs.dispose();
-			new appointmentPage();
-		}
-=======
-
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 		else if(e.getSource() == aboutUsBtn)
 		{
 			ContactUs.dispose();
@@ -296,14 +249,12 @@ public class ContactUs implements ActionListener {
 			ContactUs.dispose();
 			new BracesPage();
 		}
-<<<<<<< HEAD
+
 		else if(e.getSource() == contactUsBtn )
 		{
 			ContactUs.dispose();
 			new ContactUs();
 		}
-		
-=======
         else if(e.getSource() == feedbackBtn)
         {
         	ContactUs.dispose();
@@ -311,7 +262,6 @@ public class ContactUs implements ActionListener {
         }
 
 
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 
 		
 		
@@ -332,11 +282,4 @@ public class ContactUs implements ActionListener {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
-<<<<<<< HEAD
-
-    public static void main(String[] args) {
-        new ContactUs();
-    }
-=======
->>>>>>> 1af362b800b4da53edba7022ccc17e6d484bc950
 }
