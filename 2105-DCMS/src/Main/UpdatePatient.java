@@ -54,6 +54,7 @@ public class UpdatePatient extends JFrame {
         setFont(new Font("Arial", Font.BOLD, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 671, 556);
+        setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

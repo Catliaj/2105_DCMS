@@ -201,7 +201,7 @@ public class product extends JFrame {
 		JLabel lblNewLabel = new JLabel("PREVENTIVE PRODUCT");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 35));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setIcon(new ImageIcon(product.class.getResource("/Resources/Background.png")));
+		lblNewLabel.setIcon(new ImageIcon(product.class.getResource("/Resources/background (2).png")));
 		lblNewLabel.setBounds(0, 0, 1284, 711);
 		panel.add(lblNewLabel);
 	}

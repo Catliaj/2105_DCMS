@@ -22,12 +22,17 @@ import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import java.util.ArrayList;
 import java.util.List;
+import DCMS_DB_CONNECTION.DB_DCMSConnection;
+import backend.POS_backend;
 
 
 public class POS extends JFrame {
@@ -41,7 +46,9 @@ public class POS extends JFrame {
 	private JTextField CustomerNametxtfield;
 	private JTextField textField;
 	private JTextArea addedItemsArea;
-
+	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
+	POS_backend posbackend = new POS_backend();
+	private Connection connection;
 	// Declare lists to store selected products and services
 	List<String> selectedProducts = new ArrayList<>();
 	List<Integer> productQuantities = new ArrayList<>();
@@ -69,11 +76,13 @@ public class POS extends JFrame {
 	 * Create the frame.
 	 */
 	public POS() {
+		setVisible(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1300, 750);
+		setBounds(150, 50, 1300, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -315,60 +324,56 @@ public class POS extends JFrame {
 		// ActionListener for Receipt Button
 		Receiptbtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        // Retrieve customer and bill details
-		        String customerName = CustomerNametxtfield.getText();
-		        String billNo = BillNotxtfield.getText();
-		        String date = new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date());
-
-		        // Build the receipt string with formatting
-		        StringBuilder receipt = new StringBuilder();
-		        receipt.append("=================================\n");
-		        receipt.append("            RECEIPT\n");
-		        receipt.append("=================================\n");
-		        receipt.append(String.format("%-20s : %s\n", "Bill No", billNo));
-		        receipt.append(String.format("%-20s : %s\n", "Customer Name", customerName));
-		        receipt.append(String.format("%-20s : %s\n", "Date", date)); 
-		        receipt.append("=================================\n");
-
-		        // Append added products and services
-		        receipt.append(addedItemsArea.getText());
-
-		        // Retrieve subtotal and total
+		        // Retrieve details
+		       
+		      
+		        String productPrice = Productpricetxtfield.getText();
+		        double productpriceToInt = Double.parseDouble(productPrice);
+		        String servicePrice = textField.getText();
+		        double servicepriceToInt = Double.parseDouble(servicePrice);
 		        String subtotal = subtotaltxtfield.getText();
 		        String total = totaltxtfield.getText();
+		        double totalpriceToInt = Double.parseDouble(total);
+		        String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+		        
+		        posbackend.setCustomerName(CustomerNametxtfield.getText());
+		        posbackend.setProducts( Productcombobox.getSelectedItem().toString());
+		        posbackend.setProductPrice(productpriceToInt);
+		        posbackend.setServices(Servicecombobox.getSelectedItem().toString());
+		        posbackend.setServicePrice(servicepriceToInt);
+		        posbackend.setTotal(totalpriceToInt);
+		        
+		        
+		        
+		        
+		        connection = dcmsConnection.getConnection();
+		        // Insert into the database
+		        try (Connection conn = connection) {
+		            String sql = "INSERT INTO billdata ( customername, productname, productprice, servicename, serviceprice, total, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		            PreparedStatement ps = conn.prepareStatement(sql);
+		           
+		            ps.setString(1, posbackend.getCustomerName());
+		            ps.setString(2, posbackend.getProducts());
+		            ps.setDouble(3, posbackend.getProductPrice());
+		            ps.setString(4, posbackend.getServices());
+		            ps.setDouble(5, posbackend.getServicePrice());
+		            ps.setDouble(6, posbackend.getTotal());
+		            ps.setDate(7, java.sql.Date.valueOf(date));
 
-		        receipt.append("=================================\n");
-		        receipt.append(String.format("%-20s : $%s\n", "Subtotal", subtotal));
-		        receipt.append(String.format("%-20s : $%s\n", "Total", total));
-		        receipt.append("=================================\n");
-		        receipt.append("            Thank you!\n");
-		        receipt.append("=================================\n");
+		            int rowsInserted = ps.executeUpdate();
+		            if (rowsInserted > 0) {
+		                JOptionPane.showMessageDialog(null, "Bill details saved successfully!");
+		            }
+		        } catch (SQLException ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Error saving bill details to the database.");
+		        }
 
-		        // Create the JTextArea for the receipt
-		        JTextArea receiptArea = new JTextArea(receipt.toString());
-		        receiptArea.setEditable(false);
-		        receiptArea.setFont(new Font("Monospaced", Font.PLAIN, 14));  // Use a monospaced font for better alignment
-		        receiptArea.setBackground(new Color(240, 240, 240));  // Set background color to light gray
-		        receiptArea.setMargin(new Insets(10, 10, 10, 10));  // Add padding around the text
-
-		        // Create a JScrollPane to make the JTextArea scrollable
-		        JScrollPane scrollPane = new JScrollPane(receiptArea);
-		        scrollPane.setPreferredSize(new Dimension(600, 400));  // Set a larger size for the scrollable area
-
-		        // Create a dialog window to display the receipt
-		        JDialog receiptDialog = new JDialog();
-		        receiptDialog.setTitle("Receipt");
-		        receiptDialog.setSize(350, 450);  // Set a larger size for the window
-		        receiptDialog.setLocationRelativeTo(null);  // Center the dialog
-		        receiptDialog.setModal(true);  // Make the dialog modal to block interaction with the main window
-		        receiptDialog.getContentPane().add(scrollPane);  // Add the scroll pane with the receipt content
-		        receiptDialog.setVisible(true);  // Show the dialog
+		        // Generate and display receipt
+		        generateReceipt(posbackend.getCustomerName(), posbackend.getProducts(),productPrice , posbackend.getServices(),servicePrice , subtotal, total, date);
 		    }
 		});
 
-
-		
-		
 		JPanel ResetPanel = new JPanel();
 		ResetPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		ResetPanel.setBackground(new Color(5, 59, 67));
@@ -501,7 +506,7 @@ public class POS extends JFrame {
 				
 															
 							JLabel ContentBackG = new JLabel("");
-							ContentBackG.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\backG.png"));
+							ContentBackG.setIcon(new ImageIcon(POS.class.getResource("/Resources/background (2).png")));
 							ContentBackG.setBounds(0, 0, 1286, 713);
 							panel.add(ContentBackG);
 		
@@ -566,4 +571,34 @@ public class POS extends JFrame {
 	                }
 	            });
 	    }
+	public void generateReceipt(String customerName, String productName, String productPrice, String serviceName, String servicePrice, String subtotal, String total, String date) {
+	    StringBuilder receipt = new StringBuilder();
+	    receipt.append("=================================\n");
+	    receipt.append("            RECEIPT\n");
+	    receipt.append("=================================\n");
+	    receipt.append(String.format("%-20s : %s\n", "Customer Name", customerName));
+	    receipt.append(String.format("%-20s : %s\n", "Date", date));
+	    receipt.append("=================================\n");
+	    receipt.append(String.format("Product: %-10s $%s\n", productName, productPrice));
+	    receipt.append(String.format("Service: %-10s $%s\n", serviceName, servicePrice));
+	    receipt.append("=================================\n");
+	    receipt.append(String.format("%-20s : $%s\n", "Subtotal", subtotal));
+	    receipt.append(String.format("%-20s : $%s\n", "Total", total));
+	    receipt.append("=================================\n");
+	    receipt.append("            Thank you!\n");
+	    receipt.append("=================================\n");
+
+	    JTextArea receiptArea = new JTextArea(receipt.toString());
+	    receiptArea.setEditable(false);
+	    receiptArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+	    JScrollPane scrollPane = new JScrollPane(receiptArea);
+
+	    JDialog receiptDialog = new JDialog();
+	    receiptDialog.setTitle("Receipt");
+	    receiptDialog.setSize(400, 500);
+	    receiptDialog.setLocationRelativeTo(null);
+	    receiptDialog.add(scrollPane);
+	    receiptDialog.setVisible(true);
+	}
+
 	    }
