@@ -200,6 +200,11 @@ public class homePage implements ActionListener
 			homepage.dispose();
 			new ContactUs();
 		}
+		else if(e.getSource() == productsBtn )
+		{
+			homepage.dispose();
+			new product();
+		}
         else if(e.getSource() == feedbackBtn)
         {
         	homepage.dispose();

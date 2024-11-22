@@ -220,6 +220,11 @@ public class FeedbackForm implements ActionListener {
 			FeedbackForm.dispose();
 			new BracesPage();
 		}
+		else if(e.getSource() == servicesBtn)
+		{
+			FeedbackForm.dispose();
+			new product();
+			}
 		else if(e.getSource() == contactUsBtn)
 		{
 			FeedbackForm.dispose();
