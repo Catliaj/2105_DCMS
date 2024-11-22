@@ -245,9 +245,12 @@ public class NewPatient extends JFrame implements ActionListener {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
             String dateOfBirth = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()) : "Not Selected";
 
-
-            new newPatient_Backend(firstName,mi,lastName,selectedGender,contact,dateOfBirth,email,address,age);
-            dispose();
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure to add this patient?");
+            	if(confirm ==JOptionPane.YES_OPTION)
+            	{
+            		new newPatient_Backend(firstName,mi,lastName,selectedGender,contact,dateOfBirth,email,address,age);
+            		dispose();
+            	}
         }
     }
 }

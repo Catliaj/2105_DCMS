@@ -35,8 +35,6 @@ import java.awt.Toolkit;
 import DCMS_DB_CONNECTION.DB_DCMSConnection;
 import backend.POS_backend;
 
-
-
 public class POS extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -56,7 +54,7 @@ public class POS extends JFrame {
 	List<Double> productPrices = new ArrayList<>();
 	List<String> selectedServices = new ArrayList<>();
 	List<Double> servicePrices = new ArrayList<>();
-	private JTextField pricetxtfield2;
+	private JTextField Productprice;
 	/**
 	 * Launch the application.
 	 */
@@ -195,22 +193,30 @@ public class POS extends JFrame {
 		TotalPanel_1_1.add(addbtn);
 		addbtn.setBackground(new Color(194, 192, 192));
 		addbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		addbtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        String selectedProduct = (String) Productcombobox.getSelectedItem();
-		        String productPrice = Productpricetxtfield.getText();
-		        int quantity = (Integer) Qtyspinner.getValue();
+			addbtn.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        String selectedProduct = (String) Productcombobox.getSelectedItem();
+			        String productPrice = Productpricetxtfield.getText();
+			        int quantity = (Integer) Qtyspinner.getValue();
 
-		        if (!selectedProduct.isEmpty() && !productPrice.isEmpty() && quantity > 0) {
-		            // Append the selected product details to the added items area
-		            addedItemsArea.append("Product: " + selectedProduct + "\n");
-		            addedItemsArea.append("Price: $" + productPrice + "\n");
-		            addedItemsArea.append("Quantity: " + quantity + "\n");
-		            addedItemsArea.append("Subtotal: $" + (Double.parseDouble(productPrice) * quantity) + "\n");
-		            addedItemsArea.append("---------------------------------\n");
-		        }
-		    }
-		});
+			        if (!selectedProduct.isEmpty() && !productPrice.isEmpty() && quantity > 0) {
+			            // Add details to lists
+			            selectedProducts.add(selectedProduct);
+			            productQuantities.add(quantity);
+			            productPrices.add(Double.parseDouble(productPrice));
+
+			            // Append to the added items area
+			            double subtotal = Double.parseDouble(productPrice) * quantity;
+			            addedItemsArea.append(String.format("Product: %s\nPrice: $%.2f\nQuantity: %d\nSubtotal: $%.2f\n",
+			                    selectedProduct, Double.parseDouble(productPrice), quantity, subtotal));
+			            addedItemsArea.append("---------------------------------\n");
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Please select a product, enter a price, and set a quantity greater than 0.");
+			        }
+			    }
+			});
+
+		
 		
 		JLabel pricelbl2 = new JLabel("PRICE");
 		pricelbl2.setForeground(new Color(194, 192, 192));
@@ -218,28 +224,13 @@ public class POS extends JFrame {
 		pricelbl2.setBounds(227, 208, 149, 70);
 		ProductPanel.add(pricelbl2);
 		
-		pricetxtfield2 = new JTextField();
-		pricetxtfield2.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		pricetxtfield2.setColumns(10);
-		pricetxtfield2.setBounds(227, 268, 110, 40);
-		ProductPanel.add(pricetxtfield2);
-		addbtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        String selectedProduct = (String) Productcombobox.getSelectedItem();
-		        String productPrice = Productpricetxtfield.getText();
-		        int quantity = (Integer) Qtyspinner.getValue();
-
-		        if (!selectedProduct.isEmpty() && !productPrice.isEmpty() && quantity > 0) {
-		            // Use the instance variable
-		            addedItemsArea.append("Product: " + selectedProduct + "\n");
-		            addedItemsArea.append("Price: $" + productPrice + "\n");
-		            addedItemsArea.append("Quantity: " + quantity + "\n");
-		            addedItemsArea.append("Subtotal: $" + (Double.parseDouble(productPrice) * quantity) + "\n");
-		            addedItemsArea.append("---------------------------------\n");
-		        }
-		    }
-		});
+		Productpricetxtfield = new JTextField();
+		Productpricetxtfield.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Productpricetxtfield.setColumns(10);
+		Productpricetxtfield.setBounds(227, 268, 110, 40);
+		ProductPanel.add(Productpricetxtfield);
 		
+		 
 		JPanel ServicePanel = new JPanel();
 		ServicePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		ServicePanel.setBackground(new Color(5, 59, 67));
@@ -304,36 +295,33 @@ public class POS extends JFrame {
 		ServicePanel.add(TotalPanel_1);
 		TotalPanel_1.setLayout(null);
 		
-		JButton Resetbtn = new JButton("RESET");
-		Resetbtn.setBackground(new Color(194, 192, 192));
-		Resetbtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		Resetbtn.setToolTipText("RESET");
-		Resetbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		Resetbtn.setBounds(136, 644, 159, 37);
-		panel.add(Resetbtn);
+		JPanel ReceiptPanel = new JPanel();
+		ReceiptPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		ReceiptPanel.setBackground(new Color(5, 59, 67));
+		ReceiptPanel.setBounds(326, 633, 205, 59);
+		panel.add(ReceiptPanel);
+		ReceiptPanel.setLayout(null);
 		
 		JButton Receiptbtn = new JButton("RECEIPT");
+		Receiptbtn.setBounds(23, 10, 159, 37);
+		ReceiptPanel.add(Receiptbtn);
 		Receiptbtn.setBackground(new Color(194, 192, 192));
 		Receiptbtn.setToolTipText("RECEIPT");
 		Receiptbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		Receiptbtn.setBounds(553, 644, 159, 37);
-		panel.add(Receiptbtn);
 		
 		Receiptbtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        
-		        String productPrice = Productpricetxtfield.getText();
-		        double productpriceToInt = Double.parseDouble(productPrice);
-		        String servicePrice = textField.getText();
-		        double servicepriceToInt = Double.parseDouble(servicePrice);
+		    	// Get necessary details
+		    	String productPrice = Productpricetxtfield.getText();
+		    	double productpriceToInt = Double.parseDouble(productPrice);
+		    	String servicePrice = textField.getText();
+		    	double servicepriceToInt = Double.parseDouble(servicePrice);
+		        String customerName = CustomerNametxtfield.getText();
 		        String subtotal = subtotaltxtfield.getText();
 		        String total = totaltxtfield.getText();
 		        double totalpriceToInt = Double.parseDouble(total);
 		        String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-		        
+
 		        posbackend.setCustomerName(CustomerNametxtfield.getText());
 		        posbackend.setProducts( Productcombobox.getSelectedItem().toString());
 		        posbackend.setServices(Servicecombobox.getSelectedItem().toString());
@@ -342,23 +330,11 @@ public class POS extends JFrame {
 		        generateReceipt(posbackend.getCustomerName(), posbackend.getProducts(),productPrice , posbackend.getServices(),servicePrice , subtotal, total, date);
 		    }
 		});
-
-		JPanel ResetPanel = new JPanel();
-		ResetPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		ResetPanel.setBackground(new Color(5, 59, 67));
-		ResetPanel.setBounds(113, 633, 205, 59);
-		panel.add(ResetPanel);
-		
-		JPanel ReceiptPanel = new JPanel();
-		ReceiptPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		ReceiptPanel.setBackground(new Color(5, 59, 67));
-		ReceiptPanel.setBounds(533, 633, 205, 59);
-		panel.add(ReceiptPanel);
 		
 		JPanel ExitPanel = new JPanel();
 		ExitPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		ExitPanel.setBackground(new Color(5, 59, 67));
-		ExitPanel.setBounds(945, 633, 205, 59);
+		ExitPanel.setBounds(743, 633, 205, 59);
 		panel.add(ExitPanel);
 		ExitPanel.setLayout(null);
 		
@@ -427,6 +403,25 @@ public class POS extends JFrame {
 				Totalbtn.setBackground(new Color(194, 192, 192));
 				Totalbtn.setForeground(new Color(0, 0, 0));
 				Totalbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				Totalbtn.addActionListener(new ActionListener() {
+				    public void actionPerformed(ActionEvent e) {
+				        double subtotal = 0.0;
+
+				        // Calculate subtotal for all products
+				        for (int i = 0; i < selectedProducts.size(); i++) {
+				            subtotal += productPrices.get(i) * productQuantities.get(i);
+				        }
+
+				        // Calculate tax and total
+				        double tax = subtotal * 0.05; // 5% tax
+				        double total = subtotal + tax;
+
+				        // Update subtotal and total fields
+				        subtotaltxtfield.setText(String.format("%.2f", subtotal));
+				        totaltxtfield.setText(String.format("%.2f", total));
+				    }
+				});
+
 				
 				JLabel lblTax = new JLabel("TAX");
 				lblTax.setForeground(new Color(194, 192, 192));
@@ -489,17 +484,7 @@ public class POS extends JFrame {
 							productPrices.put("Colgate Optic White Teeth Whitening Pen", 1250.0);
 							productPrices.put("Colgate Kids Toothpaste", 80.0);
 							productPrices.put("Oral-B Pro 1000 Electric Toothbrush", 3137.0);
-
-														
-							 // Product ComboBox Listener
-					        Productcombobox.addActionListener(new ActionListener() {
-					            public void actionPerformed(ActionEvent e) {
-					                String selectedProduct = (String) Productcombobox.getSelectedItem();
-					                if (selectedProduct != null && productPrices.containsKey(selectedProduct)) {
-					                    Productpricetxtfield.setText(String.valueOf(productPrices.get(selectedProduct)));
-					                }
-					            }
-					        });
+							
 					        
 	        Map<String, Double> servicePrices = new HashMap<>();
 	        servicePrices.put("Consultation", 500.0);
@@ -517,8 +502,17 @@ public class POS extends JFrame {
 	        servicePrices.put("X-Ray", 500.0);
 	        servicePrices.put("Pediatric Dentistry (Consultation)", 300.0);
 
-	     
-
+	        
+	        Productcombobox.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        String selectedProduct = (String) Productcombobox.getSelectedItem();
+			        if (selectedProduct != null && productPrices.containsKey(selectedProduct)) {
+			            Productpricetxtfield.setText(String.valueOf(productPrices.get(selectedProduct)));
+			        } else {
+			            Productpricetxtfield.setText(""); // Clear the field if no valid selection
+			        }
+			    }
+			});
 	        // Service ComboBox Listener
 	        Servicecombobox.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
@@ -526,37 +520,6 @@ public class POS extends JFrame {
 	                if (selectedService != null && servicePrices.containsKey(selectedService)) {
 	                    textField.setText(String.valueOf(servicePrices.get(selectedService)));
 	                }
-	            }
-	        });
-
-	     // Reset Button ActionListener
-	        Resetbtn.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	                // Clear the lists of selected products and services
-	                selectedProducts.clear();
-	                productQuantities.clear();
-	                productPrices.clear();
-	                selectedServices.clear();
-	                servicePrices.clear();
-	                
-	                // Clear the text fields
-	                CustomerNametxtfield.setText("");
-	                subtotaltxtfield.setText("");
-	                totaltxtfield.setText("");
-	                
-	                // Clear the added items area
-	                addedItemsArea.setText("");
-	                
-	                // Reset the combo boxes to the default value
-	                Productcombobox.setSelectedIndex(0);
-	                Servicecombobox.setSelectedIndex(0);
-	                
-	                // Reset the quantity spinner to its default value
-	                Qtyspinner.setValue(1);
-	                
-	                // Clear the product price and service price text fields
-	                Productpricetxtfield.setText("");
-	                textField.setText("");
 	            }
 	        });
 	    }
@@ -589,4 +552,4 @@ public class POS extends JFrame {
 	    receiptDialog.getContentPane().add(scrollPane);
 	    receiptDialog.setVisible(true);
 	}
-	    }
+}

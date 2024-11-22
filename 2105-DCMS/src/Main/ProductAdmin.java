@@ -53,6 +53,7 @@ public class ProductAdmin extends JFrame {
 	private JTextField textFieldProdID;
 	private JTextField textField_4;
 	private String imagePath = "null";
+	private JLabel lblIMAGE;
 	/**
 	 * Launch the application.
 	 */
@@ -127,7 +128,7 @@ public class ProductAdmin extends JFrame {
 		panel_1.add(panelImage);
 		panelImage.setLayout(null);
 		
-		JLabel lblIMAGE = new JLabel("");
+		lblIMAGE = new JLabel("");
 		lblIMAGE.setBounds(0, 0, 151, 119);
 		panelImage.add(lblIMAGE);
 		
@@ -194,77 +195,62 @@ public class ProductAdmin extends JFrame {
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        // Get the input data
+		        // Get input data
 		        String productName = textFieldProdName.getText();
 		        String price = textFieldPrice.getText();
 		        String quantity = textField_4.getText();
-		        ImageIcon imageIcon = (ImageIcon) lblIMAGE.getIcon();  // Get the ImageIcon from the JLabel
-		        
-		        // Input validation
-		        if (productName.isEmpty() || price.isEmpty() || quantity.isEmpty() || imageIcon == null) {
+
+		        // Validate input fields
+		        if (productName.isEmpty() || price.isEmpty() || quantity.isEmpty() || lblIMAGE.getIcon() == null) {
 		            JOptionPane.showMessageDialog(null, "Please fill all fields and upload an image!");
 		            return;
 		        }
 
-		        // Convert the ImageIcon to byte array
+		        // Convert ImageIcon to byte array
 		        byte[] imageBytes = null;
 		        try {
-		            if (imageIcon != null) {
-		                // Convert the ImageIcon to byte array
-		                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		                Image image = imageIcon.getImage();  // Get the Image from the ImageIcon
-		                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-		                Graphics2D g = bufferedImage.createGraphics();
-		                g.drawImage(image, 0, 0, null);
-		                g.dispose();
+		            Image image = ((ImageIcon) lblIMAGE.getIcon()).getImage();
+		            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		            Graphics2D g2d = bufferedImage.createGraphics();
+		            g2d.drawImage(image, 0, 0, null);
+		            g2d.dispose();
 
-		                // Write the image to the byte array output stream in JPEG format (or any other format like PNG)
-		                ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
-		                imageBytes = byteArrayOutputStream.toByteArray();
-		            }
+		            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		            ImageIO.write(bufferedImage, "jpg", baos);
+		            imageBytes = baos.toByteArray();
 		        } catch (IOException ex) {
 		            ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Error converting image to byte array: " + ex.getMessage());
+		            JOptionPane.showMessageDialog(null, "Error converting image: " + ex.getMessage());
 		            return;
 		        }
 
-		        // Database connection variables
-		        String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Change to your database name
-		        String username = "root"; // Change to your MySQL username
-		        String password = ""; // Change to your MySQL password
-
-		        // SQL insert query
+		        // Insert into the database
 		        String query = "INSERT INTO products (ProductName, Price, Quantity, Image) VALUES (?, ?, ?, ?)";
+		        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "root", "");
+		             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-		        try (
-		            java.sql.Connection connection = java.sql.DriverManager.getConnection(url, username, password);
-		            java.sql.PreparedStatement preparedStatement = connection.prepareStatement(query)
-		        ) {
-		            // Set query parameters
 		            preparedStatement.setString(1, productName);
 		            preparedStatement.setDouble(2, Double.parseDouble(price));
 		            preparedStatement.setInt(3, Integer.parseInt(quantity));
-		            preparedStatement.setBytes(4, imageBytes);  // Insert the image as byte array
+		            preparedStatement.setBytes(4, imageBytes);
 
-		            // Execute the query
 		            int rowsInserted = preparedStatement.executeUpdate();
-
 		            if (rowsInserted > 0) {
 		                JOptionPane.showMessageDialog(null, "Product added successfully!");
-		                // Optionally, clear the input fields
 		                textFieldProdName.setText("");
 		                textFieldPrice.setText("");
 		                textField_4.setText("");
 		                lblIMAGE.setIcon(null);
 		            } else {
-		                JOptionPane.showMessageDialog(null, "Error adding the product. Try again.");
+		                JOptionPane.showMessageDialog(null, "Error adding the product.");
 		            }
 		        } catch (Exception ex) {
 		            ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
+		            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
 		        }
 		    }
 		});
+
 
 
 
@@ -276,20 +262,16 @@ public class ProductAdmin extends JFrame {
 		JButton btnUpdate = new JButton("UPDATE");
 		btnUpdate.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        // Get the input data
 		        String productId = textFieldProdID.getText().trim();
 		        String productName = textFieldProdName.getText().trim();
 		        String price = textFieldPrice.getText().trim();
 		        String quantity = textField_4.getText().trim();
-		        String image = lblIMAGE.getIcon() != null ? ((ImageIcon) lblIMAGE.getIcon()).toString() : null;
 
-		        // Check if ProductID is filled
 		        if (productId.isEmpty()) {
-		            JOptionPane.showMessageDialog(null, "Please fill in the Product ID to update.");
+		            JOptionPane.showMessageDialog(null, "Please provide the Product ID to update.");
 		            return;
 		        }
 
-		        // Prepare the SQL query
 		        StringBuilder queryBuilder = new StringBuilder("UPDATE products SET ");
 		        boolean hasUpdates = false;
 
@@ -305,70 +287,53 @@ public class ProductAdmin extends JFrame {
 		            queryBuilder.append("Quantity = ?, ");
 		            hasUpdates = true;
 		        }
-		        if (image != null) {
+		        if (lblIMAGE.getIcon() != null) {
 		            queryBuilder.append("Image = ?, ");
 		            hasUpdates = true;
 		        }
 
 		        if (!hasUpdates) {
-		            JOptionPane.showMessageDialog(null, "No updates provided. Please fill at least one field to update.");
+		            JOptionPane.showMessageDialog(null, "No updates provided. Please fill at least one field.");
 		            return;
 		        }
 
-		        // Remove trailing comma and space, and add WHERE clause
-		        queryBuilder.setLength(queryBuilder.length() - 2); // Remove last ", "
+		        queryBuilder.setLength(queryBuilder.length() - 2); // Remove trailing comma
 		        queryBuilder.append(" WHERE ProductID = ?");
 
-		        String query = queryBuilder.toString();
+		        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "root", "");
+		             PreparedStatement preparedStatement = connection.prepareStatement(queryBuilder.toString())) {
 
-		        // Database connection variables
-		        String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Change to your database name
-		        String username = "root"; // Change to your MySQL username
-		        String password = ""; // Change to your MySQL password
+		            int index = 1;
+		            if (!productName.isEmpty()) preparedStatement.setString(index++, productName);
+		            if (!price.isEmpty()) preparedStatement.setDouble(index++, Double.parseDouble(price));
+		            if (!quantity.isEmpty()) preparedStatement.setInt(index++, Integer.parseInt(quantity));
+		            if (lblIMAGE.getIcon() != null) {
+		                Image image = ((ImageIcon) lblIMAGE.getIcon()).getImage();
+		                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		                Graphics2D g2d = bufferedImage.createGraphics();
+		                g2d.drawImage(image, 0, 0, null);
+		                g2d.dispose();
 
-		        try (
-		            java.sql.Connection connection = java.sql.DriverManager.getConnection(url, username, password);
-		            java.sql.PreparedStatement preparedStatement = connection.prepareStatement(query)
-		        ) {
-		            // Set parameters dynamically
-		            int parameterIndex = 1;
+		                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		                ImageIO.write(bufferedImage, "jpg", baos);
+		                preparedStatement.setBytes(index++, baos.toByteArray());
+		            }
 
-		            if (!productName.isEmpty()) {
-		                preparedStatement.setString(parameterIndex++, productName);
-		            }
-		            if (!price.isEmpty()) {
-		                preparedStatement.setDouble(parameterIndex++, Double.parseDouble(price));
-		            }
-		            if (!quantity.isEmpty()) {
-		                preparedStatement.setInt(parameterIndex++, Integer.parseInt(quantity));
-		            }
-		            if (image != null) {
-		                preparedStatement.setString(parameterIndex++, image );
-		            }
-		            preparedStatement.setString(parameterIndex, productId); // Set ProductID as the last parameter
+		            preparedStatement.setString(index, productId);
 
-		            // Execute the query
 		            int rowsUpdated = preparedStatement.executeUpdate();
-
 		            if (rowsUpdated > 0) {
 		                JOptionPane.showMessageDialog(null, "Product updated successfully!");
-		                // Optionally, clear the input fields
-		                textFieldProdID.setText("");
-		                textFieldProdName.setText("");
-		                textFieldPrice.setText("");
-		                textField_4.setText("");
-		                lblIMAGE.setIcon(null);
 		            } else {
-		                JOptionPane.showMessageDialog(null, "Error updating the product. Product ID not found.");
+		                JOptionPane.showMessageDialog(null, "Product not found.");
 		            }
-		           
-					
-					} catch (Exception ex) {
+		        } catch (Exception ex) {
 		            ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
+		            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
 		        }
 		    }
 		});
+
 
 		btnUpdate.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnUpdate.setBounds(218, 393, 113, 57);
@@ -508,7 +473,7 @@ public class ProductAdmin extends JFrame {
 	                    byte[] imgData = resultSet.getBytes("Image");
 	                    if (imgData != null) {
 	                        ImageIcon icon = new ImageIcon(new ImageIcon(imgData).getImage()
-	                            .getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
+	                                .getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 	                        row.add(icon);
 	                    } else {
 	                        row.add(null);
@@ -520,18 +485,34 @@ public class ProductAdmin extends JFrame {
 	            data.add(row);
 	        }
 
-	        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+	        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+	            @Override
+	            public Class<?> getColumnClass(int column) {
+	                if (column == columnCount - 1) return ImageIcon.class; // Set the image column
+	                return Object.class;
+	            }
+	        };
 	        table.setModel(model);
 
-	        // Set custom renderer for the image column
-	        table.getColumnModel().getColumn(columnCount - 1).setCellRenderer(new DefaultTableCellRenderer() {
-	            @Override
-	            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-	                    boolean hasFocus, int row, int column) {
-	                if (value instanceof ImageIcon) {
-	                    return new JLabel((ImageIcon) value);
+	        // Add MouseListener to the table
+	        table.addMouseListener(new java.awt.event.MouseAdapter() {
+	            public void mouseClicked(java.awt.event.MouseEvent evt) {
+	                int selectedRow = table.getSelectedRow();
+	                if (selectedRow != -1) {
+	                    // Populate text fields with table data
+	                    textFieldProdID.setText(table.getValueAt(selectedRow, 0).toString());
+	                    textFieldProdName.setText(table.getValueAt(selectedRow, 1).toString());
+	                    textFieldPrice.setText(table.getValueAt(selectedRow, 2).toString());
+	                    textField_4.setText(table.getValueAt(selectedRow, 3).toString());
+
+	                    // Handle image
+	                    Object imageIcon = table.getValueAt(selectedRow, 4);
+	                    if (imageIcon instanceof ImageIcon) {
+	                        lblIMAGE.setIcon((ImageIcon) imageIcon);
+	                    } else {
+	                        lblIMAGE.setIcon(null);
+	                    }
 	                }
-	                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 	            }
 	        });
 	    } catch (Exception ex) {
@@ -539,5 +520,6 @@ public class ProductAdmin extends JFrame {
 	        JOptionPane.showMessageDialog(null, "Error loading table data: " + ex.getMessage());
 	    }
 	}
+
 
 }

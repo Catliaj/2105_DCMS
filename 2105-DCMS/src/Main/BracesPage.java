@@ -55,7 +55,7 @@ public class BracesPage implements ActionListener {
 
         BracesPage.setLayout(new BorderLayout());
         BracesPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        BracesPage.setSize(1440, 1024);
+        BracesPage.setSize(1300, 750);
 
         // Create side panel with buttons
         sidePanel.setLayout(new GridLayout(13, 1, 5, 5)); // 13 buttons in a single column

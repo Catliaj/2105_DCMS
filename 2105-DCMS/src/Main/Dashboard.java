@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -275,8 +277,11 @@ public class Dashboard extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Logoutbtn)
 		{
-			dispose();
-			new LogInPage();
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
+		    if (confirm == JOptionPane.YES_OPTION) {
+		    	dispose();
+		    	new LogInPage();
+		    }
 		}
 
 		

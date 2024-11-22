@@ -46,7 +46,7 @@ public class FeedbackForm implements ActionListener {
         FeedbackForm.setIconImage(image.getImage());
         FeedbackForm.setLayout(new BorderLayout());
         FeedbackForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        FeedbackForm.setSize(1440, 1024);
+        FeedbackForm.setSize(1300, 750);
 
         // Header setup
         header.setLayout(new BorderLayout());

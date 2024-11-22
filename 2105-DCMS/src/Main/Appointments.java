@@ -281,8 +281,11 @@ public class Appointments extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Logoutbtn)
 		{
-			dispose();
-			new LogInPage();
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
+		    if (confirm == JOptionPane.YES_OPTION) {
+		    	dispose();
+		    	new LogInPage();
+		    }
 		}
 
 		

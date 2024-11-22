@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
@@ -18,16 +22,16 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import backend.newPatient_Backend;
-
 import javax.swing.border.BevelBorder;
-
+import DCMS_DB_CONNECTION.DB_DCMSConnection;
 public class PatientRecord extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable PatientHistorytable;
 	private JTextField Searchtxtfield;
-
+	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
+	private Connection connection;
 	/**
 	 * Launch the application.
 	 */
@@ -167,33 +171,7 @@ public class PatientRecord extends JFrame {
 		PatientHistorytable.setBackground(new Color(226, 224, 224));
 		PatientHistorytable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		PatientHistorytable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
+			new Object[][] {},
 			new String[] {
 				"DATE", "TIME", "TREATMENT", "REMARKS"
 			}
@@ -279,16 +257,52 @@ public class PatientRecord extends JFrame {
 		    }
 
 		    newPatient_Backend backend = new newPatient_Backend();
-		    boolean isUpdated = backend.updatePatientData(patientID, firstName, middleInitial, lastName, dob, age, gender, email, address, contactNumber);
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this patient record?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 
-		    if (isUpdated) {
-		        JOptionPane.showMessageDialog(this, "Patient details updated successfully!");
-		    } else {
-		        JOptionPane.showMessageDialog(this, "Failed to update patient details. Please try again.");
+		    if (confirm == JOptionPane.YES_OPTION) {
+            	boolean isUpdated = backend.updatePatientData(patientID, firstName, middleInitial, lastName, dob, age, gender, email, address, contactNumber);
+
+            	if (isUpdated) {
+            		JOptionPane.showMessageDialog(this, "Patient details updated successfully!");
+            	} else {
+            		JOptionPane.showMessageDialog(this, "Failed to update patient details. Please try again.");
+		    }
+        	}
+		});
+		
+		Deletebtn.addActionListener(e -> {
+		    String patientID = PIDtxtpane.getText().trim();
+
+		    if (patientID.isEmpty()) {
+		        JOptionPane.showMessageDialog(this, "Please enter a valid Patient ID to delete.");
+		        return;
+		    }
+
+		    newPatient_Backend backend = new newPatient_Backend();
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this patient record?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+
+		    if (confirm == JOptionPane.YES_OPTION) {
+		        boolean isDeleted = backend.deletePatientByID(patientID);
+
+		        if (isDeleted) {
+		            JOptionPane.showMessageDialog(this, "Patient record deleted successfully!");
+		            // Clear text fields after deletion
+		            PIDtxtpane.setText("");
+		            Nametxtpane.setText("");
+		            DOBtextPane.setText("");
+		            AGEtextPane.setText("");
+		            Gendertxtpane.setText("");
+		            EmailtextPane.setText("");
+		            Addresstxtpane.setText("");
+		            Contacttxtpane.setText("");
+		            // Optionally refresh table or UI
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Failed to delete patient record. Please try again.");
+		        }
 		    }
 		});
 
 
 	}
-	
+
 }

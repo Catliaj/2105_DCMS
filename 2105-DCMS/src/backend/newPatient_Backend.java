@@ -249,5 +249,19 @@ public class newPatient_Backend
 			return isUpdated;
 			}
 
+	public boolean deletePatientByID(String patientID) {
+	    try {
+	        // Database connection and deletion logic
+	    	connection = dcmsConnection.getConnection();
+	        String query = "DELETE FROM patientdata WHERE patientid = ?";
+	        PreparedStatement pstmt = connection.prepareStatement(query);
+	        pstmt.setString(1, patientID);
+	        int rowsAffected = pstmt.executeUpdate();
+	        return rowsAffected > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 
 	}

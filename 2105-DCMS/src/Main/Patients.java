@@ -281,11 +281,6 @@ public class Patients extends JFrame implements ActionListener{
 			dispose();
 			new SALES();
 		}
-		else if(e.getSource() == Logoutbtn)
-		{
-			dispose();
-			new LogInPage();
-		}
 		else if(e.getSource() == btnAddPatient)
 		{
 			new NewPatient();
@@ -305,8 +300,11 @@ public class Patients extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Logoutbtn)
 		{
-			dispose();
-			new LogInPage();
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
+		    if (confirm == JOptionPane.YES_OPTION) {
+		    	dispose();
+		    	new LogInPage();
+		    }
 		}
 
 
