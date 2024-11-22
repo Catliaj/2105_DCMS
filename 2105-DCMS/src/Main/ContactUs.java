@@ -60,13 +60,6 @@ public class ContactUs implements ActionListener {
         navPanel.setBackground(new Color(5, 59, 67));
 
 
-        // Set styles for buttons
-        setButtonStyles(homeBtn);
-        setButtonStyles(aboutUsBtn);
-        setButtonStyles(servicesBtn);
-        setButtonStyles(productsBtn);
-        setButtonStyles(contactUsBtn);
-
         // Set styles for 
         contactUsBtn.setFont(new Font("Arial", Font.BOLD, 16));
         contactUsBtn.setBackground(Color.WHITE);
@@ -171,6 +164,7 @@ public class ContactUs implements ActionListener {
 
         // Make frame visible
         ContactUs.setVisible(true);
+        ContactUs.setLocationRelativeTo(null);
     }
 
     // Method to create a small panel with an image, main text, and two subtexts
@@ -249,18 +243,16 @@ public class ContactUs implements ActionListener {
 			ContactUs.dispose();
 			new BracesPage();
 		}
-
-		else if(e.getSource() == contactUsBtn )
-		{
-			ContactUs.dispose();
-			new ContactUs();
-		}
         else if(e.getSource() == feedbackBtn)
         {
         	ContactUs.dispose();
         	new FeedbackForm();
         }
-
+        else if(e.getSource() == productsBtn)
+        {
+        	ContactUs.dispose();
+        	new product();
+        }
 
 
 		

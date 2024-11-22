@@ -68,11 +68,11 @@ public class NewPatient extends JFrame implements ActionListener {
     	setResizable(false);
     	setLocationRelativeTo(null);
     	setVisible(true);
+    	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setBackground(new Color(128, 128, 128));
         setForeground(new Color(0, 0, 0));
         setTitle("NEW PATIENT");
         setFont(new Font("Arial", Font.BOLD, 12));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 671, 556);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -234,65 +234,20 @@ public class NewPatient extends JFrame implements ActionListener {
             String address = AddressTxtField.getText();
             String ageText = AgeTxtField.getText();
             Integer age = 0;
-
             
+
             try {
                 age = Integer.parseInt(ageText);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid number for age.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            
             SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
             String dateOfBirth = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()) : "Not Selected";
 
-            
-            backend.setFirstName(firstName);
-            backend.setMiddleInitial(mi);
-            backend.setLastName(lastName);
-            backend.setAge(age);
-            backend.setGender(selectedGender);
-            backend.setContactNumber(contact);
-            backend.setEmail(email);
-            backend.setAddress(address);
 
-           
-            try {
-            	connection = dcmsConnection.getConnection();
-                PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO patientdata (FirstName, LastName, MiddleInitial, Age, Gender, ContactNumber, Email, Address, DateOfBirth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-                );
-                ps.setString(1, backend.getFirstName());
-                ps.setString(2, backend.getLastName());
-                ps.setString(3, backend.getMiddleInitial());
-                ps.setInt(4, backend.getAge());
-                ps.setString(5, backend.getGender());
-                ps.setString(6, backend.getContactNumber());
-                ps.setString(7, backend.getEmail());
-                ps.setString(8, backend.getAddress());
-                ps.setString(9, dateOfBirth);
-
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Patient record saved successfully!");
-                    FirstNameTxtField.setText("");
-                    LastNameTxtField.setText("");
-                    MITxtField.setText("");
-                    ContactTxtField.setText("");
-                    EmailTxtField.setText("");
-                    AddressTxtField.setText("");
-                    AgeTxtField.setText("");
-                    
-                } else {
-                    JOptionPane.showMessageDialog(this, "Failed to save patient record. Please try again.");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-            }
-            
+            new newPatient_Backend(firstName,mi,lastName,selectedGender,contact,dateOfBirth,email,address,age);
+            dispose();
         }
     }
 }

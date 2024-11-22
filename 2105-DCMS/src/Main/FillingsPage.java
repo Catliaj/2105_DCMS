@@ -210,6 +210,7 @@ public class FillingsPage implements ActionListener{
 
 	        // Make frame visible
 	        FillingsPage.setVisible(true);
+	        FillingsPage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

@@ -38,7 +38,7 @@ public class LogInPage implements ActionListener {
         // Frame settings
         logInFrame.setResizable(false);
         logInFrame.setTitle("LOG IN");
-        logInFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\path\\to\\icon.png"));
+        logInFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("/Resources/icon.png"));
         logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logInFrame.getContentPane().setBackground(new Color(2, 79, 90));
         logInFrame.setSize(836, 589);
@@ -105,7 +105,7 @@ public class LogInPage implements ActionListener {
         logInButton.addActionListener(this);
         ContentBackG.setHorizontalAlignment(SwingConstants.CENTER);
         ContentBackG.setBackground(new Color(194, 192, 192));
-        ContentBackG.setIcon(new ImageIcon("C:\\path\\to\\background.png"));
+        ContentBackG.setIcon(new ImageIcon(LogInPage.class.getResource("/Resources/backgroundLogin.png")));
         ContentBackG.setBounds(-12, -23, 901, 622);
         logInFrame.setLocationRelativeTo(null);
         logInFrame.getContentPane().add(ContentBackG);

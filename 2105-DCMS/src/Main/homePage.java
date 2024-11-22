@@ -98,12 +98,7 @@ public class homePage implements ActionListener
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-        productsBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		 homepage.dispose(); // Close the current frame
-        	        new product(); // Open the ProductForm
-        	}
-        });
+
      
 
         navPanel.add(productsBtn);
@@ -162,6 +157,7 @@ public class homePage implements ActionListener
 
         // Make frame visible
         homepage.setVisible(true);
+        homepage.setLocationRelativeTo(null);
         textPanel.setOpaque(false);
         clinicName.setOpaque(false);
         subText.setOpaque(false);

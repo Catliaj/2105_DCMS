@@ -40,6 +40,7 @@ public class Patients extends JFrame implements ActionListener{
     private JButton ProductSalesbtn;
     private JButton btnAddPatient;
     private JButton btnViewRecord;
+    private JButton btnRefresh;
 
     /**
      * Launch the application.
@@ -236,11 +237,12 @@ public class Patients extends JFrame implements ActionListener{
         btnViewRecord.addActionListener(this);
         panel.add(btnViewRecord);
         
-        JButton btnRefresh = new JButton("REFRESH");
+        btnRefresh = new JButton("REFRESH");
         btnRefresh.setForeground(Color.BLACK);
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnRefresh.setBackground(new Color(194, 192, 192));
         btnRefresh.setBounds(1005, 600, 217, 50);
+        btnRefresh.addActionListener(this);
         panel.add(btnRefresh);
         
         JLabel lblNewLabel_1 = new JLabel("");
@@ -272,7 +274,7 @@ public class Patients extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Productbtn)
 		{
-			System.out.println("click");
+			new ProductAdmin();
 		}
 		else if(e.getSource() == ProductSalesbtn )
 		{
@@ -297,7 +299,17 @@ public class Patients extends JFrame implements ActionListener{
 			dispose();
 			new POS();
 		}
-		
+		else if (e.getSource() == btnRefresh) {
+			dispose();
+			new Patients();
+		}
+		else if(e.getSource() == Logoutbtn)
+		{
+			dispose();
+			new LogInPage();
+		}
+
+
 	}
 	private void loadPatientData() {
 	

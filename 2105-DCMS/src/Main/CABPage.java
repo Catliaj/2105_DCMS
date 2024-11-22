@@ -216,6 +216,7 @@ public class CABPage implements ActionListener {
 
         // Make frame visible
         CABPage.setVisible(true);
+        CABPage.setLocationRelativeTo(null);
     }
 
     // Method to set button styles

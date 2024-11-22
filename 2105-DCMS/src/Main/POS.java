@@ -79,9 +79,9 @@ public class POS extends JFrame {
 		setResizable(false);
 		setBackground(new Color(5, 59, 67));
 		setTitle("POS");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Adminiconlogo.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("/Resources/Adminiconlogo.png"));
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(150, 50, 1300, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -106,16 +106,13 @@ public class POS extends JFrame {
 		CustomerNamelbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
 		CustomerNamelbl.setBounds(77, 19, 250, 34);
 		TopPanel.add(CustomerNamelbl);
-		
-
-		
+				
 		JLabel Datelbl = new JLabel("DATE");
 		Datelbl.setForeground(new Color(194, 192, 192));
 		Datelbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
 		Datelbl.setBounds(815, 19, 84, 34);
 		TopPanel.add(Datelbl);
-		
-		
+				
 		CustomerNametxtfield = new JTextField();
 		CustomerNametxtfield.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		CustomerNametxtfield.setColumns(10);
@@ -139,15 +136,12 @@ public class POS extends JFrame {
 		Productslbl.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		Productslbl.setBounds(115, 25, 178, 70);
 		ProductPanel.add(Productslbl);
-
 		
 		JComboBox<String> Productcombobox = new JComboBox<>(new String[] {
 		"", "Colgate Optic White", "Oral-B Pro Health", "Oral-B Toothbrush", "Colgate Plax Mouthwash", "Oral-B Floss Sticks", "Colgate Optic White Teeth Whitening Pen", "Colgate Kids Toothpaste", "Oral-B Pro 1000 Electric Toothbrush"});
 		Productcombobox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		Productcombobox.setBounds(61, 158, 276, 40);
 		ProductPanel.add(Productcombobox);
-		
-		
 		
 		Productpricetxtfield = new JTextField();
 		JSpinner Qtyspinner = new JSpinner();
@@ -187,8 +181,7 @@ public class POS extends JFrame {
         JScrollPane scrollPane_1 = new JScrollPane(addedItemsArea);
         scrollPane_1.setBounds(10, 40, 380, 130);
         AddedItemsPanel.add(scrollPane_1);
-		
-		
+				
 		JPanel TotalPanel_1_1 = new JPanel();
 		TotalPanel_1_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		TotalPanel_1_1.setBackground(new Color(5, 59, 67));
@@ -260,11 +253,12 @@ public class POS extends JFrame {
 		addbtn_1.setBackground(new Color(194, 192, 192));
 		addbtn_1.setBounds(141, 378, 127, 35);
 		ServicePanel.add(addbtn_1);
-		addbtn_1.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
+		addbtn_1.addActionListener(new ActionListener() 
+		{
+		    public void actionPerformed(ActionEvent e) 
+		    {
 		        String selectedService = (String) Servicecombobox.getSelectedItem();
 		        String servicePrice = textField.getText();
-
 		        if (!selectedService.isEmpty() && !servicePrice.isEmpty()) {
 		            // Use the instance variable
 		            addedItemsArea.append("Service: " + selectedService + "\n");
@@ -298,12 +292,10 @@ public class POS extends JFrame {
 		Receiptbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		Receiptbtn.setBounds(553, 644, 159, 37);
 		panel.add(Receiptbtn);
-		// ActionListener for Receipt Button
+		
 		Receiptbtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        // Retrieve details
-		       
-		      
+		        
 		        String productPrice = Productpricetxtfield.getText();
 		        double productpriceToInt = Double.parseDouble(productPrice);
 		        String servicePrice = textField.getText();
@@ -315,38 +307,9 @@ public class POS extends JFrame {
 		        
 		        posbackend.setCustomerName(CustomerNametxtfield.getText());
 		        posbackend.setProducts( Productcombobox.getSelectedItem().toString());
-		        posbackend.setProductPrice(productpriceToInt);
 		        posbackend.setServices(Servicecombobox.getSelectedItem().toString());
-		        posbackend.setServicePrice(servicepriceToInt);
-		        posbackend.setTotal(totalpriceToInt);
-		        
-		        
-		        
-		        
-		        connection = dcmsConnection.getConnection();
-		        // Insert into the database
-		        try (Connection conn = connection) {
-		            String sql = "INSERT INTO billdata ( customername, productname, productprice, servicename, serviceprice, total, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		            PreparedStatement ps = conn.prepareStatement(sql);
-		           
-		            ps.setString(1, posbackend.getCustomerName());
-		            ps.setString(2, posbackend.getProducts());
-		            ps.setDouble(3, posbackend.getProductPrice());
-		            ps.setString(4, posbackend.getServices());
-		            ps.setDouble(5, posbackend.getServicePrice());
-		            ps.setDouble(6, posbackend.getTotal());
-		            ps.setDate(7, java.sql.Date.valueOf(date));
-
-		            int rowsInserted = ps.executeUpdate();
-		            if (rowsInserted > 0) {
-		                JOptionPane.showMessageDialog(null, "Bill details saved successfully!");
-		            }
-		        } catch (SQLException ex) {
-		            ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Error saving bill details to the database.");
-		        }
-
-		        // Generate and display receipt
+		     		        
+		        new POS_backend(posbackend.getCustomerName(),posbackend.getProducts(), posbackend.getServices(),productpriceToInt,servicepriceToInt,totalpriceToInt,date);
 		        generateReceipt(posbackend.getCustomerName(), posbackend.getProducts(),productPrice , posbackend.getServices(),servicePrice , subtotal, total, date);
 		    }
 		});
@@ -381,7 +344,7 @@ public class POS extends JFrame {
 		Exitbtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        // Close the application when the "Exit" button is clicked
-		        System.exit(0);
+		        dispose();
 		    }
 		});
 		

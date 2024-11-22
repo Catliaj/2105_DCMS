@@ -198,6 +198,7 @@ public class RCTPage implements ActionListener{
 
 	        // Make frame visible
 	        RCTPage.setVisible(true);
+	        RCTPage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

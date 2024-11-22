@@ -212,7 +212,7 @@ public class SALES extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Productbtn)
 		{
-			System.out.println("click");
+			new ProductAdmin();
 		}
 		else if(e.getSource() == Billingbtn)
 		{
@@ -237,6 +237,11 @@ public class SALES extends JFrame implements ActionListener{
 		{
 			dispose();
 			new ProductSales();
+		}
+		else if(e.getSource() == Logoutbtn)
+		{
+			dispose();
+			new LogInPage();
 		}
 
 		

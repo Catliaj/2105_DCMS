@@ -100,12 +100,6 @@ public class ImplantsPage implements ActionListener{
 
 	        // Set styles for buttons and add action listeners
 
-	        setButtonStyles(homeBtn);
-	        setButtonStyles(aboutUsBtn);
-	        setButtonStyles(servicesBtn);
-	        setButtonStyles(productsBtn);
-	        setButtonStyles(contactUsBtn);
-
 	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
 	        servicesBtn.setBackground(Color.WHITE);
 	        servicesBtn.setForeground(new Color(2, 79, 90));
@@ -121,8 +115,6 @@ public class ImplantsPage implements ActionListener{
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
-	        navPanel.add(productsBtn);
-	        navPanel.add(contactUsBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
@@ -206,6 +198,7 @@ public class ImplantsPage implements ActionListener{
 
 	        // Make frame visible
 	        homepage.setVisible(true);
+	        homepage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

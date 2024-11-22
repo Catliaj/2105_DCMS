@@ -199,6 +199,7 @@ public class VeneersPage implements ActionListener {
 
 	        // Make frame visible
 	        homepage.setVisible(true);
+	        homepage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles
@@ -221,12 +222,16 @@ public class VeneersPage implements ActionListener {
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	homepage.dispose();
 	            new aboutUs();
-	        }  else if (e.getSource() == productsBtn) {
+	        }  
 
-	        	
-	            System.out.println("Products button clicked");
-	            
-	        } else if (e.getSource() == contactUsBtn) {
+	        else if(e.getSource() == productsBtn)
+	        {
+	        	homepage.dispose();
+	        	new product();
+	        }
+	        
+	        
+	        else if (e.getSource() == contactUsBtn) {
 	        	homepage.dispose();
 	            new  ContactUs();
 	          

@@ -7,12 +7,18 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import backend.POS_backend;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ProductSales extends JFrame implements ActionListener{
@@ -21,7 +27,7 @@ public class ProductSales extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JTable table;
 	private JButton btnBack;
-
+	private JButton btnRefresh;
 
 	/**
 	 * Launch the application.
@@ -125,11 +131,8 @@ public class ProductSales extends JFrame implements ActionListener{
 		panel_1.setBounds(77, 69, 981, 458);
 		panel.add(panel_1);
 		
-		JButton btnRefresh = new JButton("REFRESH");
-		btnRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnRefresh = new JButton("REFRESH");
+		btnRefresh.addActionListener(this);
 		btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnRefresh.setBackground(new Color(194, 192, 192));
 		btnRefresh.setBounds(365, 555, 175, 45);
@@ -139,6 +142,7 @@ public class ProductSales extends JFrame implements ActionListener{
 		lblNewLabel_1.setIcon(new ImageIcon(ProductSales.class.getResource("/Resources/Background (2).png")));
 		lblNewLabel_1.setBounds(0, 0, 1136, 615);
 		panel.add(lblNewLabel_1);
+		loadProductBillData();
 	}
 
 	@Override
@@ -149,5 +153,27 @@ public class ProductSales extends JFrame implements ActionListener{
 			dispose();
 			new SALES();
 		}
+		else if (e.getSource() == btnRefresh) {
+			dispose();
+			new ProductSales();
+		}
+	}
+	private void loadProductBillData() 
+	{
+		
+	    DefaultTableModel model = (DefaultTableModel) table.getModel();
+	    model.setRowCount(0); // Clear existing data
+	   
+	    POS_backend backend = new POS_backend();
+	    List<String[]> ProductBillData = backend.getProductBillData();
+	    // Check if there is any data to display
+	    if (ProductBillData.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No patient data found.");
+	        return;
+	    }
+	    // Loop through the list and add rows to the table
+	    for (String[] row : ProductBillData) {
+	        model.addRow(row);
+	    }
 	}
 }

@@ -208,6 +208,7 @@ public class ExtractionPage implements ActionListener{
 
 	        // Make frame visible
 	        ExtractionPage.setVisible(true);
+	        ExtractionPage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

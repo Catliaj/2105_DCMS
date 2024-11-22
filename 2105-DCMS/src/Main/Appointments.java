@@ -40,6 +40,7 @@ public class Appointments extends JFrame implements ActionListener{
     private JButton Logoutbtn;
     private JButton ProductSalesbtn;
     private JButton btnBookAppointment;
+    private JButton btnRefresh;
 
     /**
      * Launch the application.
@@ -238,7 +239,7 @@ public class Appointments extends JFrame implements ActionListener{
         lblNewLabel_3.setBounds(294, 351, 45, 13);
         panel.add(lblNewLabel_3);
         
-        JButton btnRefresh = new JButton("REFRESH");
+        btnRefresh = new JButton("REFRESH");
         btnRefresh.setForeground(Color.BLACK);
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnRefresh.setBackground(new Color(194, 192, 192));
@@ -274,7 +275,7 @@ public class Appointments extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Productbtn)
 		{
-			System.out.println("click");
+			new ProductAdmin();
 		}
 		else if(e.getSource() == Billingbtn)
 		{
@@ -295,11 +296,21 @@ public class Appointments extends JFrame implements ActionListener{
 		{
 			new AppointmentForm();
 		}
+		else if (e.getSource() == btnRefresh) {
+			dispose();
+			new Appointments();
+		}
+		else if(e.getSource() == Logoutbtn)
+		{
+			dispose();
+			new LogInPage();
+		}
 
 		
 	}
 	
-	private void loadAppointmentData() {
+	private void loadAppointmentData() 
+	{
 		
 	    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
 	    model.setRowCount(0); // Clear existing data

@@ -44,7 +44,7 @@ public class PatientRecord extends JFrame {
 		setTitle("PATIENT DETAILS");
 		setResizable(false);
     	setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 870, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

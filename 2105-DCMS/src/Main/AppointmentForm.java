@@ -54,15 +54,13 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
 	ApointmentForm_backend backend =new ApointmentForm_backend();
-	private Connection connection;
 	
 	public AppointmentForm() {
 		setResizable(false);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 576);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -178,48 +176,20 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	    if (e.getActionCommand().equals("BOOK APPOINTMENT")) {
-	    	connection = dcmsConnection.getConnection();
+	    	
+	    	String name = NameTxtField.getText();
+	    	String email = EmailTxtField.getText();
+	    	String PhoneNumber = CotactTxtField.getText();
+	    	String reason = (String) ReasoncomboBox.getSelectedItem();
 	    	SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
 	    	String date = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()): "Not Selected";
 	        String hour = (String) hourComboBox.getSelectedItem();
 	        String minute = (String) minuteComboBox.getSelectedItem();
 	        String amPm = (String) amPmComboBox.getSelectedItem();
 	        String time = hour + ":" + minute + " " + amPm;
-	       
-	        backend.setName(NameTxtField.getText());
-	        backend.setEmail(EmailTxtField.getText());
-	        backend.setPhoneNumber(CotactTxtField.getText());
-	        backend.setDate((String)date);
-	        backend.setTime((String)time);
-	        backend.setReason((String) ReasoncomboBox.getSelectedItem());
-            try 
-            {               	
-                
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO appointments (Name, Email, PhoneNumber, Date, Time, Reason) VALUES (?, ?, ?, ?, ?, ?)");
-                ps.setString(1, backend.getName());
-                ps.setString(2, backend.getEmail());
-                ps.setString(3, backend.getPhoneNumber());
-                ps.setString(4, backend.getDate());
-                ps.setString(5, backend.getTime());
-                ps.setString(6, backend.getReason());
-                
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected > 0) 
-                {
-                    JOptionPane.showMessageDialog( null, "Appointment scheduled successfully!");
-                } 
-                else 
-                {
-                    JOptionPane.showMessageDialog( null, "Failed to Feedback. Please try again.");
-                }
-
-            } 
-            catch (Exception ex) 
-            {
-                ex.printStackTrace(); 
-                JOptionPane.showMessageDialog( null,"Error: " + ex.getMessage() );
-            }
+	      
+	        new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);
+	        
 	    }
 	}
 

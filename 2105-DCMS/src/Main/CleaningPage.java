@@ -213,6 +213,7 @@ public class CleaningPage implements ActionListener {
 
 	        // Make frame visible
 	        CleaningPage.setVisible(true);
+	        CleaningPage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

@@ -17,7 +17,7 @@ public class FeedbackForm implements ActionListener {
 	
 	
 	JOptionPane message = new JOptionPane();
-    JFrame AppointmentForm = new JFrame("DCF Dental Clinic");
+    JFrame FeedbackForm = new JFrame("DCF Dental Clinic");
     JButton sumbitBtn = new JButton("SUBMIT");
     JPanel content = new BackgroundPanel("/Resources/Background (2).png");
 
@@ -43,10 +43,10 @@ public class FeedbackForm implements ActionListener {
         // Frame setup
     	connection = dcmsConnection.getConnection();
         ImageIcon image = new ImageIcon(getClass().getResource("/Resources/DCFlogo.png"));
-        AppointmentForm.setIconImage(image.getImage());
-        AppointmentForm.setLayout(new BorderLayout());
-        AppointmentForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        AppointmentForm.setSize(1440, 1024);
+        FeedbackForm.setIconImage(image.getImage());
+        FeedbackForm.setLayout(new BorderLayout());
+        FeedbackForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        FeedbackForm.setSize(1440, 1024);
 
         // Header setup
         header.setLayout(new BorderLayout());
@@ -85,7 +85,7 @@ public class FeedbackForm implements ActionListener {
         navPanel.add(feedbackBtn);
 
         header.add(navPanel, BorderLayout.CENTER);
-        AppointmentForm.add(header, BorderLayout.NORTH);
+        FeedbackForm.add(header, BorderLayout.NORTH);
 
         // Content area
         content.setLayout(new GridBagLayout());  
@@ -144,7 +144,7 @@ public class FeedbackForm implements ActionListener {
         formPanel.add(messageLabel);
 
         content.add(formPanel);
-        AppointmentForm.add(content, BorderLayout.CENTER);
+        FeedbackForm.add(content, BorderLayout.CENTER);
 
         // Footer setup
         footer.setLayout(new BorderLayout());
@@ -157,9 +157,10 @@ public class FeedbackForm implements ActionListener {
         footer.add(dateTimeLabel, BorderLayout.CENTER);
         dateTimeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         dateTimeLabel.setForeground(Color.WHITE);
-        AppointmentForm.add(footer, BorderLayout.SOUTH);
-
-        AppointmentForm.setVisible(true);
+        FeedbackForm.add(footer, BorderLayout.SOUTH);
+        FeedbackForm.setVisible(true);
+        FeedbackForm.setLocationRelativeTo(null);
+        
     }
 
     private void setButtonStyles(JButton button) {
@@ -202,55 +203,26 @@ public class FeedbackForm implements ActionListener {
             backend.setEmail(emailField.getText());
             backend.setPhoneNumber(phoneNumberField.getText());
             backend.setFeedback(reasonField.getText());
-            try 
-            {               	
-                
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO feedbackdata (Name, Email, PhoneNumber, Feedback) VALUES (?, ?, ?, ?)");
-                ps.setString(1, backend.getName());
-                ps.setString(2, backend.getEmail());
-                ps.setString(3, backend.getPhoneNumber());
-                ps.setString(4, backend.getFeedback());
-                
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected > 0) 
-                {
-                    JOptionPane.showMessageDialog( null, "Appointment scheduled successfully!");
-                    nameField.setText("");
-                    emailField.setText("");
-                    phoneNumberField.setText("");
-                    reasonField.setText("");
-                } 
-                else 
-                {
-                    JOptionPane.showMessageDialog( null, "Failed to Feedback. Please try again.");
-                }
-
-            } 
-            catch (Exception ex) 
-            {
-                ex.printStackTrace(); 
-                JOptionPane.showMessageDialog( null,"Error: " + ex.getMessage() );
-            }
+            new  feedback_backend(backend.getName(),backend.getEmail(),backend.getPhoneNumber(),backend.getFeedback());
             nameField.setText("");
             emailField.setText("");
             phoneNumberField.setText("");
             reasonField.setText("");
         } else if (e.getSource() == homeBtn) {
-            AppointmentForm.dispose();
+            FeedbackForm.dispose();
             new homePage();
         } else if (e.getSource() == aboutUsBtn) {
-            AppointmentForm.dispose();
+            FeedbackForm.dispose();
             new aboutUs();
         }
 		else if(e.getSource() == servicesBtn)
 		{
-			AppointmentForm.dispose();
+			FeedbackForm.dispose();
 			new BracesPage();
 		}
 		else if(e.getSource() == contactUsBtn)
 		{
-			AppointmentForm.dispose();
+			FeedbackForm.dispose();
 			new ContactUs();
 		}
 

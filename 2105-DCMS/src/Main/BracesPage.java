@@ -26,7 +26,6 @@ public class BracesPage implements ActionListener {
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
-    JButton appointmentBtn = new JButton("APPOINTMENT");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
     JButton feedbackBtn = new JButton("FEEDBACK");
@@ -107,13 +106,6 @@ public class BracesPage implements ActionListener {
 
         // Set styles for buttons
 
-        setButtonStyles(homeBtn);
-        setButtonStyles(aboutUsBtn);
-        setButtonStyles(servicesBtn);
-        setButtonStyles(appointmentBtn);
-        setButtonStyles(productsBtn);
-        setButtonStyles(contactUsBtn);
-
         servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
         servicesBtn.setBackground(Color.WHITE);
         servicesBtn.setForeground(new Color(2, 79, 90));
@@ -130,11 +122,6 @@ public class BracesPage implements ActionListener {
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-
-        navPanel.add(appointmentBtn);
-        navPanel.add(productsBtn);
-        navPanel.add(contactUsBtn);
-
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
@@ -222,6 +209,7 @@ public class BracesPage implements ActionListener {
 
         // Make frame visible
         BracesPage.setVisible(true);
+        BracesPage.setLocationRelativeTo(null);
     }
 
     // Method to set button styles
@@ -355,10 +343,5 @@ public class BracesPage implements ActionListener {
             // Draw the background image, scaled to fit the panel size
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
-    }
-
-
-    public static void main(String[] args) {
-        new BracesPage();
     }
 }

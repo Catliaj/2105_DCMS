@@ -96,12 +96,6 @@ public class DenturesPage implements ActionListener{
 
 	        // Set styles for buttons and add action listeners
 
-	        setButtonStyles(homeBtn);
-	        setButtonStyles(aboutUsBtn);
-	        setButtonStyles(servicesBtn);
-	        setButtonStyles(productsBtn);
-	        setButtonStyles(contactUsBtn);
-
 	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
 	        servicesBtn.setBackground(Color.WHITE);
 	        servicesBtn.setForeground(new Color(2, 79, 90));
@@ -118,10 +112,6 @@ public class DenturesPage implements ActionListener{
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
-
-	        navPanel.add(productsBtn);
-	        navPanel.add(contactUsBtn);
-
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
@@ -210,6 +200,7 @@ public class DenturesPage implements ActionListener{
 
 	        // Make frame visible
 	        DenturesPage.setVisible(true);
+	        DenturesPage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

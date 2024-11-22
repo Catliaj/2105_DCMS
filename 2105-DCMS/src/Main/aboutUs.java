@@ -130,6 +130,7 @@ public class aboutUs implements ActionListener {
 
         // Make frame visible
         aboutpage.setVisible(true);
+        aboutpage.setLocationRelativeTo(null);
     }
 
     // Method to set button styles
@@ -151,17 +152,6 @@ public class aboutUs implements ActionListener {
 			aboutpage.dispose();
 			new homePage();
 		}
-		else if(e.getSource() == aboutUsBtn)
-		{
-			aboutpage.dispose();
-			new aboutUs();
-		}
-		else if(e.getSource() == aboutUsBtn)
-		{
-			aboutpage.dispose();
-			new aboutUs();
-		}
-
 		else if(e.getSource() == servicesBtn)
 		{
 			aboutpage.dispose();
@@ -176,6 +166,11 @@ public class aboutUs implements ActionListener {
         {
         	aboutpage.dispose();
         	new FeedbackForm();
+        }
+        else if(e.getSource() == productsBtn)
+        {
+        	aboutpage.dispose();
+        	new product();
         }
 		
     }

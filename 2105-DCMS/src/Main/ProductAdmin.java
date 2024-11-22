@@ -47,8 +47,11 @@ public class ProductAdmin extends JFrame {
 	 * Create the frame.
 	 */
 	public ProductAdmin() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1300, 750);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -367,7 +370,6 @@ public class ProductAdmin extends JFrame {
 		btnBACK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new Dashboard();
 			}
 		});
 		btnBACK.setFont(new Font("Segoe UI", Font.BOLD, 13));

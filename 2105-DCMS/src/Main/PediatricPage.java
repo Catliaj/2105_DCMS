@@ -200,6 +200,7 @@ public class PediatricPage implements ActionListener {
 
 	        // Make frame visible
 	        homepage.setVisible(true);
+	        homepage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

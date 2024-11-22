@@ -1,8 +1,6 @@
 package backend;
 
 
-import java.sql.Connection;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -16,10 +14,52 @@ public class newPatient_Backend
 {
 	private String firstName,MiddleInitial, lastName, gender,ContactNumber,DateOfBirth,Email,Address;
 	private int age;
-
-	
-	
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
+	private Connection connection;
+	  
+	
+	public newPatient_Backend(String firstName, String middleInitial, String lastName, String gender,
+			                 String contactNumber, String dateOfBirth, String email, String address, int age) 
+	{
+		setFirstName(firstName);
+		setMiddleInitial(middleInitial);
+		setLastName(lastName);
+		setGender(gender);
+		setContactNumber(contactNumber);
+		setDateOfBirth(dateOfBirth);
+		setEmail(email);
+		setAddress(address);
+		setAge(age);
+		
+		
+		try {
+        	connection = dcmsConnection.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                "INSERT INTO patientdata (FirstName, LastName, MiddleInitial, Age, Gender, ContactNumber, Email, Address, DateOfBirth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            ps.setString(1, getFirstName());
+            ps.setString(2, getLastName());
+            ps.setString(3, getMiddleInitial());
+            ps.setInt(4,    getAge());
+            ps.setString(5, getGender());
+            ps.setString(6, getContactNumber());
+            ps.setString(7, getEmail());
+            ps.setString(8, getAddress());
+            ps.setString(9, dateOfBirth);
+
+            int rowsAffected = ps.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Successfully Add");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        }
+        
+
+	}
+
+	public newPatient_Backend() {}
+	
 	public String getFirstName() 
 	{
 		return firstName;
@@ -106,7 +146,7 @@ public class newPatient_Backend
 		this.age = age;
 	}
 
-	  private Connection connection;
+
 
 	    public List<String[]> getPatientData() {
 	        List<String[]> patientData = new ArrayList<>();

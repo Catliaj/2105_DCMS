@@ -212,6 +212,7 @@ public class GCPage implements ActionListener {
 
 	        // Make frame visible
 	        GCPage.setVisible(true);
+	        GCPage.setLocationRelativeTo(null);
 	    }
 
 	    // Method to set button styles

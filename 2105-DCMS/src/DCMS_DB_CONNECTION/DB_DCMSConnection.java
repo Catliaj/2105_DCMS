@@ -18,8 +18,7 @@ public class DB_DCMSConnection
         (
             "jdbc:mysql://localhost:3306/dcfdentalclinicdb", 
             "admin", 
-            "admin"
-            
+            "admin"     
         );
 		
 		}
