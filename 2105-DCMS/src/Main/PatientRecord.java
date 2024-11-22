@@ -14,12 +14,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.border.BevelBorder;
 
 public class PatientRecord extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
+	private JTable PatientHistorytable;
+	private JTextField Searchtxtfield;
 
 	/**
 	 * Launch the application.
@@ -59,110 +61,107 @@ public class PatientRecord extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("PATIENT DETAILS:");
-		lblNewLabel.setBounds(17, 10, 246, 60);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		panel.add(lblNewLabel);
+		JLabel PatientDetailslbl = new JLabel("PATIENT DETAILS:");
+		PatientDetailslbl.setBounds(17, 10, 246, 60);
+		PatientDetailslbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
+		panel.add(PatientDetailslbl);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(290, 81, 537, 260);
-		panel_1.setBackground(new Color(165, 165, 165));
-		panel.add(panel_1);
-		panel_1.setLayout(null);
+		JPanel panelinfo = new JPanel();
+		panelinfo.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelinfo.setBounds(290, 102, 537, 260);
+		panelinfo.setBackground(new Color(165, 165, 165));
+		panel.add(panelinfo);
+		panelinfo.setLayout(null);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("DATE OF BIRTH");
-		lblNewLabel_1_1.setBounds(42, 22, 178, 21);
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		panel_1.add(lblNewLabel_1_1);
+		JLabel DOBlbl = new JLabel("DATE OF BIRTH");
+		DOBlbl.setBounds(42, 22, 178, 21);
+		DOBlbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		panelinfo.add(DOBlbl);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("AGE");
-		lblNewLabel_1_1_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblNewLabel_1_1_1.setBounds(359, 22, 178, 21);
-		panel_1.add(lblNewLabel_1_1_1);
+		JLabel AGElbl = new JLabel("AGE");
+		AGElbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		AGElbl.setBounds(359, 22, 178, 21);
+		panelinfo.add(AGElbl);
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("EMAIL");
-		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblNewLabel_1_1_2.setBounds(42, 89, 178, 21);
-		panel_1.add(lblNewLabel_1_1_2);
+		JLabel Emaillbl = new JLabel("EMAIL");
+		Emaillbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Emaillbl.setBounds(42, 89, 178, 21);
+		panelinfo.add(Emaillbl);
 		
-		JLabel lblNewLabel_1_1_2_1 = new JLabel("ADDRESS");
-		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblNewLabel_1_1_2_1.setBounds(42, 169, 178, 21);
-		panel_1.add(lblNewLabel_1_1_2_1);
+		JLabel Addresslbl = new JLabel("ADDRESS");
+		Addresslbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Addresslbl.setBounds(42, 169, 178, 21);
+		panelinfo.add(Addresslbl);
 		
-		JLabel lblNewLabel_1_1_2_2 = new JLabel("GENDER");
-		lblNewLabel_1_1_2_2.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblNewLabel_1_1_2_2.setBounds(359, 89, 178, 21);
-		panel_1.add(lblNewLabel_1_1_2_2);
+		JLabel Genderlbl = new JLabel("GENDER");
+		Genderlbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Genderlbl.setBounds(359, 89, 178, 21);
+		panelinfo.add(Genderlbl);
 		
-		JLabel lblNewLabel_1_1_2_1_1 = new JLabel("CONTACT NO.");
-		lblNewLabel_1_1_2_1_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblNewLabel_1_1_2_1_1.setBounds(359, 169, 178, 21);
-		panel_1.add(lblNewLabel_1_1_2_1_1);
+		JLabel Contactlbl = new JLabel("CONTACT NO.");
+		Contactlbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Contactlbl.setBounds(359, 169, 178, 21);
+		panelinfo.add(Contactlbl);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(42, 53, 286, 26);
-		panel_1.add(textPane);
+		JTextPane DOBtextPane = new JTextPane();
+		DOBtextPane.setBounds(42, 53, 286, 26);
+		panelinfo.add(DOBtextPane);
 		
-		JTextPane textPane_1 = new JTextPane();
-		textPane_1.setBounds(358, 53, 52, 26);
-		panel_1.add(textPane_1);
+		JTextPane AGEtextPane = new JTextPane();
+		AGEtextPane.setBounds(358, 53, 52, 26);
+		panelinfo.add(AGEtextPane);
 		
-		JTextPane textPane_2 = new JTextPane();
-		textPane_2.setBounds(42, 120, 286, 26);
-		panel_1.add(textPane_2);
+		JTextPane EmailtextPane = new JTextPane();
+		EmailtextPane.setBounds(42, 120, 286, 26);
+		panelinfo.add(EmailtextPane);
 		
-		JTextPane textPane_1_1 = new JTextPane();
-		textPane_1_1.setBounds(358, 120, 81, 26);
-		panel_1.add(textPane_1_1);
+		JTextPane Gendertxtpane = new JTextPane();
+		Gendertxtpane.setBounds(358, 120, 81, 26);
+		panelinfo.add(Gendertxtpane);
 		
-		JTextPane textPane_1_1_1 = new JTextPane();
-		textPane_1_1_1.setBounds(359, 196, 147, 26);
-		panel_1.add(textPane_1_1_1);
+		JTextPane Contacttxtpane = new JTextPane();
+		Contacttxtpane.setBounds(359, 196, 147, 26);
+		panelinfo.add(Contacttxtpane);
 		
-		JTextPane textPane_2_1 = new JTextPane();
-		textPane_2_1.setBounds(42, 196, 286, 26);
-		panel_1.add(textPane_2_1);
+		JTextPane Addresstxtpane = new JTextPane();
+		Addresstxtpane.setBounds(42, 196, 286, 26);
+		panelinfo.add(Addresstxtpane);
 		
-		JLabel lblNewLabel_1 = new JLabel("GENERAL INFORMATION");
-		lblNewLabel_1.setBounds(290, 57, 210, 13);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		panel.add(lblNewLabel_1);
+		JLabel GenInfolbl = new JLabel("GENERAL INFORMATION");
+		GenInfolbl.setBounds(290, 79, 210, 13);
+		GenInfolbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		panel.add(GenInfolbl);
 		
-		JButton btnNewButton = new JButton("DELETE");
-		btnNewButton.setForeground(new Color(194, 192, 192));
-		btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnNewButton.setBackground(new Color(5, 59, 67));
-		btnNewButton.setBounds(23, 307, 117, 34);
-		panel.add(btnNewButton);
+		JButton Deletebtn = new JButton("DELETE");
+		Deletebtn.setForeground(new Color(194, 192, 192));
+		Deletebtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		Deletebtn.setBackground(new Color(5, 59, 67));
+		Deletebtn.setBounds(17, 269, 117, 34);
+		panel.add(Deletebtn);
 		
-		JTextPane textPane_2_1_1 = new JTextPane();
-		textPane_2_1_1.setBounds(96, 189, 101, 26);
-		panel.add(textPane_2_1_1);
+		JTextPane PIDtxtpane = new JTextPane();
+		PIDtxtpane.setBounds(95, 222, 101, 26);
+		panel.add(PIDtxtpane);
 		
-		JTextPane textPane_2_1_1_1 = new JTextPane();
-		textPane_2_1_1_1.setBounds(23, 225, 240, 72);
-		panel.add(textPane_2_1_1_1);
+		JTextPane Nametxtpane = new JTextPane();
+		Nametxtpane.setBounds(17, 140, 240, 72);
+		panel.add(Nametxtpane);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(80, 78, 137, 101);
-		panel.add(panel_2);
+		JButton Updatebtn = new JButton("UPDATE");
+		Updatebtn.setForeground(new Color(194, 192, 192));
+		Updatebtn.setBackground(new Color(5, 59, 67));
+		Updatebtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		Updatebtn.setBounds(144, 269, 119, 34);
+		panel.add(Updatebtn);
 		
-		JButton btnNewButton_1 = new JButton("SAVE");
-		btnNewButton_1.setForeground(new Color(194, 192, 192));
-		btnNewButton_1.setBackground(new Color(5, 59, 67));
-		btnNewButton_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnNewButton_1.setBounds(161, 307, 101, 34);
-		panel.add(btnNewButton_1);
+		JScrollPane HistoryscrollPane = new JScrollPane();
+		HistoryscrollPane.setBounds(17, 406, 802, 218);
+		panel.add(HistoryscrollPane);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(25, 395, 792, 221);
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		table.setBackground(new Color(226, 224, 224));
-		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		table.setModel(new DefaultTableModel(
+		PatientHistorytable = new JTable();
+		PatientHistorytable.setBackground(new Color(226, 224, 224));
+		PatientHistorytable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		PatientHistorytable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null},
 				{null, null, null, null},
@@ -196,17 +195,41 @@ public class PatientRecord extends JFrame {
 		));
 		
 		   // Set row height and column widths
-        table.setRowHeight(30); // Set to a larger value as needed
-        table.getColumnModel().getColumn(0).setPreferredWidth(100); // Patient ID
-        table.getColumnModel().getColumn(1).setPreferredWidth(150); // First Name
-        table.getColumnModel().getColumn(2).setPreferredWidth(50);  // M.I
-        table.getColumnModel().getColumn(3).setPreferredWidth(150); // Last Name
+        PatientHistorytable.setRowHeight(30); // Set to a larger value as needed
+        PatientHistorytable.getColumnModel().getColumn(0).setPreferredWidth(100); // Patient ID
+        PatientHistorytable.getColumnModel().getColumn(1).setPreferredWidth(150); // First Name
+        PatientHistorytable.getColumnModel().getColumn(2).setPreferredWidth(50);  // M.I
+        PatientHistorytable.getColumnModel().getColumn(3).setPreferredWidth(150); // Last Name
         
-		scrollPane.setViewportView(table);
+		HistoryscrollPane.setViewportView(PatientHistorytable);
 		
-		JLabel lblNewLabel_2 = new JLabel("PATIENT HISTORY");
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		lblNewLabel_2.setBounds(25, 365, 244, 26);
-		panel.add(lblNewLabel_2);
+		JLabel PatientHistorylbl = new JLabel("PATIENT HISTORY");
+		PatientHistorylbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		PatientHistorylbl.setBounds(19, 370, 244, 26);
+		panel.add(PatientHistorylbl);
+		
+		JPanel Searchpanel = new JPanel();
+		Searchpanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		Searchpanel.setBackground(new Color(149, 149, 149));
+		Searchpanel.setBounds(639, 25, 188, 45);
+		panel.add(Searchpanel);
+		Searchpanel.setLayout(null);
+		
+		Searchtxtfield = new JTextField();
+		Searchtxtfield.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		Searchtxtfield.setBackground(new Color(215, 213, 213));
+		Searchtxtfield.setBounds(48, 9, 130, 27);
+		Searchpanel.add(Searchtxtfield);
+		Searchtxtfield.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(10, -33, 45, 110);
+		Searchpanel.add(lblNewLabel);
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\people (2).png"));
+		
+		JLabel Searchlbl = new JLabel("SEARCH ID:");
+		Searchlbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Searchlbl.setBounds(548, 35, 101, 26);
+		panel.add(Searchlbl);
 	}
 }

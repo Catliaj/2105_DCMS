@@ -56,6 +56,7 @@ public class POS extends JFrame {
 	List<Double> productPrices = new ArrayList<>();
 	List<String> selectedServices = new ArrayList<>();
 	List<Double> servicePrices = new ArrayList<>();
+	private JTextField pricetxtfield2;
 	/**
 	 * Launch the application.
 	 */
@@ -194,6 +195,34 @@ public class POS extends JFrame {
 		TotalPanel_1_1.add(addbtn);
 		addbtn.setBackground(new Color(194, 192, 192));
 		addbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		addbtn.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        String selectedProduct = (String) Productcombobox.getSelectedItem();
+		        String productPrice = Productpricetxtfield.getText();
+		        int quantity = (Integer) Qtyspinner.getValue();
+
+		        if (!selectedProduct.isEmpty() && !productPrice.isEmpty() && quantity > 0) {
+		            // Append the selected product details to the added items area
+		            addedItemsArea.append("Product: " + selectedProduct + "\n");
+		            addedItemsArea.append("Price: $" + productPrice + "\n");
+		            addedItemsArea.append("Quantity: " + quantity + "\n");
+		            addedItemsArea.append("Subtotal: $" + (Double.parseDouble(productPrice) * quantity) + "\n");
+		            addedItemsArea.append("---------------------------------\n");
+		        }
+		    }
+		});
+		
+		JLabel pricelbl2 = new JLabel("PRICE");
+		pricelbl2.setForeground(new Color(194, 192, 192));
+		pricelbl2.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		pricelbl2.setBounds(227, 208, 149, 70);
+		ProductPanel.add(pricelbl2);
+		
+		pricetxtfield2 = new JTextField();
+		pricetxtfield2.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		pricetxtfield2.setColumns(10);
+		pricetxtfield2.setBounds(227, 268, 110, 40);
+		ProductPanel.add(pricetxtfield2);
 		addbtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        String selectedProduct = (String) Productcombobox.getSelectedItem();
@@ -450,16 +479,28 @@ public class POS extends JFrame {
 							ContentBackG.setBounds(0, 0, 1286, 713);
 							panel.add(ContentBackG);
 		
-		 Map<String, Double> productPrices = new HashMap<>();
-	        productPrices.put("Colgate Optic White", 170.0);
-	        productPrices.put("Oral-B Pro Health", 75.0);
-	        productPrices.put("Oral-B Toothbrush", 440.0);
-	        productPrices.put("Colgate Plax Mouthwash", 135.0);
-	        productPrices.put("Oral-B Floss Sticks", 60.0);
-	        productPrices.put("Colgate Optic white Teeth Whitening Pen", 1250.0);
-	        productPrices.put("Colgate Kids Toothbrush", 80.0);
-	        productPrices.put("Oral-B Pro 1000 Electric Toothbrush", 3137.0);
+							// Define product prices in a map
+							Map<String, Double> productPrices = new HashMap<>();
+							productPrices.put("Colgate Optic White", 170.0);
+							productPrices.put("Oral-B Pro Health", 75.0);
+							productPrices.put("Oral-B Toothbrush", 440.0);
+							productPrices.put("Colgate Plax Mouthwash", 135.0);
+							productPrices.put("Oral-B Floss Sticks", 60.0);
+							productPrices.put("Colgate Optic White Teeth Whitening Pen", 1250.0);
+							productPrices.put("Colgate Kids Toothpaste", 80.0);
+							productPrices.put("Oral-B Pro 1000 Electric Toothbrush", 3137.0);
 
+														
+							 // Product ComboBox Listener
+					        Productcombobox.addActionListener(new ActionListener() {
+					            public void actionPerformed(ActionEvent e) {
+					                String selectedProduct = (String) Productcombobox.getSelectedItem();
+					                if (selectedProduct != null && productPrices.containsKey(selectedProduct)) {
+					                    Productpricetxtfield.setText(String.valueOf(productPrices.get(selectedProduct)));
+					                }
+					            }
+					        });
+					        
 	        Map<String, Double> servicePrices = new HashMap<>();
 	        servicePrices.put("Consultation", 500.0);
 	        servicePrices.put("Braces", 1500.0);
@@ -476,15 +517,7 @@ public class POS extends JFrame {
 	        servicePrices.put("X-Ray", 500.0);
 	        servicePrices.put("Pediatric Dentistry (Consultation)", 300.0);
 
-	        // Product ComboBox Listener
-	        Productcombobox.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	                String selectedProduct = (String) Productcombobox.getSelectedItem();
-	                if (selectedProduct != null && productPrices.containsKey(selectedProduct)) {
-	                    Productpricetxtfield.setText(String.valueOf(productPrices.get(selectedProduct)));
-	                }
-	            }
-	        });
+	     
 
 	        // Service ComboBox Listener
 	        Servicecombobox.addActionListener(new ActionListener() {
@@ -553,8 +586,7 @@ public class POS extends JFrame {
 	    receiptDialog.setTitle("Receipt");
 	    receiptDialog.setSize(400, 500);
 	    receiptDialog.setLocationRelativeTo(null);
-	    receiptDialog.add(scrollPane);
+	    receiptDialog.getContentPane().add(scrollPane);
 	    receiptDialog.setVisible(true);
 	}
-
 	    }

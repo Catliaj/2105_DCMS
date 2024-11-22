@@ -76,39 +76,38 @@ public class ServiceSales extends JFrame implements ActionListener {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"SERVICE ID", "CUSTOMER NAME", "DATE", "SERVICE", "PRICE", "TOTAL"
+				"SERVICE ID", "CUSTOMER NAME", "DATE", "SERVICE", "PRICE"
 			}
 		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(30);
+		table.getColumnModel().getColumn(1).setPreferredWidth(150);
+		table.getColumnModel().getColumn(2).setPreferredWidth(50);
+		table.getColumnModel().getColumn(3).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(50);
 		
-		  table.setRowHeight(30); // Set to a larger value as needed
-	        table.getColumnModel().getColumn(0).setPreferredWidth(30); 
-	        table.getColumnModel().getColumn(1).setPreferredWidth(150); 
-	        table.getColumnModel().getColumn(2).setPreferredWidth(50);  
-	        table.getColumnModel().getColumn(3).setPreferredWidth(50); 
-	        table.getColumnModel().getColumn(4).setPreferredWidth(50); 
-	        table.getColumnModel().getColumn(5).setPreferredWidth(50);  
+		  table.setRowHeight(30);
 
 		scrollPane.setViewportView(table);
 		

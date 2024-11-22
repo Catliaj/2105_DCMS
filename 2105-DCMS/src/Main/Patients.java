@@ -170,7 +170,7 @@ public class Patients extends JFrame implements ActionListener{
         timeLabel = new JLabel();
         timeLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         timeLabel.setForeground(Color.WHITE);
-        timeLabel.setBounds(653, 10, 481, 30);
+        timeLabel.setBounds(676, 10, 481, 30);
         panel_2.add(timeLabel);
 
         // Set up timer to update the time label every second
@@ -229,7 +229,7 @@ public class Patients extends JFrame implements ActionListener{
         btnAddPatient.setBounds(286, 600, 217, 50);
         panel.add(btnAddPatient);
                                 
-        btnViewRecord = new JButton("VIEW RECORD");
+        btnViewRecord = new JButton("SEARCH");
         btnViewRecord.setForeground(Color.BLACK);
         btnViewRecord.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewRecord.setBackground(new Color(194, 192, 192));
