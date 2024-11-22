@@ -99,12 +99,6 @@ public class ExtractionPage implements ActionListener{
 
 	        // Set styles for buttons and add action listeners
 
-	        setButtonStyles(homeBtn);
-	        setButtonStyles(aboutUsBtn);
-	        setButtonStyles(servicesBtn);
-	        setButtonStyles(productsBtn);
-	        setButtonStyles(contactUsBtn);
-
 	        servicesBtn.setFont(new Font("Arial", Font.BOLD, 16));
 	        servicesBtn.setBackground(Color.WHITE);
 	        servicesBtn.setForeground(new Color(2, 79, 90));
@@ -121,8 +115,6 @@ public class ExtractionPage implements ActionListener{
 	        navPanel.add(homeBtn);
 	        navPanel.add(aboutUsBtn);
 	        navPanel.add(servicesBtn);
-	        navPanel.add(productsBtn);
-	        navPanel.add(contactUsBtn);
 	        navPanel.add(productsBtn);
 	        navPanel.add(contactUsBtn);
 	        navPanel.add(feedbackBtn);
@@ -231,11 +223,16 @@ public class ExtractionPage implements ActionListener{
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	ExtractionPage.dispose();
 	            new aboutUs();
-	        }  else if (e.getSource() == productsBtn) {
-	        	
-	            System.out.println("Products button clicked");
-	            
-	        } else if (e.getSource() == contactUsBtn) {
+	        }  
+	        else if(e.getSource() == productsBtn)
+	        {
+	        	ExtractionPage.dispose();
+	        	new product();
+	        }
+	        
+	        
+	        
+	        else if (e.getSource() == contactUsBtn) {
 	        	ExtractionPage.dispose();
 	            new  ContactUs(); 
 	        }

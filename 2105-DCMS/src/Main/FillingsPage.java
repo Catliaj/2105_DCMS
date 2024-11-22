@@ -234,12 +234,14 @@ public class FillingsPage implements ActionListener{
 	        	FillingsPage.dispose();
 	            new aboutUs();
 
-	        }  else if (e.getSource() == productsBtn) {
-
-	        	
-	            System.out.println("Products button clicked");
-	            
-	        } else if (e.getSource() == contactUsBtn) {
+	        } 
+	        
+	        else if(e.getSource() == productsBtn)
+	        {
+	        	FillingsPage.dispose();
+	        	new product();
+	        }
+	        else if (e.getSource() == contactUsBtn) {
 	        	FillingsPage.dispose();
 	            new  ContactUs();
 	          

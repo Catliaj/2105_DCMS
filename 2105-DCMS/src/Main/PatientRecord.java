@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -14,6 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import backend.newPatient_Backend;
+
 import javax.swing.border.BevelBorder;
 
 public class PatientRecord extends JFrame {
@@ -225,11 +230,65 @@ public class PatientRecord extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(10, -33, 45, 110);
 		Searchpanel.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\people (2).png"));
+		lblNewLabel.setIcon(new ImageIcon(PatientRecord.class.getResource("/Resources/people.png")));
 		
 		JLabel Searchlbl = new JLabel("SEARCH ID:");
 		Searchlbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		Searchlbl.setBounds(548, 35, 101, 26);
 		panel.add(Searchlbl);
+		
+		Searchtxtfield.addActionListener(e -> {
+		    String searchID = Searchtxtfield.getText().trim();
+		    if (!searchID.isEmpty()) {
+		        newPatient_Backend backend = new newPatient_Backend();
+		        String[] patientDetails = backend.getPatientByID(searchID);
+
+		        if (patientDetails != null) {
+		            // Populate text panes with retrieved data
+		            PIDtxtpane.setText(patientDetails[0]);      
+		            Nametxtpane.setText(patientDetails[1] + " " + patientDetails[2] + " " + patientDetails[3]); 
+		            DOBtextPane.setText(patientDetails[4]);     
+		            AGEtextPane.setText(patientDetails[5]);     
+		            Gendertxtpane.setText(patientDetails[6]);  
+		            EmailtextPane.setText(patientDetails[7]);   
+		            Addresstxtpane.setText(patientDetails[8]);  
+		            Contacttxtpane.setText(patientDetails[9]);  
+		        } else {
+		            JOptionPane.showMessageDialog(this, "No patient found with ID: " + searchID);
+		        }
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Please enter a Patient ID.");
+		    }
+		});
+		
+		Updatebtn.addActionListener(e -> {
+		    String patientID = PIDtxtpane.getText().trim();
+		    String firstName = Nametxtpane.getText().split(" ")[0].trim(); // Assuming the Name field holds full name
+		    String middleInitial = Nametxtpane.getText().split(" ").length > 1 ? Nametxtpane.getText().split(" ")[1].trim() : "";
+		    String lastName = Nametxtpane.getText().split(" ").length > 2 ? Nametxtpane.getText().split(" ")[2].trim() : "";
+		    String dob = DOBtextPane.getText().trim();
+		    String age = AGEtextPane.getText().trim();
+		    String gender = Gendertxtpane.getText().trim();
+		    String email = EmailtextPane.getText().trim();
+		    String address = Addresstxtpane.getText().trim();
+		    String contactNumber = Contacttxtpane.getText().trim();
+
+		    if (patientID.isEmpty() || firstName.isEmpty() || lastName.isEmpty()) {
+		        JOptionPane.showMessageDialog(this, "Patient ID, First Name, and Last Name are required to update!");
+		        return;
+		    }
+
+		    newPatient_Backend backend = new newPatient_Backend();
+		    boolean isUpdated = backend.updatePatientData(patientID, firstName, middleInitial, lastName, dob, age, gender, email, address, contactNumber);
+
+		    if (isUpdated) {
+		        JOptionPane.showMessageDialog(this, "Patient details updated successfully!");
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Failed to update patient details. Please try again.");
+		    }
+		});
+
+
 	}
+	
 }

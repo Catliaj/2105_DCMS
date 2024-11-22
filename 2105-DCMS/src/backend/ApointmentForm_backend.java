@@ -15,6 +15,7 @@ public class ApointmentForm_backend extends newPatient_Backend
 	private String Name, Email, PhoneNumber, Date, Time, Reason;
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
 	private Connection connection;
+	
 	public ApointmentForm_backend(String name, String email,String phonenumber, String Date, String Time, String Reason)
 	{
         try 

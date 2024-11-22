@@ -98,9 +98,6 @@ public class homePage implements ActionListener
         navPanel.add(homeBtn);
         navPanel.add(aboutUsBtn);
         navPanel.add(servicesBtn);
-
-     
-
         navPanel.add(productsBtn);
         navPanel.add(contactUsBtn);
         navPanel.add(feedbackBtn);
@@ -205,6 +202,12 @@ public class homePage implements ActionListener
         	homepage.dispose();
         	new FeedbackForm();
         }
+        else if(e.getSource() == productsBtn)
+        {
+        	homepage.dispose();
+        	new product();
+        }
+		
 		
     }
 	

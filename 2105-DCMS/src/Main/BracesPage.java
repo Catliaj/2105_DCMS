@@ -249,6 +249,11 @@ public class BracesPage implements ActionListener {
         	BracesPage.dispose();
         	new FeedbackForm();
         }
+        else if(e.getSource() == productsBtn)
+        {
+        	BracesPage.dispose();
+        	new product();
+        }
 
         // Handle side button actions if needed
         for (int i = 0; i < sideButtons.length; i++) {

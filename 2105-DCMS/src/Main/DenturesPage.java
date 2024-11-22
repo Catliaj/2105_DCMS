@@ -224,11 +224,13 @@ public class DenturesPage implements ActionListener{
 	        	DenturesPage.dispose();
 	            new aboutUs();
 
-	        }  else if (e.getSource() == productsBtn) {
-	        	
-	            System.out.println("Products button clicked");
-	            
-	        } else if (e.getSource() == contactUsBtn) {
+	        }  
+	        else if(e.getSource() == productsBtn)
+	        {
+	        	DenturesPage.dispose();
+	        	new product();
+	        }
+	        else if (e.getSource() == contactUsBtn) {
 	        	DenturesPage.dispose();
 	            new  ContactUs();
 	          

@@ -187,28 +187,7 @@ public class Appointments extends JFrame implements ActionListener{
         table_2 = new JTable();
         table_2.setBackground(new Color(207, 205, 205));
         table_2.setModel(new DefaultTableModel(
-        	new Object[][] {
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null, null, null},
-        	},
+        	new Object[][] {},
         	new String[] {
         		"PATIENT ID", "NAME", "DATE", "TIME", "SERVICE", "CONTACT NO. ", "EMAIL", "PRICE", "STATUS"
         	}

@@ -226,6 +226,11 @@ public class FeedbackForm implements ActionListener {
 			new ContactUs();
 		}
 
+        else if(e.getSource() == productsBtn)
+        {
+        	FeedbackForm.dispose();
+        	new product();
+        }
 
     }
 

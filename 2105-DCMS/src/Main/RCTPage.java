@@ -221,12 +221,16 @@ public class RCTPage implements ActionListener{
 	        } else if (e.getSource() == aboutUsBtn) {
 	        	RCTPage.dispose();
 	            new aboutUs();
-	        }  else if (e.getSource() == productsBtn) {
+	        }  
 
-	        	
-	            System.out.println("Products button clicked");
-	            
-	        } else if (e.getSource() == contactUsBtn) {
+	        else if(e.getSource() == productsBtn)
+	        {
+	        	RCTPage.dispose();
+	        	new product();
+	        } 
+	        
+	        
+	        else if (e.getSource() == contactUsBtn) {
 	        	RCTPage.dispose();
 	            new  ContactUs();
 	          

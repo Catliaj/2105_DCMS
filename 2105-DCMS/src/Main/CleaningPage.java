@@ -237,11 +237,15 @@ public class CleaningPage implements ActionListener {
 	        	CleaningPage.dispose();
 	            new aboutUs();
 
-	        }  else if (e.getSource() == productsBtn) {
-	        	
-	            System.out.println("Products button clicked");
-	            
-	        } else if (e.getSource() == contactUsBtn) {
+	        }  
+
+	        else if(e.getSource() == productsBtn)
+	        {
+	        	CleaningPage.dispose();
+	        	new product();
+	        }
+	               
+	        else if (e.getSource() == contactUsBtn) {
 	        	CleaningPage.dispose();
 	            new  ContactUs();  
 	        }

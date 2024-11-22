@@ -239,11 +239,11 @@ public class CABPage implements ActionListener {
         } else if (e.getSource() == aboutUsBtn) {
         	CABPage.dispose();
             new aboutUs();
-        }  else if (e.getSource() == productsBtn) {
-
-        	
-            System.out.println("Products button clicked");
-            
+        }  
+        else if(e.getSource() == productsBtn)
+        {
+        	CABPage.dispose();
+        	new product();
         } else if (e.getSource() == contactUsBtn) {
         	CABPage.dispose();
             new  ContactUs();

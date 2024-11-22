@@ -178,4 +178,76 @@ public class newPatient_Backend
 	        }
 	        return patientData;
 	    }
+	    
+	    public String[] getPatientByID(String patientID) {
+	        String[] patientDetails = null;
+
+	        try {
+	            connection = dcmsConnection.getConnection();
+	            String query = "SELECT * FROM PatientData WHERE PatientID = ?";
+	            PreparedStatement ps = connection.prepareStatement(query);
+	            ps.setString(1, patientID);
+	            ResultSet resultSet = ps.executeQuery();
+
+	            if (resultSet.next()) {
+	                patientDetails = new String[]{
+	                    resultSet.getString("PatientID"),
+	                    resultSet.getString("FirstName"),
+	                    resultSet.getString("MiddleInitial"),
+	                    resultSet.getString("LastName"),
+	                    resultSet.getString("DateOfBirth"),
+	                    String.valueOf(resultSet.getInt("Age")),
+	                    resultSet.getString("Gender"),
+	                    resultSet.getString("Email"),
+	                    resultSet.getString("Address"),
+	                    resultSet.getString("ContactNumber")
+	                };
+	            }
+
+	            resultSet.close();
+	            ps.close();
+	            connection.close();
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	            JOptionPane.showMessageDialog(null, "Error retrieving patient data: " + ex.getMessage());
+	        }
+
+	        return patientDetails;
+	    }
+	    
+	    
+ public boolean updatePatientData(String patientID, String firstName, String middleInitial, String lastName,
+		 						  String dob, String age, String gender, String email, String address, String contactNumber) {
+			boolean isUpdated = false;
+			
+			try {
+			connection = dcmsConnection.getConnection();
+			String query = "UPDATE PatientData SET FirstName = ?, MiddleInitial = ?, LastName = ?, DateOfBirth = ?, " +
+			      "Age = ?, Gender = ?, Email = ?, Address = ?, ContactNumber = ? WHERE PatientID = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, firstName);
+			ps.setString(2, middleInitial);
+			ps.setString(3, lastName);
+			ps.setString(4, dob);
+			ps.setInt(5, Integer.parseInt(age));
+			ps.setString(6, gender);
+			ps.setString(7, email);
+			ps.setString(8, address);
+			ps.setString(9, contactNumber);
+			ps.setString(10, patientID);
+			
+			int rowsAffected = ps.executeUpdate();
+			isUpdated = rowsAffected > 0;
+			
+			ps.close();
+			connection.close();
+			} catch (Exception ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error updating patient data: " + ex.getMessage());
+			}
+			
+			return isUpdated;
+			}
+
+
 	}
