@@ -1,21 +1,47 @@
 package Main;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.util.Vector;
+
 import javax.swing.JOptionPane;
 
 public class ProductAdmin extends JFrame {
@@ -26,7 +52,7 @@ public class ProductAdmin extends JFrame {
 	private JTextField textFieldPrice;
 	private JTextField textFieldProdID;
 	private JTextField textField_4;
-
+	private String imagePath = "null";
 	/**
 	 * Launch the application.
 	 */
@@ -47,9 +73,7 @@ public class ProductAdmin extends JFrame {
 	 * Create the frame.
 	 */
 	public ProductAdmin() {
-		setVisible(true);
-		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 750);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -79,33 +103,34 @@ public class ProductAdmin extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Product Name");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1.setBounds(102, 149, 169, 31);
+		lblNewLabel_1.setBounds(80, 265, 169, 31);
 		panel_1.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Product ID");
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1_1.setBounds(123, 107, 129, 31);
+		lblNewLabel_1_1.setBounds(101, 223, 129, 31);
 		panel_1.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Price");
 		lblNewLabel_1_2.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1_2.setBounds(168, 191, 72, 31);
+		lblNewLabel_1_2.setBounds(146, 307, 72, 31);
 		panel_1.add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("QTY");
 		lblNewLabel_1_3.setToolTipText("");
 		lblNewLabel_1_3.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel_1_3.setBounds(168, 234, 72, 31);
+		lblNewLabel_1_3.setBounds(146, 350, 72, 31);
 		panel_1.add(lblNewLabel_1_3);
 		
 		JPanel panelImage = new JPanel();
-		panelImage.setBounds(646, 107, 146, 119);
+		panelImage.setBounds(260, 78, 151, 119);
 		panel_1.add(panelImage);
 		panelImage.setLayout(null);
 		
 		JLabel lblIMAGE = new JLabel("");
-		lblIMAGE.setBounds(0, 0, 146, 119);
+		lblIMAGE.setBounds(0, 0, 151, 119);
 		panelImage.add(lblIMAGE);
+		
 		
 		JButton btnUpload = new JButton("Upload");
 		btnUpload.addActionListener(new ActionListener() {
@@ -127,33 +152,79 @@ public class ProductAdmin extends JFrame {
 		            ImageIcon icon = new ImageIcon(new ImageIcon(path).getImage()
 		                    .getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH));
 		            lblIMAGE.setIcon(icon); // Assuming lblIMAGE is a JLabel where the image will be displayed
+
+		            // Convert the image to byte array
+		            try {
+		                FileInputStream fis = new FileInputStream(f);  // Open the file for reading
+		                byte[] imageBytes = new byte[(int) f.length()]; // Create a byte array to hold the image data
+		                fis.read(imageBytes); // Read the file data into the byte array
+		                fis.close(); // Close the file input stream
+		                
+		                // Save the byte[] for database insertion (you can use this in your SQL insert statement)
+		                System.out.println("Image converted to byte array, ready for insertion.");
+
+		                // Debugging: Check byte array length
+		                System.out.println("Image byte array size: " + imageBytes.length);
+
+		                // Now you can use the `imageBytes` in your database insertion query.
+		                // Example: preparedStatement.setBytes(4, imageBytes); // Assuming 4 is the parameter for image field
+		                
+		            } catch (IOException ex) {
+		                ex.printStackTrace();
+		                JOptionPane.showMessageDialog(null, "Error reading the image file: " + ex.getMessage());
+		            }
 		            
-		            // Optional: Save the path or file for future use (like inserting into the database)
-		            System.out.println("File Selected: " + path); // Debugging
 		        } else {
 		            JOptionPane.showMessageDialog(null, "No file selected!");
 		        }
 		    }
 		});
 
+
+
+
+
 		btnUpload.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		btnUpload.setBounds(676, 245, 89, 23);
+		btnUpload.setBounds(141, 175, 89, 23);
 		panel_1.add(btnUpload);
 		
 		
 		
-		   JButton btnAdd = new JButton("ADD");
+	
+		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        // Get the input data
 		        String productName = textFieldProdName.getText();
 		        String price = textFieldPrice.getText();
 		        String quantity = textField_4.getText();
-		        String imagePath = lblIMAGE.getIcon() != null ? ((ImageIcon) lblIMAGE.getIcon()).toString() : null;
-
+		        ImageIcon imageIcon = (ImageIcon) lblIMAGE.getIcon();  // Get the ImageIcon from the JLabel
+		        
 		        // Input validation
-		        if (productName.isEmpty() || price.isEmpty() || quantity.isEmpty() || imagePath == null) {
+		        if (productName.isEmpty() || price.isEmpty() || quantity.isEmpty() || imageIcon == null) {
 		            JOptionPane.showMessageDialog(null, "Please fill all fields and upload an image!");
+		            return;
+		        }
+
+		        // Convert the ImageIcon to byte array
+		        byte[] imageBytes = null;
+		        try {
+		            if (imageIcon != null) {
+		                // Convert the ImageIcon to byte array
+		                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		                Image image = imageIcon.getImage();  // Get the Image from the ImageIcon
+		                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		                Graphics2D g = bufferedImage.createGraphics();
+		                g.drawImage(image, 0, 0, null);
+		                g.dispose();
+
+		                // Write the image to the byte array output stream in JPEG format (or any other format like PNG)
+		                ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
+		                imageBytes = byteArrayOutputStream.toByteArray();
+		            }
+		        } catch (IOException ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Error converting image to byte array: " + ex.getMessage());
 		            return;
 		        }
 
@@ -173,7 +244,7 @@ public class ProductAdmin extends JFrame {
 		            preparedStatement.setString(1, productName);
 		            preparedStatement.setDouble(2, Double.parseDouble(price));
 		            preparedStatement.setInt(3, Integer.parseInt(quantity));
-		            preparedStatement.setString(4, imagePath);
+		            preparedStatement.setBytes(4, imageBytes);  // Insert the image as byte array
 
 		            // Execute the query
 		            int rowsInserted = preparedStatement.executeUpdate();
@@ -194,6 +265,9 @@ public class ProductAdmin extends JFrame {
 		        }
 		    }
 		});
+
+
+
 
 		btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		btnAdd.setBounds(80, 392, 117, 58);
@@ -287,7 +361,9 @@ public class ProductAdmin extends JFrame {
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Error updating the product. Product ID not found.");
 		            }
-		        } catch (Exception ex) {
+		           
+					
+					} catch (Exception ex) {
 		            ex.printStackTrace();
 		            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
 		        }
@@ -335,6 +411,8 @@ public class ProductAdmin extends JFrame {
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Product not found. Please check the Product ID.");
 		            }
+		            
+					
 		        } catch (Exception ex) {
 		            ex.printStackTrace();
 		            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
@@ -348,32 +426,118 @@ public class ProductAdmin extends JFrame {
 		
 		textFieldProdName = new JTextField();
 		textFieldProdName.setColumns(10);
-		textFieldProdName.setBounds(282, 149, 151, 31);
+		textFieldProdName.setBounds(260, 265, 151, 31);
 		panel_1.add(textFieldProdName);
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setColumns(10);
-		textFieldPrice.setBounds(282, 191, 151, 29);
+		textFieldPrice.setBounds(260, 307, 151, 29);
 		panel_1.add(textFieldPrice);
 		
 		textFieldProdID = new JTextField();
 		textFieldProdID.setColumns(10);
-		textFieldProdID.setBounds(282, 107, 151, 29);
+		textFieldProdID.setBounds(260, 223, 151, 29);
 		panel_1.add(textFieldProdID);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(282, 234, 151, 29);
+		textField_4.setBounds(260, 350, 151, 29);
 		panel_1.add(textField_4);
 		
 		JButton btnBACK = new JButton("BACK");
 		btnBACK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				new Dashboard();
 			}
 		});
 		btnBACK.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		btnBACK.setBounds(849, 392, 117, 58);
+		btnBACK.setBounds(349, 462, 117, 58);
 		panel_1.add(btnBACK);
+		
+		JPanel paneltbl = new JPanel();
+		paneltbl.setLayout(null); // Explicitly set null layout for manual positioning
+		paneltbl.setBounds(547, 68, 462, 428);
+		panel_1.add(paneltbl);
+
+	
+		 JTable table = new JTable();
+	        table.setBounds(10, 10, 356, 408);
+	        JScrollPane scrollPane = new JScrollPane(table);
+	        scrollPane.setBounds(10, 10, 442, 408);
+	        paneltbl.add(scrollPane);
+
+	        loadTableData(table);
+	        
+	        JButton btnREFRESH = new JButton("REFRESH");
+	        btnREFRESH.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		 loadTableData(table);
+	        	        JOptionPane.showMessageDialog(null, "Table refreshed successfully!");
+	        	}
+	        });
+	        
+	        
+	        btnREFRESH.setFont(new Font("Segoe UI", Font.BOLD, 9));
+	        btnREFRESH.setBounds(937, 26, 72, 31);
+	        panel_1.add(btnREFRESH);
+	        
 	}
+	private void loadTableData(JTable table) {
+	    String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb";
+	    String username = "root";
+	    String password = "";
+
+	    try (Connection connection = DriverManager.getConnection(url, username, password);
+	         Statement statement = connection.createStatement();
+	         ResultSet resultSet = statement.executeQuery("SELECT * FROM products")) {
+
+	        ResultSetMetaData metaData = resultSet.getMetaData();
+	        int columnCount = metaData.getColumnCount();
+
+	        Vector<String> columnNames = new Vector<>();
+	        for (int i = 1; i <= columnCount; i++) {
+	            columnNames.add(metaData.getColumnName(i));
+	        }
+
+	        Vector<Vector<Object>> data = new Vector<>();
+	        while (resultSet.next()) {
+	            Vector<Object> row = new Vector<>();
+	            for (int i = 1; i <= columnCount; i++) {
+	                if (i == columnCount) { // Assuming the last column is the image
+	                    byte[] imgData = resultSet.getBytes("Image");
+	                    if (imgData != null) {
+	                        ImageIcon icon = new ImageIcon(new ImageIcon(imgData).getImage()
+	                            .getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
+	                        row.add(icon);
+	                    } else {
+	                        row.add(null);
+	                    }
+	                } else {
+	                    row.add(resultSet.getObject(i));
+	                }
+	            }
+	            data.add(row);
+	        }
+
+	        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+	        table.setModel(model);
+
+	        // Set custom renderer for the image column
+	        table.getColumnModel().getColumn(columnCount - 1).setCellRenderer(new DefaultTableCellRenderer() {
+	            @Override
+	            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+	                    boolean hasFocus, int row, int column) {
+	                if (value instanceof ImageIcon) {
+	                    return new JLabel((ImageIcon) value);
+	                }
+	                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	            }
+	        });
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Error loading table data: " + ex.getMessage());
+	    }
+	}
+
 }

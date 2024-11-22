@@ -1,247 +1,176 @@
 package Main;
 
-import java.awt.EventQueue;
-
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.*;
+import java.sql.*;
 
 public class product extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					product frame = new product();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    // Database connection variables
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Replace with your DB URL
+    private static final String DB_USER = "root"; // Replace with your DB username
+    private static final String DB_PASS = ""; // Replace with your DB password
 
-	/**
-	 * Create the frame.
-	 */
-	public product() {
-setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1300, 750);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                product frame = new product();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 1284, 711);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("PREVENTIVE PRODUCT");
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 35));
-		lblNewLabel_1.setBounds(47, 11, 398, 50);
-		panel.add(lblNewLabel_1);
-		
-		JPanel panelPRD1 = new JPanel();
-		panelPRD1.setBounds(94, 120, 176, 236);
-		panel.add(panelPRD1);
-		panelPRD1.setLayout(null);
-		
-		JLabel lblPRD1 = new JLabel("");
-		lblPRD1.setBounds(10, 5, 156, 127);
-		panelPRD1.add(lblPRD1);
-		lblPRD1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JLabel lblPRDNAME = new JLabel("");
-		lblPRDNAME.setBounds(20, 151, 132, 26);
-		panelPRD1.add(lblPRDNAME);
-		lblPRDNAME.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JLabel lblPRDPRICE = new JLabel("");
-		lblPRDPRICE.setBounds(30, 188, 112, 26);
-		panelPRD1.add(lblPRDPRICE);
-		lblPRDPRICE.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JPanel panelPRD2 = new JPanel();
-		panelPRD2.setBounds(363, 120, 176, 236);
-		panel.add(panelPRD2);
-		panelPRD2.setLayout(null);
-		
-		JLabel lblPRD2 = new JLabel("");
-		lblPRD2.setBounds(10, 11, 156, 127);
-		panelPRD2.add(lblPRD2);
-		lblPRD2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		
-		JLabel lblPRDNAME_1 = new JLabel("");
-		lblPRDNAME_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDNAME_1.setBounds(20, 149, 132, 26);
-		panelPRD2.add(lblPRDNAME_1);
-		
-		JLabel lblPRDPRICE_1 = new JLabel("");
-		lblPRDPRICE_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDPRICE_1.setBounds(30, 186, 112, 26);
-		panelPRD2.add(lblPRDPRICE_1);
-		
-		JPanel panelPRD3 = new JPanel();
-		panelPRD3.setLayout(null);
-		panelPRD3.setBounds(654, 120, 176, 236);
-		panel.add(panelPRD3);
-		
-		JLabel lblPRD3 = new JLabel("");
-		lblPRD3.setBounds(10, 11, 156, 127);
-		panelPRD3.add(lblPRD3);
-		lblPRD3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JLabel lblPRDPRICE_1_1 = new JLabel("");
-		lblPRDPRICE_1_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDPRICE_1_1.setBounds(30, 186, 112, 26);
-		panelPRD3.add(lblPRDPRICE_1_1);
-		
-		JLabel lblPRDNAME_1_1 = new JLabel("");
-		lblPRDNAME_1_1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDNAME_1_1.setBounds(20, 149, 132, 26);
-		panelPRD3.add(lblPRDNAME_1_1);
-		
-		
-		JPanel panelPRD4 = new JPanel();
-		panelPRD4.setLayout(null);
-		panelPRD4.setBounds(936, 120, 176, 236);
-		panel.add(panelPRD4);
-		
-		JLabel lblPRD4 = new JLabel("");
-		lblPRD4.setBounds(10, 11, 156, 127);
-		panelPRD4.add(lblPRD4);
-		lblPRD4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		
-		JLabel lblPRDPRICE_1_2 = new JLabel("");
-		lblPRDPRICE_1_2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDPRICE_1_2.setBounds(30, 181, 112, 26);
-		panelPRD4.add(lblPRDPRICE_1_2);
-		
-		JLabel lblPRDNAME_1_2 = new JLabel("");
-		lblPRDNAME_1_2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDNAME_1_2.setBounds(20, 144, 132, 26);
-		panelPRD4.add(lblPRDNAME_1_2);
-		
-		JPanel panelPRD5 = new JPanel();
-		panelPRD5.setLayout(null);
-		panelPRD5.setBounds(94, 406, 176, 236);
-		panel.add(panelPRD5);
-		
-		JLabel lblPRD5 = new JLabel("");
-		lblPRD5.setBounds(10, 11, 156, 127);
-		panelPRD5.add(lblPRD5);
-		lblPRD5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JLabel lblPRDPRICE_1_3 = new JLabel("");
-		lblPRDPRICE_1_3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDPRICE_1_3.setBounds(30, 186, 112, 26);
-		panelPRD5.add(lblPRDPRICE_1_3);
-		
-		JLabel lblPRDNAME_1_3 = new JLabel("");
-		lblPRDNAME_1_3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDNAME_1_3.setBounds(20, 149, 132, 26);
-		panelPRD5.add(lblPRDNAME_1_3);
-		
-		JPanel panelPRD6 = new JPanel();
-		panelPRD6.setLayout(null);
-		panelPRD6.setBounds(363, 406, 176, 236);
-		panel.add(panelPRD6);
-		
-		JLabel lblPRD6 = new JLabel("");
-		lblPRD6.setBounds(10, 11, 156, 127);
-		panelPRD6.add(lblPRD6);
-		lblPRD6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JLabel lblPRDPRICE_1_4 = new JLabel("");
-		lblPRDPRICE_1_4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDPRICE_1_4.setBounds(30, 182, 112, 26);
-		panelPRD6.add(lblPRDPRICE_1_4);
-		
-		JLabel lblPRDNAME_1_4 = new JLabel("");
-		lblPRDNAME_1_4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDNAME_1_4.setBounds(20, 145, 132, 26);
-		panelPRD6.add(lblPRDNAME_1_4);
-		
-		JPanel panelPRD7 = new JPanel();
-		panelPRD7.setLayout(null);
-		panelPRD7.setBounds(654, 406, 176, 236);
-		panel.add(panelPRD7);
-		
-		JLabel lblPRD7 = new JLabel("");
-		lblPRD7.setBounds(10, 11, 156, 127);
-		panelPRD7.add(lblPRD7);
-		lblPRD7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JLabel lblPRDPRICE_1_5 = new JLabel("");
-		lblPRDPRICE_1_5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDPRICE_1_5.setBounds(30, 186, 112, 26);
-		panelPRD7.add(lblPRDPRICE_1_5);
-		
-		JLabel lblPRDNAME_1_5 = new JLabel("");
-		lblPRDNAME_1_5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDNAME_1_5.setBounds(20, 149, 132, 26);
-		panelPRD7.add(lblPRDNAME_1_5);
-		
-		JPanel panelPRD8 = new JPanel();
-		panelPRD8.setLayout(null);
-		panelPRD8.setBounds(936, 406, 176, 236);
-		panel.add(panelPRD8);
-		
-		JLabel lblPRD8 = new JLabel("");
-		lblPRD8.setBounds(10, 11, 156, 127);
-		panelPRD8.add(lblPRD8);
-		lblPRD8.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		JLabel lblPRDPRICE_1_6 = new JLabel("");
-		lblPRDPRICE_1_6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDPRICE_1_6.setBounds(30, 186, 112, 26);
-		panelPRD8.add(lblPRDPRICE_1_6);
-		
-		JLabel lblPRDNAME_1_6 = new JLabel("");
-		lblPRDNAME_1_6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		lblPRDNAME_1_6.setBounds(20, 149, 132, 26);
-		panelPRD8.add(lblPRDNAME_1_6);
-		
-		JButton btnBack = new JButton("BACK");
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new homePage();
-				
-			}
-		});
-		btnBack.setFont(new Font("Segoe UI", Font.BOLD, 23));
-		btnBack.setBounds(1160, 652, 114, 48);
-		panel.add(btnBack);
-		
-		JLabel lblNewLabel = new JLabel("PREVENTIVE PRODUCT");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 35));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setIcon(new ImageIcon(product.class.getResource("/Resources/background (2).png")));
-		lblNewLabel.setBounds(0, 0, 1284, 711);
-		panel.add(lblNewLabel);
-	}
+    public product() {
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 1300, 750);
+        setLocationRelativeTo(null); 
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 1284, 711);
+        contentPane.add(panel);
+        panel.setLayout(null);
+
+        JLabel lblTitle = new JLabel("PREVENTIVE PRODUCTS");
+        lblTitle.setForeground(Color.WHITE);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 35));
+        lblTitle.setBounds(47, 11, 500, 50);
+        panel.add(lblTitle);
+
+        // Panels for products
+        JPanel[] productPanels = new JPanel[8];
+        JLabel[] productImages = new JLabel[8];
+        JLabel[] productNames = new JLabel[8];
+        JLabel[] productPrices = new JLabel[8];
+
+        int x = 94, y = 120;
+        for (int i = 0; i < 8; i++) {
+            productPanels[i] = new JPanel();
+            productPanels[i].setLayout(null);
+            productPanels[i].setBounds(x, y, 176, 236);
+            productPanels[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            panel.add(productPanels[i]);
+
+            productImages[i] = new JLabel("");
+            productImages[i].setBounds(10, 5, 156, 127);
+            productImages[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            productPanels[i].add(productImages[i]);
+
+            productNames[i] = new JLabel("");
+            productNames[i].setBounds(20, 151, 132, 26);
+            productNames[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            productNames[i].setFont(new Font("Arial", Font.BOLD, 10)); 
+            productPanels[i].add(productNames[i]);
+
+            productPrices[i] = new JLabel("");
+            productPrices[i].setBounds(30, 188, 112, 26);
+            productPrices[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            productPanels[i].add(productPrices[i]);
+
+            x += 269;
+            if ((i + 1) % 4 == 0) { // Move to the next row after every 4 items
+                x = 94;
+                y += 286;
+            }
+        }
+
+        JButton btnBack = new JButton("BACK");
+        btnBack.addActionListener(e -> {
+            dispose();
+            new homePage();
+        });
+        btnBack.setFont(new Font("Segoe UI", Font.BOLD, 23));
+        btnBack.setBounds(1160, 652, 114, 48);
+        panel.add(btnBack);
+
+        JLabel background = new JLabel("");
+        background.setIcon(new ImageIcon(product.class.getResource("/Resources/background (2).png")));
+        background.setBounds(0, 0, 1284, 711);
+        panel.add(background);
+
+        // Load product data from the database
+        loadProductData(productImages, productNames, productPrices);
+    }
+
+    private void loadProductData(JLabel[] productImages, JLabel[] productNames, JLabel[] productPrices) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS)) {
+            String query = "SELECT ProductName, Price, Image FROM products LIMIT 8";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            int index = 0;
+            while (resultSet.next() && index < productImages.length) {
+                // Retrieve product name and price
+                String name = resultSet.getString("ProductName");
+                String price = resultSet.getString("Price");
+
+                // Debug: Log retrieved name and price
+                System.out.println("Product Name: " + name);
+                System.out.println("Price: ₱" + price);
+
+                // Retrieve the image as a byte array from the BLOB field
+                byte[] imageBytes = resultSet.getBytes("Image");
+
+                // Set product name and price to their respective labels
+                productNames[index].setText(name);
+                productPrices[index].setText("₱" + price);
+
+                if (imageBytes != null && imageBytes.length > 0) {
+                    try {
+                        // Convert the byte array to an ImageIcon
+                        ImageIcon icon = new ImageIcon(imageBytes);
+
+                        // Validate the image
+                        if (icon.getImageLoadStatus() != MediaTracker.COMPLETE) {
+                            throw new Exception("Image failed to load");
+                        }
+
+                        // Scale the image for display
+                        Image scaledImage = icon.getImage().getScaledInstance(156, 127, Image.SCALE_SMOOTH);
+                        if (scaledImage == null) {
+                            throw new Exception("Scaled image is null");
+                        }
+
+                        // Set the scaled image to the JLabel
+                        productImages[index].setIcon(new ImageIcon(scaledImage));
+                        productImages[index].setText(""); // Clear any placeholder text
+                    } catch (Exception e) {
+                        System.out.println("Error processing image for product: " + name + " - " + e.getMessage());
+                        productImages[index].setIcon(null);
+                        productImages[index].setText("Invalid Image");
+                    }
+                } else {
+                    // Handle case where no image is available
+                    System.out.println("No image found for product: " + name);
+                    productImages[index].setIcon(null);
+                    productImages[index].setText("No Image");
+                }
+
+                // Ensure proper layout updates
+                productImages[index].revalidate();
+                productImages[index].repaint();
+
+                index++;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error fetching product data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

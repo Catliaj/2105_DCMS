@@ -237,8 +237,8 @@ public class BracesPage implements ActionListener {
 
         } else if (e.getSource() == productsBtn) {
             
-            System.out.println("Products button clicked");
-            
+        	 BracesPage.dispose();
+             new product();
         } else if (e.getSource() == contactUsBtn) {
             BracesPage.dispose();
             new ContactUs();
