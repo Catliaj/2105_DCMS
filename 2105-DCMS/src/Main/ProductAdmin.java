@@ -463,12 +463,12 @@ public class ProductAdmin extends JFrame {
 	        		 	        panel_2.setLayout(null);
 	        		 	        
 	        		 	        JLabel lblNewLabel_5 = new JLabel("");
-	        		 	        lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\ClinicLogo.png"));
+	        		 	        lblNewLabel_5.setIcon(new ImageIcon(ProductAdmin.class.getResource("/Resources/ClinicLogo.png")));
 	        		 	        lblNewLabel_5.setBounds(395, 22, 475, 64);
 	        		 	        panel_2.add(lblNewLabel_5);
 	        		 	        
 	        		 	        JLabel lblNewLabel_3 = new JLabel("");
-	        		 	        lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\DCF DENTAL CLINIC Your Convenient, Accommodating, and Affordable Dental Partner. (2)\\HeaderPanelBG.png"));
+	        		 	        lblNewLabel_3.setIcon(new ImageIcon(ProductAdmin.class.getResource("/Resources/HeaderPanelBG.png")));
 	        		 	        lblNewLabel_3.setBounds(0, 0, 1284, 107);
 	        		 	        panel_2.add(lblNewLabel_3);
 	        		 	        
@@ -556,7 +556,7 @@ public class ProductAdmin extends JFrame {
 	        		 	        panel_4.add(btnAppointments_1_1_1);
 	        		 	        
 	        		 	        JLabel lblNewLabel_4 = new JLabel("");
-	        		 	        lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\DCF DENTAL CLINIC Your Convenient, Accommodating, and Affordable Dental Partner. (2)\\SidePanelBG.png"));
+	        		 	        lblNewLabel_4.setIcon(new ImageIcon(ProductAdmin.class.getResource("/Resources/SidePanelBG.png")));
 	        		 	        lblNewLabel_4.setBounds(0, 0, 229, 613);
 	        		 	        panel_4.add(lblNewLabel_4);
 	        		 	        
@@ -614,7 +614,7 @@ public class ProductAdmin extends JFrame {
 	        		 	        
 	        		 	        JLabel lblNewLabel_2 = new JLabel("");
 	        		 	        lblNewLabel_2.setBackground(new Color(5, 59, 67));
-	        		 	        lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\backG.png"));
+	        		 	        lblNewLabel_2.setIcon(new ImageIcon(ProductAdmin.class.getResource("/Resources/Background (2).png")));
 	        		 	        lblNewLabel_2.setBounds(0, 0, 1284, 712);
 	        		 	        panel.add(lblNewLabel_2);
 	        

@@ -182,12 +182,6 @@ public class product extends JFrame {
                     productImages[index].setText("No Image");
                 }
 
-<<<<<<< HEAD
-                // Ensure proper layout updates
-                productImages[index].revalidate();
-                productImages[index].repaint();
-                index++;
-=======
                 // Make the current panel visible
                 productPanels[index].setVisible(true);
                 index++; 
@@ -196,7 +190,7 @@ public class product extends JFrame {
             // Hide unused panels
             for (int i = index; i < productPanels.length; i++) {
                 productPanels[i].setVisible(false);
->>>>>>> 004346e2e60fbd62b5e8392e10d140d6e83f82aa
+
             }
 
         } catch (SQLException e) {
