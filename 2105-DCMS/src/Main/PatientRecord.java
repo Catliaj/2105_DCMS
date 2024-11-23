@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+
 import backend.newPatient_Backend;
 
 import javax.swing.border.BevelBorder;
@@ -26,7 +27,6 @@ public class PatientRecord extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable PatientHistorytable;
-	private JTextField Searchtxtfield;
 	private JTextPane DOBtextPane;
 	private	JTextPane AGEtextPane;
 	private	JTextPane EmailtextPane;
@@ -82,7 +82,7 @@ public class PatientRecord extends JFrame {
 		
 		JPanel panelinfo = new JPanel();
 		panelinfo.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panelinfo.setBounds(290, 102, 537, 260);
+		panelinfo.setBounds(289, 63, 537, 260);
 		panelinfo.setBackground(new Color(165, 165, 165));
 		panel.add(panelinfo);
 		panelinfo.setLayout(null);
@@ -118,31 +118,37 @@ public class PatientRecord extends JFrame {
 		panelinfo.add(Contactlbl);
 		
 	    DOBtextPane = new JTextPane();
+	    DOBtextPane.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		DOBtextPane.setBounds(42, 53, 286, 26);
 		panelinfo.add(DOBtextPane);
 		
 	    AGEtextPane = new JTextPane();
+	    AGEtextPane.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		AGEtextPane.setBounds(358, 53, 52, 26);
 		panelinfo.add(AGEtextPane);
 		
 	    EmailtextPane = new JTextPane();
+	    EmailtextPane.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		EmailtextPane.setBounds(42, 120, 286, 26);
 		panelinfo.add(EmailtextPane);
 		
 	    Gendertxtpane = new JTextPane();
+	    Gendertxtpane.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		Gendertxtpane.setBounds(358, 120, 81, 26);
 		panelinfo.add(Gendertxtpane);
 		
 	    Contacttxtpane = new JTextPane();
+	    Contacttxtpane.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		Contacttxtpane.setBounds(359, 196, 147, 26);
 		panelinfo.add(Contacttxtpane);
 		
 	    Addresstxtpane = new JTextPane();
+	    Addresstxtpane.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		Addresstxtpane.setBounds(42, 196, 286, 26);
 		panelinfo.add(Addresstxtpane);
 		
 		JLabel GenInfolbl = new JLabel("GENERAL INFORMATION");
-		GenInfolbl.setBounds(290, 79, 210, 13);
+		GenInfolbl.setBounds(289, 40, 210, 13);
 		GenInfolbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		panel.add(GenInfolbl);
 		
@@ -150,31 +156,35 @@ public class PatientRecord extends JFrame {
 		Deletebtn.setForeground(new Color(194, 192, 192));
 		Deletebtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		Deletebtn.setBackground(new Color(5, 59, 67));
-		Deletebtn.setBounds(17, 269, 117, 34);
+		Deletebtn.setBounds(17, 242, 117, 34);
 		panel.add(Deletebtn);
 		
 	    PIDtxtpane = new JTextPane();
-		PIDtxtpane.setBounds(95, 222, 101, 26);
+	    PIDtxtpane.setBackground(new Color(255, 255, 255));
+	    PIDtxtpane.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		PIDtxtpane.setBounds(132, 184, 25, 26);
 		panel.add(PIDtxtpane);
 		
 	    Nametxtpane = new JTextPane();
-		Nametxtpane.setBounds(17, 140, 240, 72);
+	    Nametxtpane.setBackground(new Color(255, 255, 255));
+	    Nametxtpane.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		Nametxtpane.setBounds(25, 123, 238, 34);
 		panel.add(Nametxtpane);
 		
 		JButton Updatebtn = new JButton("UPDATE");
 		Updatebtn.setForeground(new Color(194, 192, 192));
 		Updatebtn.setBackground(new Color(5, 59, 67));
 		Updatebtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		Updatebtn.setBounds(144, 269, 119, 34);
+		Updatebtn.setBounds(144, 242, 119, 34);
 		panel.add(Updatebtn);
 		
 		JScrollPane HistoryscrollPane = new JScrollPane();
-		HistoryscrollPane.setBounds(17, 406, 802, 218);
+		HistoryscrollPane.setBounds(17, 373, 802, 251);
 		panel.add(HistoryscrollPane);
 		
 		PatientHistorytable = new JTable();
 		PatientHistorytable.setBackground(new Color(226, 224, 224));
-		PatientHistorytable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		PatientHistorytable.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		PatientHistorytable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -194,56 +204,18 @@ public class PatientRecord extends JFrame {
 		
 		JLabel PatientHistorylbl = new JLabel("PATIENT HISTORY");
 		PatientHistorylbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		PatientHistorylbl.setBounds(19, 370, 244, 26);
+		PatientHistorylbl.setBounds(17, 337, 244, 26);
 		panel.add(PatientHistorylbl);
 		
-		JPanel Searchpanel = new JPanel();
-		Searchpanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		Searchpanel.setBackground(new Color(149, 149, 149));
-		Searchpanel.setBounds(639, 25, 188, 45);
-		panel.add(Searchpanel);
-		Searchpanel.setLayout(null);
+		JLabel lblName = new JLabel("NAME");
+		lblName.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblName.setBounds(25, 102, 178, 21);
+		panel.add(lblName);
 		
-		Searchtxtfield = new JTextField();
-		Searchtxtfield.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		Searchtxtfield.setBackground(new Color(215, 213, 213));
-		Searchtxtfield.setBounds(48, 9, 130, 27);
-		Searchpanel.add(Searchtxtfield);
-		Searchtxtfield.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(10, -33, 45, 110);
-		Searchpanel.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(PatientRecord.class.getResource("/Resources/people.png")));
-		
-		JLabel Searchlbl = new JLabel("SEARCH ID:");
-		Searchlbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		Searchlbl.setBounds(548, 35, 101, 26);
-		panel.add(Searchlbl);
-		
-		Searchtxtfield.addActionListener(e -> {
-		    String searchID = Searchtxtfield.getText().trim();
-		    if (!searchID.isEmpty()) {
-		        newPatient_Backend backend = new newPatient_Backend();
-		        String[] patientDetails = backend.getPatientByID(searchID);
-
-		        if (patientDetails != null) {
-		            // Populate text panes with retrieved data
-		            PIDtxtpane.setText(patientDetails[0]);      
-		            Nametxtpane.setText(patientDetails[1] + " " + patientDetails[2] + " " + patientDetails[3]); 
-		            DOBtextPane.setText(patientDetails[4]);     
-		            AGEtextPane.setText(patientDetails[5]);     
-		            Gendertxtpane.setText(patientDetails[6]);  
-		            EmailtextPane.setText(patientDetails[7]);   
-		            Addresstxtpane.setText(patientDetails[8]);  
-		            Contacttxtpane.setText(patientDetails[9]);  
-		        } else {
-		            JOptionPane.showMessageDialog(this, "No patient found with ID: " + searchID);
-		        }
-		    } else {
-		        JOptionPane.showMessageDialog(this, "Please enter a Patient ID.");
-		    }
-		});
+		JLabel lblPatientId = new JLabel("PATIENT ID");
+		lblPatientId.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblPatientId.setBounds(106, 163, 178, 21);
+		panel.add(lblPatientId);
 		
 		Updatebtn.addActionListener(e -> {
 		    String patientID = PIDtxtpane.getText().trim();

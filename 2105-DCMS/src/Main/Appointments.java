@@ -24,6 +24,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import backend.ApointmentForm_backend;
+import javax.swing.border.BevelBorder;
+import javax.swing.JComboBox;
 
 public class Appointments extends JFrame implements ActionListener{
 
@@ -41,6 +43,7 @@ public class Appointments extends JFrame implements ActionListener{
     private JButton ProductSalesbtn;
     private JButton btnBookAppointment;
     private JButton btnRefresh;
+    private JTextField textField;
 
     /**
      * Launch the application.
@@ -164,18 +167,18 @@ public class Appointments extends JFrame implements ActionListener{
         
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(5, 59, 67));
-        panel_1.setBounds(460, 126, 585, 57);
+        panel_1.setBounds(460, 126, 585, 44);
         panel.add(panel_1);
         panel_1.setLayout(null);
         
         JLabel lblNewLabel = new JLabel("SCHEDULED APPOINTMENTS");
         lblNewLabel.setForeground(new Color(194, 192, 192));
         lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 25));
-        lblNewLabel.setBounds(128, 10, 388, 34);
+        lblNewLabel.setBounds(128, 5, 388, 34);
         panel_1.add(lblNewLabel);
                 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(262, 212, 992, 390);
+        scrollPane.setBounds(262, 265, 992, 349);
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table);
@@ -185,6 +188,7 @@ public class Appointments extends JFrame implements ActionListener{
         scrollPane.setViewportView(table);
         
         table_2 = new JTable();
+        table_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         table_2.setBackground(new Color(207, 205, 205));
         table_2.setModel(new DefaultTableModel(
         	new Object[][] {},
@@ -206,12 +210,12 @@ public class Appointments extends JFrame implements ActionListener{
         
         scrollPane.setViewportView(table_2);
                         
-        btnBookAppointment = new JButton("BOOK NEW APPOINTMENT");
+        btnBookAppointment = new JButton("BOOK APPOINTMENT");
         btnBookAppointment.addActionListener(this);
         btnBookAppointment.setBackground(new Color(194, 192, 192));
         btnBookAppointment.setForeground(new Color(0, 0, 0));
         btnBookAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnBookAppointment.setBounds(350, 628, 359, 50);
+        btnBookAppointment.setBounds(262, 642, 265, 50);
         panel.add(btnBookAppointment);
         
         JLabel lblNewLabel_3 = new JLabel("New label");
@@ -222,12 +226,48 @@ public class Appointments extends JFrame implements ActionListener{
         btnRefresh.setForeground(Color.BLACK);
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnRefresh.setBackground(new Color(194, 192, 192));
-        btnRefresh.setBounds(809, 628, 359, 50);
+        btnRefresh.setBounds(989, 642, 265, 50);
         panel.add(btnRefresh);
+        
+        JButton btnViewAppointment = new JButton("VIEW APPOINTMENT");
+        btnViewAppointment.setForeground(Color.BLACK);
+        btnViewAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        btnViewAppointment.setBackground(new Color(194, 192, 192));
+        btnViewAppointment.setBounds(623, 642, 265, 50);
+        panel.add(btnViewAppointment);
+        
+        JPanel panel_2 = new JPanel();
+        panel_2.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        panel_2.setBackground(new Color(194, 192, 192));
+        panel_2.setBounds(680, 190, 256, 50);
+        panel.add(panel_2);
+        panel_2.setLayout(null);
+        
+        textField = new JTextField();
+        textField.setBounds(53, 10, 193, 30);
+        panel_2.add(textField);
+        textField.setColumns(10);
+        
+        JLabel lblNewLabel_6 = new JLabel("");
+        lblNewLabel_6.setBounds(4, 2, 81, 44);
+        panel_2.add(lblNewLabel_6);
+        lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\people (1).png"));
+        
+        JComboBox SortcomboBox = new JComboBox<>(new String[]{"SORT BY", "PATIENT ID", "NAME", "DATE"});
+        SortcomboBox.setBackground(new Color(194, 192, 192));
+        SortcomboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        SortcomboBox.setBounds(1128, 246, 126, 20);
+        panel.add(SortcomboBox);
+        
+        JLabel lblNewLabel_7 = new JLabel("SEARCH:");
+        lblNewLabel_7.setForeground(new Color(194, 192, 192));
+        lblNewLabel_7.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblNewLabel_7.setBounds(580, 195, 102, 36);
+        panel.add(lblNewLabel_7);
         
         JLabel lblNewLabel_1 = new JLabel("");
         lblNewLabel_1.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/Background (2).png")));
-        lblNewLabel_1.setBounds(10, 72, 1286, 743);
+        lblNewLabel_1.setBounds(0, 71, 1286, 743);
         panel.add(lblNewLabel_1);
         loadAppointmentData();
     }
@@ -309,6 +349,4 @@ public class Appointments extends JFrame implements ActionListener{
 	        model.addRow(row);
 	    }
 	}
-
-	
 }
