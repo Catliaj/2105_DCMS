@@ -158,7 +158,6 @@ public class product extends JFrame {
                 // Ensure proper layout updates
                 productImages[index].revalidate();
                 productImages[index].repaint();
-
                 index++;
             }
 

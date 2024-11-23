@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -41,7 +43,7 @@ public class Patients extends JFrame implements ActionListener{
     private JButton btnAddPatient;
     private JButton btnViewRecord;
     private JButton btnRefresh;
-
+    private JComboBox<String> sortComboBox;
     /**
      * Launch the application.
      */
@@ -122,6 +124,22 @@ public class Patients extends JFrame implements ActionListener{
         Appointmentsbtn.addActionListener(this);
         SidePanel.add(Appointmentsbtn);
 
+        sortComboBox = new JComboBox<>(new String[]{"Sort By", "PatientID", "First Name", "Last Name"});
+        sortComboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        sortComboBox.setBounds(961, 203, 200, 30); // Adjust position and size as needed
+        panel.add(sortComboBox);
+
+        // Add an action listener to handle sorting
+        sortComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String selectedSort = sortComboBox.getSelectedItem().toString();
+                if (!selectedSort.equals("Sort By")) {
+                    loadPatientData(selectedSort);
+                }
+            }
+        });
+
+        
         Productbtn = new JButton("PRODUCT");
         Productbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Productbtn.setBackground(new Color(194, 192, 192));
@@ -196,7 +214,7 @@ public class Patients extends JFrame implements ActionListener{
         panel_1.add(lblNewLabel);
                 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(350, 210, 813, 358);
+        scrollPane.setBounds(348, 232, 813, 358);
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table_1);
@@ -318,24 +336,42 @@ public class Patients extends JFrame implements ActionListener{
 
 
 	}
-	private void loadPatientData() {
-	
+	private void loadPatientData(String sortBy) {
 	    DefaultTableModel model = (DefaultTableModel) table_1.getModel();
 	    model.setRowCount(0); // Clear existing data
-	   
-	    newPatient_Backend patientBackend = new newPatient_Backend();
-	    List<String[]> patientData = patientBackend.getPatientData();
 
-	    // Check if there is any data to display
-	    if (patientData.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "No patient data found.");
-	        return;
+	    newPatient_Backend patientBackend = new newPatient_Backend();
+	    List<String[]> patientData = patientBackend.getPatientData(); // Fetch patient data
+
+	    // Sort the data based on the selected criteria
+	    if (sortBy.equals("PatientID")) {
+	        patientData.sort((a, b) -> {
+	            try {
+	                int id1 = Integer.parseInt(a[0]);
+	                int id2 = Integer.parseInt(b[0]);
+	                return Integer.compare(id1, id2);
+	            } catch (NumberFormatException e) {
+	                return a[0].compareTo(b[0]); // Fallback to string comparison
+	            }
+	        });
 	    }
-	    // Loop through the list and add rows to the table
+	    else if (sortBy.equals("First Name")) {
+	        patientData.sort((a, b) -> a[1].compareToIgnoreCase(b[1])); // Sort by First Name
+	    } else if (sortBy.equals("Last Name")) {
+	        patientData.sort((a, b) -> a[3].compareToIgnoreCase(b[3])); // Sort by Last Name
+	    }
+
+	    // Loop through the sorted list and add rows to the table
 	    for (String[] row : patientData) {
 	        model.addRow(row);
 	    }
 	}
+
+	// Overload to load data without sorting (default)
+	private void loadPatientData() {
+	    loadPatientData("PatientID"); // Default sorting by PatientID
+	}
+
 	
 	
 }

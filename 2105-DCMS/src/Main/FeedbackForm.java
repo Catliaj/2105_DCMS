@@ -15,12 +15,10 @@ public class FeedbackForm implements ActionListener {
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
 	private Connection connection;
 	
-	
 	JOptionPane message = new JOptionPane();
     JFrame FeedbackForm = new JFrame("DCF Dental Clinic");
     JButton sumbitBtn = new JButton("SUBMIT");
     JPanel content = new BackgroundPanel("/Resources/Background (2).png");
-
     JButton homeBtn = new JButton("HOME");
     JButton aboutUsBtn = new JButton("ABOUT US");
     JButton servicesBtn = new JButton("SERVICES");
@@ -46,7 +44,7 @@ public class FeedbackForm implements ActionListener {
         FeedbackForm.setIconImage(image.getImage());
         FeedbackForm.setLayout(new BorderLayout());
         FeedbackForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        FeedbackForm.setSize(1300, 750);
+        FeedbackForm.setSize(1440, 1024);
 
         // Header setup
         header.setLayout(new BorderLayout());
