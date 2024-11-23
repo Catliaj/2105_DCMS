@@ -250,6 +250,19 @@ public class Patients extends JFrame implements ActionListener{
         lblNewLabel_1.setBounds(10, 72, 1286, 743);
         panel.add(lblNewLabel_1);
         loadPatientData();
+        
+        btnViewRecord.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table_1.getSelectedRow();
+                if (selectedRow != -1) { // Ensure a row is selected
+                    String patientID = table_1.getValueAt(selectedRow, 0).toString();
+                    new PatientRecord(patientID); // Pass patient ID to PatientRecord
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select a patient from the list.");
+                }
+            }
+        });
+
     }
 
     // Method to get the current date and time with day and full month name
@@ -284,10 +297,6 @@ public class Patients extends JFrame implements ActionListener{
 		else if(e.getSource() == btnAddPatient)
 		{
 			new NewPatient();
-		}
-		else if(e.getSource() == btnViewRecord)
-		{
-			new PatientRecord();
 		}
 		else if(e.getSource() == Billingbtn)
 		{
@@ -327,4 +336,6 @@ public class Patients extends JFrame implements ActionListener{
 	        model.addRow(row);
 	    }
 	}
+	
+	
 }

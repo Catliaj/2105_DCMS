@@ -9,10 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
@@ -22,16 +18,25 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import backend.newPatient_Backend;
+
 import javax.swing.border.BevelBorder;
-import DCMS_DB_CONNECTION.DB_DCMSConnection;
+
 public class PatientRecord extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable PatientHistorytable;
 	private JTextField Searchtxtfield;
-	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
-	private Connection connection;
+	private JTextPane DOBtextPane;
+	private	JTextPane AGEtextPane;
+	private	JTextPane EmailtextPane;
+	private	JTextPane Gendertxtpane;
+	private	JTextPane Contacttxtpane;
+	private	JTextPane Addresstxtpane;
+	private	JTextPane PIDtxtpane;
+	private	JTextPane Nametxtpane;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -112,27 +117,27 @@ public class PatientRecord extends JFrame {
 		Contactlbl.setBounds(359, 169, 178, 21);
 		panelinfo.add(Contactlbl);
 		
-		JTextPane DOBtextPane = new JTextPane();
+	    DOBtextPane = new JTextPane();
 		DOBtextPane.setBounds(42, 53, 286, 26);
 		panelinfo.add(DOBtextPane);
 		
-		JTextPane AGEtextPane = new JTextPane();
+	    AGEtextPane = new JTextPane();
 		AGEtextPane.setBounds(358, 53, 52, 26);
 		panelinfo.add(AGEtextPane);
 		
-		JTextPane EmailtextPane = new JTextPane();
+	    EmailtextPane = new JTextPane();
 		EmailtextPane.setBounds(42, 120, 286, 26);
 		panelinfo.add(EmailtextPane);
 		
-		JTextPane Gendertxtpane = new JTextPane();
+	    Gendertxtpane = new JTextPane();
 		Gendertxtpane.setBounds(358, 120, 81, 26);
 		panelinfo.add(Gendertxtpane);
 		
-		JTextPane Contacttxtpane = new JTextPane();
+	    Contacttxtpane = new JTextPane();
 		Contacttxtpane.setBounds(359, 196, 147, 26);
 		panelinfo.add(Contacttxtpane);
 		
-		JTextPane Addresstxtpane = new JTextPane();
+	    Addresstxtpane = new JTextPane();
 		Addresstxtpane.setBounds(42, 196, 286, 26);
 		panelinfo.add(Addresstxtpane);
 		
@@ -148,11 +153,11 @@ public class PatientRecord extends JFrame {
 		Deletebtn.setBounds(17, 269, 117, 34);
 		panel.add(Deletebtn);
 		
-		JTextPane PIDtxtpane = new JTextPane();
+	    PIDtxtpane = new JTextPane();
 		PIDtxtpane.setBounds(95, 222, 101, 26);
 		panel.add(PIDtxtpane);
 		
-		JTextPane Nametxtpane = new JTextPane();
+	    Nametxtpane = new JTextPane();
 		Nametxtpane.setBounds(17, 140, 240, 72);
 		panel.add(Nametxtpane);
 		
@@ -171,7 +176,8 @@ public class PatientRecord extends JFrame {
 		PatientHistorytable.setBackground(new Color(226, 224, 224));
 		PatientHistorytable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		PatientHistorytable.setModel(new DefaultTableModel(
-			new Object[][] {},
+			new Object[][] {
+			},
 			new String[] {
 				"DATE", "TIME", "TREATMENT", "REMARKS"
 			}
@@ -257,52 +263,52 @@ public class PatientRecord extends JFrame {
 		    }
 
 		    newPatient_Backend backend = new newPatient_Backend();
-		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this patient record?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+		    boolean isUpdated = backend.updatePatientData(patientID, firstName, middleInitial, lastName, dob, age, gender, email, address, contactNumber);
 
-		    if (confirm == JOptionPane.YES_OPTION) {
-            	boolean isUpdated = backend.updatePatientData(patientID, firstName, middleInitial, lastName, dob, age, gender, email, address, contactNumber);
-
-            	if (isUpdated) {
-            		JOptionPane.showMessageDialog(this, "Patient details updated successfully!");
-            	} else {
-            		JOptionPane.showMessageDialog(this, "Failed to update patient details. Please try again.");
-		    }
-        	}
-		});
-		
-		Deletebtn.addActionListener(e -> {
-		    String patientID = PIDtxtpane.getText().trim();
-
-		    if (patientID.isEmpty()) {
-		        JOptionPane.showMessageDialog(this, "Please enter a valid Patient ID to delete.");
-		        return;
-		    }
-
-		    newPatient_Backend backend = new newPatient_Backend();
-		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this patient record?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
-
-		    if (confirm == JOptionPane.YES_OPTION) {
-		        boolean isDeleted = backend.deletePatientByID(patientID);
-
-		        if (isDeleted) {
-		            JOptionPane.showMessageDialog(this, "Patient record deleted successfully!");
-		            // Clear text fields after deletion
-		            PIDtxtpane.setText("");
-		            Nametxtpane.setText("");
-		            DOBtextPane.setText("");
-		            AGEtextPane.setText("");
-		            Gendertxtpane.setText("");
-		            EmailtextPane.setText("");
-		            Addresstxtpane.setText("");
-		            Contacttxtpane.setText("");
-		            // Optionally refresh table or UI
-		        } else {
-		            JOptionPane.showMessageDialog(this, "Failed to delete patient record. Please try again.");
-		        }
+		    if (isUpdated) {
+		        JOptionPane.showMessageDialog(this, "Patient details updated successfully!");
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Failed to update patient details. Please try again.");
 		    }
 		});
 
 
 	}
+	
+	
+	public PatientRecord(String patientID) {
+	    this(); // Call the default constructor to set up the UI
 
+	    if (patientID != null && !patientID.isEmpty()) {
+	        populatePatientDetails(patientID); // Populate fields with patient data
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Invalid Patient ID provided.");
+	    }
+	}
+
+	// Method to populate fields based on patient ID
+	private void populatePatientDetails(String patientID) {
+	    newPatient_Backend backend = new newPatient_Backend();
+	    String[] patientDetails = backend.getPatientByID(patientID);
+
+	    if (patientDetails != null) {
+	        PIDtxtpane.setText(patientDetails[0]);      
+	        Nametxtpane.setText(patientDetails[1] + " " + patientDetails[2] + " " + patientDetails[3]); 
+	        DOBtextPane.setText(patientDetails[4]);     
+	        AGEtextPane.setText(patientDetails[5]);     
+	        Gendertxtpane.setText(patientDetails[6]);  
+	        EmailtextPane.setText(patientDetails[7]);   
+	        Addresstxtpane.setText(patientDetails[8]);  
+	        Contacttxtpane.setText(patientDetails[9]);  
+	    } else {
+	        JOptionPane.showMessageDialog(this, "No patient data found for ID: " + patientID);
+	    }
+	}
+	
 }
+
+
+
+
+
+
