@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -24,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import backend.newPatient_Backend;
+import javax.swing.border.BevelBorder;
 public class Patients extends JFrame implements ActionListener{
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +44,11 @@ public class Patients extends JFrame implements ActionListener{
     private JButton btnAddPatient;
     private JButton btnViewRecord;
     private JButton btnRefresh;
-
+    private JComboBox<String> sortComboBox;
+    private JPanel panel_4;
+    private JTextField textField;
+    private JLabel SearchIDlbl;
+    private JLabel lblNewLabel_6;
     /**
      * Launch the application.
      */
@@ -82,7 +89,7 @@ public class Patients extends JFrame implements ActionListener{
 
         JPanel HeaderPanel = new JPanel();
         HeaderPanel.setBackground(new Color(5, 59, 67));
-        HeaderPanel.setBounds(0, 0, 1286, 107);
+        HeaderPanel.setBounds(0, 0, 1286, 100);
         panel.add(HeaderPanel);
         HeaderPanel.setLayout(null);
         
@@ -93,12 +100,12 @@ public class Patients extends JFrame implements ActionListener{
                 
                 JLabel lblNewLabel_4 = new JLabel("");
                 lblNewLabel_4.setIcon(new ImageIcon(Patients.class.getResource("/Resources/HeaderPanelBG.png")));
-                lblNewLabel_4.setBounds(0, 0, 1314, 107);
+                lblNewLabel_4.setBounds(0, 0, 1314, 97);
                 HeaderPanel.add(lblNewLabel_4);
 
         JPanel SidePanel = new JPanel();
         SidePanel.setBackground(new Color(5, 59, 67));
-        SidePanel.setBounds(0, 126, 229, 587);
+        SidePanel.setBounds(0, 117, 229, 596);
         panel.add(SidePanel);
         SidePanel.setLayout(null);
 
@@ -122,6 +129,23 @@ public class Patients extends JFrame implements ActionListener{
         Appointmentsbtn.addActionListener(this);
         SidePanel.add(Appointmentsbtn);
 
+        sortComboBox = new JComboBox<>(new String[]{"SORT BY", "PATIENT ID", "FIRST NAME", "LAST NAME"});
+        sortComboBox.setBackground(new Color(194, 192, 192));
+        sortComboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        sortComboBox.setBounds(1035, 237, 126, 20); // Adjust position and size as needed
+        panel.add(sortComboBox);
+
+        // Add an action listener to handle sorting
+        sortComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String selectedSort = sortComboBox.getSelectedItem().toString();
+                if (!selectedSort.equals("Sort By")) {
+                    loadPatientData(selectedSort);
+                }
+            }
+        });
+
+        
         Productbtn = new JButton("PRODUCT");
         Productbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
         Productbtn.setBackground(new Color(194, 192, 192));
@@ -157,7 +181,7 @@ public class Patients extends JFrame implements ActionListener{
 
         JPanel panel_3 = new JPanel();
         panel_3.setBackground(new Color(194, 192, 192));
-        panel_3.setBounds(0, 107, 1286, 20);
+        panel_3.setBounds(0, 96, 1296, 20);
         panel.add(panel_3);
 
         JPanel panel_2 = new JPanel();
@@ -185,25 +209,25 @@ public class Patients extends JFrame implements ActionListener{
         
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(5, 59, 67));
-        panel_1.setBounds(460, 126, 585, 57);
+        panel_1.setBounds(456, 110, 585, 43);
         panel.add(panel_1);
         panel_1.setLayout(null);
         
         JLabel lblNewLabel = new JLabel("PATIENT LISTS");
         lblNewLabel.setForeground(new Color(194, 192, 192));
         lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 25));
-        lblNewLabel.setBounds(220, 10, 198, 34);
+        lblNewLabel.setBounds(220, 4, 198, 34);
         panel_1.add(lblNewLabel);
                 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(350, 210, 813, 358);
+        scrollPane.setBounds(348, 255, 813, 335);
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table_1);
         
         table_1 = new JTable();
         table_1.setBackground(new Color(207, 205, 205));
-        table_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        table_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         table_1.setModel(new DefaultTableModel(
         	new Object[][] {},
         	new String[] {
@@ -226,14 +250,14 @@ public class Patients extends JFrame implements ActionListener{
         btnAddPatient.setBackground(new Color(194, 192, 192));
         btnAddPatient.setForeground(new Color(0, 0, 0));
         btnAddPatient.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnAddPatient.setBounds(286, 600, 217, 50);
+        btnAddPatient.setBounds(285, 610, 217, 50);
         panel.add(btnAddPatient);
                                 
-        btnViewRecord = new JButton("SEARCH");
+        btnViewRecord = new JButton("VIEW RECORD");
         btnViewRecord.setForeground(Color.BLACK);
         btnViewRecord.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewRecord.setBackground(new Color(194, 192, 192));
-        btnViewRecord.setBounds(643, 600, 217, 50);
+        btnViewRecord.setBounds(643, 610, 217, 50);
         btnViewRecord.addActionListener(this);
         panel.add(btnViewRecord);
         
@@ -241,9 +265,32 @@ public class Patients extends JFrame implements ActionListener{
         btnRefresh.setForeground(Color.BLACK);
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnRefresh.setBackground(new Color(194, 192, 192));
-        btnRefresh.setBounds(1005, 600, 217, 50);
+        btnRefresh.setBounds(1005, 610, 217, 50);
         btnRefresh.addActionListener(this);
         panel.add(btnRefresh);
+        
+        panel_4 = new JPanel();
+        panel_4.setBackground(new Color(194, 192, 192));
+        panel_4.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        panel_4.setBounds(666, 179, 238, 50);
+        panel.add(panel_4);
+        panel_4.setLayout(null);
+        
+        textField = new JTextField();
+        textField.setBounds(53, 9, 173, 32);
+        panel_4.add(textField);
+        textField.setColumns(10);
+        
+        lblNewLabel_6 = new JLabel("");
+        lblNewLabel_6.setBounds(6, 0, 59, 50);
+        panel_4.add(lblNewLabel_6);
+        lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\people (1).png"));
+        
+        SearchIDlbl = new JLabel("SEARCH: ");
+        SearchIDlbl.setForeground(new Color(194, 192, 192));
+        SearchIDlbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        SearchIDlbl.setBounds(568, 190, 117, 30);
+        panel.add(SearchIDlbl);
         
         JLabel lblNewLabel_1 = new JLabel("");
         lblNewLabel_1.setIcon(new ImageIcon(Patients.class.getResource("/Resources/Background (2).png")));
@@ -318,24 +365,42 @@ public class Patients extends JFrame implements ActionListener{
 
 
 	}
-	private void loadPatientData() {
-	
+	private void loadPatientData(String sortBy) {
 	    DefaultTableModel model = (DefaultTableModel) table_1.getModel();
 	    model.setRowCount(0); // Clear existing data
-	   
-	    newPatient_Backend patientBackend = new newPatient_Backend();
-	    List<String[]> patientData = patientBackend.getPatientData();
 
-	    // Check if there is any data to display
-	    if (patientData.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "No patient data found.");
-	        return;
+	    newPatient_Backend patientBackend = new newPatient_Backend();
+	    List<String[]> patientData = patientBackend.getPatientData(); // Fetch patient data
+
+	    // Sort the data based on the selected criteria
+	    if (sortBy.equals("PatientID")) {
+	        patientData.sort((a, b) -> {
+	            try {
+	                int id1 = Integer.parseInt(a[0]);
+	                int id2 = Integer.parseInt(b[0]);
+	                return Integer.compare(id1, id2);
+	            } catch (NumberFormatException e) {
+	                return a[0].compareTo(b[0]); // Fallback to string comparison
+	            }
+	        });
 	    }
-	    // Loop through the list and add rows to the table
+	    else if (sortBy.equals("First Name")) {
+	        patientData.sort((a, b) -> a[1].compareToIgnoreCase(b[1])); // Sort by First Name
+	    } else if (sortBy.equals("Last Name")) {
+	        patientData.sort((a, b) -> a[3].compareToIgnoreCase(b[3])); // Sort by Last Name
+	    }
+
+	    // Loop through the sorted list and add rows to the table
 	    for (String[] row : patientData) {
 	        model.addRow(row);
 	    }
 	}
+
+	// Overload to load data without sorting (default)
+	private void loadPatientData() {
+	    loadPatientData("PatientID"); // Default sorting by PatientID
+	}
+
 	
 	
 }
