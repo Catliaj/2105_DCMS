@@ -36,7 +36,7 @@ public class ContactUs implements ActionListener {
 
         ContactUs.setLayout(new BorderLayout());
         ContactUs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ContactUs.setSize(1440, 1024);
+        ContactUs.setSize(1300, 750);
 
         // Header setup
         header.setLayout(new BorderLayout());

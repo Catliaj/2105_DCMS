@@ -27,7 +27,7 @@ public class aboutUs implements ActionListener {
         aboutpage.setIconImage(image.getImage());
         aboutpage.setLayout(new BorderLayout());
         aboutpage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        aboutpage.setSize(1440, 1024);
+        aboutpage.setSize(1300, 750);
 
         // Header setup
         header.setLayout(new BorderLayout());

@@ -61,7 +61,7 @@ public class homePage implements ActionListener
 
         homepage.getContentPane().setLayout(new BorderLayout());
         homepage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        homepage.setSize(1440, 1024);
+        homepage.setSize(1300, 750);
         
         
         // Header (Navigation bar)

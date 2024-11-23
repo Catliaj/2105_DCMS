@@ -131,7 +131,7 @@ public class BracesPage implements ActionListener {
         BracesPage.add(header, BorderLayout.NORTH);
 
         // Content area with background
-        content.setLayout(new FlowLayout(FlowLayout.RIGHT, 100, 50));  // Aligns components to the right
+        content.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 50));  // Aligns components to the right
 
         // Small rectangle panel 1
         JPanel smallPanel = new JPanel();
@@ -151,7 +151,7 @@ public class BracesPage implements ActionListener {
 
         Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH); 
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
-        imageLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
+        imageLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15)); 
 
         JLabel clinicName = new JLabel("BRACES");
         clinicName.setForeground(Color.WHITE);
@@ -177,7 +177,7 @@ public class BracesPage implements ActionListener {
         );
 
         subText.setForeground(Color.WHITE);
-        subText.setFont(new Font("Arial", Font.PLAIN, 21)); 
+        subText.setFont(new Font("Arial", Font.PLAIN, 18)); 
         subText.setBorder(BorderFactory.createEmptyBorder(10, 50, 100, 20));  //top, left, bottom, right
 
         smallPanel.add(subText, BorderLayout.CENTER); 

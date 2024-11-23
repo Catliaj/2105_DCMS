@@ -50,7 +50,7 @@ public class RCTPage implements ActionListener{
 
 	        RCTPage.setLayout(new BorderLayout());
 	        RCTPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        RCTPage.setSize(1440, 1024);
+	        RCTPage.setSize(1300, 750);
 
 	        // Create side panel with buttons
 	        sidePanel.setLayout(new GridLayout(13, 1, 5, 5)); // 13 buttons in a single column
@@ -123,7 +123,7 @@ public class RCTPage implements ActionListener{
 	        RCTPage.add(header, BorderLayout.NORTH);
 
 	        // Content area with background
-	        content.setLayout(new FlowLayout(FlowLayout.RIGHT, 100, 50));  // Aligns components to the right
+	        content.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 50));  // Aligns components to the right
 
 	        // Small rectangle panel 1
 	        JPanel smallPanel = new JPanel();
@@ -165,7 +165,7 @@ public class RCTPage implements ActionListener{
 	        );
 
 	        subText.setForeground(Color.WHITE);
-	        subText.setFont(new Font("Arial", Font.PLAIN, 21)); 
+	        subText.setFont(new Font("Arial", Font.PLAIN, 18)); 
 	        subText.setBorder(BorderFactory.createEmptyBorder(10, 50, 30, 20));  //top, left, bottom, right
 
 	        smallPanel.add(subText, BorderLayout.CENTER); 
