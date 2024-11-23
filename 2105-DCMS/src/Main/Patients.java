@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import backend.newPatient_Backend;
+import javax.swing.border.BevelBorder;
 public class Patients extends JFrame implements ActionListener{
 
     private static final long serialVersionUID = 1L;
@@ -44,6 +45,13 @@ public class Patients extends JFrame implements ActionListener{
     private JButton btnViewRecord;
     private JButton btnRefresh;
     private JComboBox<String> sortComboBox;
+<<<<<<< HEAD
+=======
+    private JPanel panel_4;
+    private JTextField textField;
+    private JLabel SearchIDlbl;
+    private JLabel lblNewLabel_6;
+>>>>>>> 004346e2e60fbd62b5e8392e10d140d6e83f82aa
     /**
      * Launch the application.
      */
@@ -84,7 +92,7 @@ public class Patients extends JFrame implements ActionListener{
 
         JPanel HeaderPanel = new JPanel();
         HeaderPanel.setBackground(new Color(5, 59, 67));
-        HeaderPanel.setBounds(0, 0, 1286, 107);
+        HeaderPanel.setBounds(0, 0, 1286, 100);
         panel.add(HeaderPanel);
         HeaderPanel.setLayout(null);
         
@@ -95,12 +103,12 @@ public class Patients extends JFrame implements ActionListener{
                 
                 JLabel lblNewLabel_4 = new JLabel("");
                 lblNewLabel_4.setIcon(new ImageIcon(Patients.class.getResource("/Resources/HeaderPanelBG.png")));
-                lblNewLabel_4.setBounds(0, 0, 1314, 107);
+                lblNewLabel_4.setBounds(0, 0, 1314, 97);
                 HeaderPanel.add(lblNewLabel_4);
 
         JPanel SidePanel = new JPanel();
         SidePanel.setBackground(new Color(5, 59, 67));
-        SidePanel.setBounds(0, 126, 229, 587);
+        SidePanel.setBounds(0, 117, 229, 596);
         panel.add(SidePanel);
         SidePanel.setLayout(null);
 
@@ -124,9 +132,16 @@ public class Patients extends JFrame implements ActionListener{
         Appointmentsbtn.addActionListener(this);
         SidePanel.add(Appointmentsbtn);
 
+<<<<<<< HEAD
         sortComboBox = new JComboBox<>(new String[]{"Sort By", "PatientID", "First Name", "Last Name"});
         sortComboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
         sortComboBox.setBounds(961, 203, 200, 30); // Adjust position and size as needed
+=======
+        sortComboBox = new JComboBox<>(new String[]{"SORT BY", "PATIENT ID", "FIRST NAME", "LAST NAME"});
+        sortComboBox.setBackground(new Color(194, 192, 192));
+        sortComboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        sortComboBox.setBounds(1035, 237, 126, 20); // Adjust position and size as needed
+>>>>>>> 004346e2e60fbd62b5e8392e10d140d6e83f82aa
         panel.add(sortComboBox);
 
         // Add an action listener to handle sorting
@@ -175,7 +190,7 @@ public class Patients extends JFrame implements ActionListener{
 
         JPanel panel_3 = new JPanel();
         panel_3.setBackground(new Color(194, 192, 192));
-        panel_3.setBounds(0, 107, 1286, 20);
+        panel_3.setBounds(0, 96, 1296, 20);
         panel.add(panel_3);
 
         JPanel panel_2 = new JPanel();
@@ -203,25 +218,29 @@ public class Patients extends JFrame implements ActionListener{
         
         JPanel panel_1 = new JPanel();
         panel_1.setBackground(new Color(5, 59, 67));
-        panel_1.setBounds(460, 126, 585, 57);
+        panel_1.setBounds(456, 110, 585, 43);
         panel.add(panel_1);
         panel_1.setLayout(null);
         
         JLabel lblNewLabel = new JLabel("PATIENT LISTS");
         lblNewLabel.setForeground(new Color(194, 192, 192));
         lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 25));
-        lblNewLabel.setBounds(220, 10, 198, 34);
+        lblNewLabel.setBounds(220, 4, 198, 34);
         panel_1.add(lblNewLabel);
                 
         JScrollPane scrollPane = new JScrollPane();
+<<<<<<< HEAD
         scrollPane.setBounds(348, 232, 813, 358);
+=======
+        scrollPane.setBounds(348, 255, 813, 335);
+>>>>>>> 004346e2e60fbd62b5e8392e10d140d6e83f82aa
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table_1);
         
         table_1 = new JTable();
         table_1.setBackground(new Color(207, 205, 205));
-        table_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        table_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         table_1.setModel(new DefaultTableModel(
         	new Object[][] {},
         	new String[] {
@@ -244,14 +263,14 @@ public class Patients extends JFrame implements ActionListener{
         btnAddPatient.setBackground(new Color(194, 192, 192));
         btnAddPatient.setForeground(new Color(0, 0, 0));
         btnAddPatient.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnAddPatient.setBounds(286, 600, 217, 50);
+        btnAddPatient.setBounds(285, 610, 217, 50);
         panel.add(btnAddPatient);
                                 
-        btnViewRecord = new JButton("SEARCH");
+        btnViewRecord = new JButton("VIEW RECORD");
         btnViewRecord.setForeground(Color.BLACK);
         btnViewRecord.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewRecord.setBackground(new Color(194, 192, 192));
-        btnViewRecord.setBounds(643, 600, 217, 50);
+        btnViewRecord.setBounds(643, 610, 217, 50);
         btnViewRecord.addActionListener(this);
         panel.add(btnViewRecord);
         
@@ -259,9 +278,32 @@ public class Patients extends JFrame implements ActionListener{
         btnRefresh.setForeground(Color.BLACK);
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnRefresh.setBackground(new Color(194, 192, 192));
-        btnRefresh.setBounds(1005, 600, 217, 50);
+        btnRefresh.setBounds(1005, 610, 217, 50);
         btnRefresh.addActionListener(this);
         panel.add(btnRefresh);
+        
+        panel_4 = new JPanel();
+        panel_4.setBackground(new Color(194, 192, 192));
+        panel_4.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        panel_4.setBounds(666, 179, 238, 50);
+        panel.add(panel_4);
+        panel_4.setLayout(null);
+        
+        textField = new JTextField();
+        textField.setBounds(53, 9, 173, 32);
+        panel_4.add(textField);
+        textField.setColumns(10);
+        
+        lblNewLabel_6 = new JLabel("");
+        lblNewLabel_6.setBounds(6, 0, 59, 50);
+        panel_4.add(lblNewLabel_6);
+        lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\people (1).png"));
+        
+        SearchIDlbl = new JLabel("SEARCH: ");
+        SearchIDlbl.setForeground(new Color(194, 192, 192));
+        SearchIDlbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        SearchIDlbl.setBounds(568, 190, 117, 30);
+        panel.add(SearchIDlbl);
         
         JLabel lblNewLabel_1 = new JLabel("");
         lblNewLabel_1.setIcon(new ImageIcon(Patients.class.getResource("/Resources/Background (2).png")));
