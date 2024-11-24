@@ -45,13 +45,12 @@ public class Patients extends JFrame implements ActionListener{
     private JButton btnViewRecord;
     private JButton btnRefresh;
     private JComboBox<String> sortComboBox;
-<<<<<<< HEAD
-=======
+
     private JPanel panel_4;
     private JTextField textField;
     private JLabel SearchIDlbl;
     private JLabel lblNewLabel_6;
->>>>>>> 004346e2e60fbd62b5e8392e10d140d6e83f82aa
+
     /**
      * Launch the application.
      */
@@ -132,16 +131,11 @@ public class Patients extends JFrame implements ActionListener{
         Appointmentsbtn.addActionListener(this);
         SidePanel.add(Appointmentsbtn);
 
-<<<<<<< HEAD
-        sortComboBox = new JComboBox<>(new String[]{"Sort By", "PatientID", "First Name", "Last Name"});
-        sortComboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        sortComboBox.setBounds(961, 203, 200, 30); // Adjust position and size as needed
-=======
         sortComboBox = new JComboBox<>(new String[]{"SORT BY", "PATIENT ID", "FIRST NAME", "LAST NAME"});
         sortComboBox.setBackground(new Color(194, 192, 192));
         sortComboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
         sortComboBox.setBounds(1035, 237, 126, 20); // Adjust position and size as needed
->>>>>>> 004346e2e60fbd62b5e8392e10d140d6e83f82aa
+
         panel.add(sortComboBox);
 
         // Add an action listener to handle sorting
@@ -229,11 +223,7 @@ public class Patients extends JFrame implements ActionListener{
         panel_1.add(lblNewLabel);
                 
         JScrollPane scrollPane = new JScrollPane();
-<<<<<<< HEAD
-        scrollPane.setBounds(348, 232, 813, 358);
-=======
         scrollPane.setBounds(348, 255, 813, 335);
->>>>>>> 004346e2e60fbd62b5e8392e10d140d6e83f82aa
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table_1);
