@@ -180,6 +180,7 @@ public class Dashboard extends JFrame implements ActionListener{
         panel_1.add(lblNewLabel_4);
         
         textField = new JTextField();
+        textField.setFont(new Font("Segoe UI", Font.BOLD, 25));
         textField.setBounds(123, 46, 96, 53);
         panel_1.add(textField);
         textField.setColumns(10);
@@ -203,6 +204,7 @@ public class Dashboard extends JFrame implements ActionListener{
         panel_1_1.add(lblNewLabel_4_1);
         
         textField_1 = new JTextField();
+        textField_1.setFont(new Font("Segoe UI", Font.BOLD, 25));
         textField_1.setColumns(10);
         textField_1.setBounds(125, 46, 96, 53);
         panel_1_1.add(textField_1);

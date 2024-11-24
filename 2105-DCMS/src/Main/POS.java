@@ -1,4 +1,5 @@
 package Main;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -22,9 +23,6 @@ import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
@@ -32,8 +30,7 @@ import com.toedter.calendar.JDateChooser;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Toolkit;
-import DCMS_DB_CONNECTION.DB_DCMSConnection;
-import backend.POS_backend;
+
 
 public class POS extends JFrame {
 
@@ -45,16 +42,21 @@ public class POS extends JFrame {
 	private JTextField CustomerNametxtfield;
 	private JTextField textField;
 	private JTextArea addedItemsArea;
-	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
-	POS_backend posbackend = new POS_backend();
-	private Connection connection;
+	private JComboBox<String> discountComboBox;
+	private JTextField Productprice;
+
 	// Declare lists to store selected products and services
 	List<String> selectedProducts = new ArrayList<>();
 	List<Integer> productQuantities = new ArrayList<>();
 	List<Double> productPrices = new ArrayList<>();
 	List<String> selectedServices = new ArrayList<>();
 	List<Double> servicePrices = new ArrayList<>();
-	private JTextField Productprice;
+	// Declare lists to store prices of products and services
+	List<Double> addedProductPrices = new ArrayList<>();
+	List<Double> addedServicePrices = new ArrayList<>();
+	private JTextField textField_1;
+	private JTextField textField_2;
+
 	/**
 	 * Launch the application.
 	 */
@@ -78,13 +80,13 @@ public class POS extends JFrame {
 		setResizable(false);
 		setBackground(new Color(5, 59, 67));
 		setTitle("POS");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("/Resources/Adminiconlogo.png"));
-		setVisible(true);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(150, 50, 1300, 750);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Adminiconlogo.png"));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1300, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
+
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -96,67 +98,71 @@ public class POS extends JFrame {
 		JPanel TopPanel = new JPanel();
 		TopPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		TopPanel.setBackground(new Color(5, 59, 67));
-		TopPanel.setBounds(27, 58, 1226, 76);
+		TopPanel.setBounds(27, 34, 810, 76);
 		panel.add(TopPanel);
 		TopPanel.setLayout(null);
 		
 		JLabel CustomerNamelbl = new JLabel("CUSTOMER NAME");
 		CustomerNamelbl.setForeground(new Color(194, 192, 192));
 		CustomerNamelbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		CustomerNamelbl.setBounds(77, 19, 250, 34);
+		CustomerNamelbl.setBounds(10, 19, 250, 34);
 		TopPanel.add(CustomerNamelbl);
-				
+		
+
+		
 		JLabel Datelbl = new JLabel("DATE");
 		Datelbl.setForeground(new Color(194, 192, 192));
 		Datelbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		Datelbl.setBounds(815, 19, 84, 34);
+		Datelbl.setBounds(515, 19, 84, 34);
 		TopPanel.add(Datelbl);
-				
+		
+		
 		CustomerNametxtfield = new JTextField();
 		CustomerNametxtfield.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		CustomerNametxtfield.setColumns(10);
-		CustomerNametxtfield.setBounds(310, 15, 396, 45);
+		CustomerNametxtfield.setBounds(243, 15, 231, 45);
 		TopPanel.add(CustomerNametxtfield);
 		
 		JDateChooser Datefield = new JDateChooser();
-		Datefield.setBounds(896, 15, 242, 45);
+		Datefield.setBounds(604, 15, 165, 45);
 		TopPanel.add(Datefield);
 		Datefield.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JPanel ProductPanel = new JPanel();
 		ProductPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		ProductPanel.setBackground(new Color(5, 59, 67));
-		ProductPanel.setBounds(27, 159, 400, 446);
+		ProductPanel.setBounds(27, 120, 400, 475);
 		panel.add(ProductPanel);
 		ProductPanel.setLayout(null);
 		
 		JLabel Productslbl = new JLabel("PRODUCTS");
 		Productslbl.setForeground(new Color(194, 192, 192));
 		Productslbl.setFont(new Font("Segoe UI", Font.BOLD, 30));
-		Productslbl.setBounds(115, 25, 178, 70);
+		Productslbl.setBounds(115, 38, 178, 70);
 		ProductPanel.add(Productslbl);
+
 		
 		JComboBox<String> Productcombobox = new JComboBox<>(new String[] {
 		"", "Colgate Optic White", "Oral-B Pro Health", "Oral-B Toothbrush", "Colgate Plax Mouthwash", "Oral-B Floss Sticks", "Colgate Optic White Teeth Whitening Pen", "Colgate Kids Toothpaste", "Oral-B Pro 1000 Electric Toothbrush"});
 		Productcombobox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		Productcombobox.setBounds(61, 158, 276, 40);
+		Productcombobox.setBounds(61, 154, 276, 40);
 		ProductPanel.add(Productcombobox);
 		
-		Productpricetxtfield = new JTextField();
+		
 		JSpinner Qtyspinner = new JSpinner();
 		Qtyspinner.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		Qtyspinner.setBounds(61, 268, 101, 40);
+		Qtyspinner.setBounds(61, 285, 101, 40);
 		Qtyspinner.setValue(1);  
 		ProductPanel.add(Qtyspinner);
 		
 		JLabel qtylbl = new JLabel("QUANTITY");
 		qtylbl.setForeground(new Color(194, 192, 192));
 		qtylbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		qtylbl.setBounds(61, 208, 149, 70);
+		qtylbl.setBounds(61, 225, 149, 70);
 		ProductPanel.add(qtylbl);
 		
 		JPanel AddedItemsPanel = new JPanel();
-        AddedItemsPanel.setBounds(847, 158, 406, 190);  // You can adjust the size and position
+        AddedItemsPanel.setBounds(847, 34, 406, 187);  // You can adjust the size and position
         AddedItemsPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
         AddedItemsPanel.setBackground(new Color(5, 59, 67));
         panel.add(AddedItemsPanel);
@@ -164,7 +170,7 @@ public class POS extends JFrame {
         
         // JLabel for "Added Items"
         JLabel AddedItemsLabel = new JLabel("ITEMS");
-        AddedItemsLabel.setBounds(171, 0, 150, 30);
+        AddedItemsLabel.setBounds(171, 5, 150, 30);
         AddedItemsLabel.setForeground(new Color(194, 192, 192));
         AddedItemsLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         AddedItemsPanel.add(AddedItemsLabel);
@@ -175,16 +181,18 @@ public class POS extends JFrame {
         addedItemsArea.setEditable(false);
         addedItemsArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         AddedItemsPanel.add(addedItemsArea);
-        
-        // Scroll pane to make the JTextArea scrollable
+     // Increase the size of the JTextArea and JScrollPane
+        addedItemsArea.setBounds(1, 56, 380, 130);  // Increased size for JTextArea
+
+        // Adjust the scroll pane to match the new size
         JScrollPane scrollPane_1 = new JScrollPane(addedItemsArea);
-        scrollPane_1.setBounds(10, 40, 380, 130);
+        scrollPane_1.setBounds(10, 40, 380, 130);  // Update scroll pane size
         AddedItemsPanel.add(scrollPane_1);
-				
+        	
 		JPanel TotalPanel_1_1 = new JPanel();
 		TotalPanel_1_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		TotalPanel_1_1.setBackground(new Color(5, 59, 67));
-		TotalPanel_1_1.setBounds(88, 365, 205, 59);
+		TotalPanel_1_1.setBounds(88, 374, 205, 59);
 		ProductPanel.add(TotalPanel_1_1);
 		TotalPanel_1_1.setLayout(null);
 		
@@ -193,148 +201,247 @@ public class POS extends JFrame {
 		TotalPanel_1_1.add(addbtn);
 		addbtn.setBackground(new Color(194, 192, 192));
 		addbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-			addbtn.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			        String selectedProduct = (String) Productcombobox.getSelectedItem();
-			        String productPrice = Productpricetxtfield.getText();
-			        int quantity = (Integer) Qtyspinner.getValue();
+		addbtn.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        String selectedProduct = (String) Productcombobox.getSelectedItem();
+		        String productPrice = Productprice.getText();
+		        int quantity = (Integer) Qtyspinner.getValue();
 
-			        if (!selectedProduct.isEmpty() && !productPrice.isEmpty() && quantity > 0) {
-			            // Add details to lists
-			            selectedProducts.add(selectedProduct);
-			            productQuantities.add(quantity);
-			            productPrices.add(Double.parseDouble(productPrice));
+		        if (!selectedProduct.isEmpty() && !productPrice.isEmpty() && quantity > 0) {
+		            try {
+		                double price = Double.parseDouble(productPrice);
+		                double subtotal = price * quantity;
 
-			            // Append to the added items area
-			            double subtotal = Double.parseDouble(productPrice) * quantity;
-			            addedItemsArea.append(String.format("Product: %s\nPrice: $%.2f\nQuantity: %d\nSubtotal: $%.2f\n",
-			                    selectedProduct, Double.parseDouble(productPrice), quantity, subtotal));
-			            addedItemsArea.append("---------------------------------\n");
-			        } else {
-			            JOptionPane.showMessageDialog(null, "Please select a product, enter a price, and set a quantity greater than 0.");
-			        }
-			    }
-			});
+		                // Append product details to the addedItemsArea
+		                addedItemsArea.append(" Product: " + selectedProduct + "\n");
+		                addedItemsArea.append(" Price: ₱" + price + "\n");
+		                addedItemsArea.append(" Quantity: " + quantity + "\n");
+		                addedItemsArea.append(" Subtotal: ₱" + subtotal + "\n");
+		                addedItemsArea.append(" ---------------------------------\n");
+
+		                // Add the price to the list for calculations
+		                for (int i = 0; i < quantity; i++) {
+		                    addedProductPrices.add(price);
+		                }
+		            } catch (NumberFormatException ex) {
+		                JOptionPane.showMessageDialog(null, "Invalid price format!");
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Please select a valid product and quantity!");
+		        }
+		    }
+		});
+
+
 
 		
 		
-		JLabel pricelbl2 = new JLabel("PRICE");
-		pricelbl2.setForeground(new Color(194, 192, 192));
-		pricelbl2.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		pricelbl2.setBounds(227, 208, 149, 70);
-		ProductPanel.add(pricelbl2);
+		JLabel pricelbl_1_1 = new JLabel("PRICE");
+		pricelbl_1_1.setForeground(new Color(194, 192, 192));
+		pricelbl_1_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		pricelbl_1_1.setBounds(226, 225, 149, 70);
+		ProductPanel.add(pricelbl_1_1);
 		
-		Productpricetxtfield = new JTextField();
-		Productpricetxtfield.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		Productpricetxtfield.setColumns(10);
-		Productpricetxtfield.setBounds(227, 268, 110, 40);
-		ProductPanel.add(Productpricetxtfield);
+		Productprice = new JTextField();
+		Productprice.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Productprice.setColumns(10);
+		Productprice.setBounds(226, 284, 110, 40);
+		ProductPanel.add(Productprice);
 		
-		 
+		JLabel Servicelbl_1 = new JLabel("PRODUCT");
+		Servicelbl_1.setForeground(new Color(194, 192, 192));
+		Servicelbl_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		Servicelbl_1.setBounds(61, 103, 149, 70);
+		ProductPanel.add(Servicelbl_1);
+	
+		
 		JPanel ServicePanel = new JPanel();
 		ServicePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		ServicePanel.setBackground(new Color(5, 59, 67));
-		ServicePanel.setBounds(437, 159, 400, 446);
+		ServicePanel.setBounds(437, 120, 400, 475);
 		panel.add(ServicePanel);
 		ServicePanel.setLayout(null);
 		
 		JLabel Serviceslbl = new JLabel("SERVICES");
+		Serviceslbl.setBounds(131, 37, 149, 70);
 		Serviceslbl.setForeground(new Color(194, 192, 192));
 		Serviceslbl.setFont(new Font("Segoe UI", Font.BOLD, 30));
-		Serviceslbl.setBounds(130, 22, 149, 70);
 		ServicePanel.add(Serviceslbl);
 		
 		JLabel Servicelbl = new JLabel("SERVICE");
+		Servicelbl.setBounds(55, 102, 149, 70);
 		Servicelbl.setForeground(new Color(194, 192, 192));
 		Servicelbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		Servicelbl.setBounds(55, 102, 149, 70);
 		ServicePanel.add(Servicelbl);
 		
 		JComboBox<String> Servicecombobox = new JComboBox<>(new String[] {
 		"", "Consultation", "Braces", "Crowns", "Bridges", "Cleaning", "Dentures", "Extraction", "Fillings", "Implants", "Root Canal", "Teeth Whitening", "Veneers", "X-Ray", "Pediatric Dentistry"});
+		Servicecombobox.setBounds(55, 153, 276, 40);
 		Servicecombobox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		Servicecombobox.setBounds(55, 155, 276, 40);
 		ServicePanel.add(Servicecombobox);
 		
 		textField = new JTextField();
+		textField.setBounds(55, 282, 110, 40);
 		textField.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		textField.setColumns(10);
-		textField.setBounds(55, 264, 110, 40);
 		ServicePanel.add(textField);
 		
 		JLabel pricelbl_1 = new JLabel("PRICE");
+		pricelbl_1.setBounds(55, 223, 149, 70);
 		pricelbl_1.setForeground(new Color(194, 192, 192));
 		pricelbl_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		pricelbl_1.setBounds(55, 205, 149, 70);
 		ServicePanel.add(pricelbl_1);
+
+
+
+		
+		JPanel TotalPanel_1 = new JPanel();
+		TotalPanel_1.setBounds(98, 375, 205, 59);
+		TotalPanel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		TotalPanel_1.setBackground(new Color(5, 59, 67));
+		ServicePanel.add(TotalPanel_1);
+		TotalPanel_1.setLayout(null);
 		
 		JButton addbtn_1 = new JButton("ADD");
+		addbtn_1.setBounds(38, 14, 127, 35);
+		TotalPanel_1.add(addbtn_1);
 		addbtn_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		addbtn_1.setBackground(new Color(194, 192, 192));
-		addbtn_1.setBounds(141, 378, 127, 35);
-		ServicePanel.add(addbtn_1);
-		addbtn_1.addActionListener(new ActionListener() 
-		{
-		    public void actionPerformed(ActionEvent e) 
-		    {
+		addbtn_1.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
 		        String selectedService = (String) Servicecombobox.getSelectedItem();
 		        String servicePrice = textField.getText();
+
 		        if (!selectedService.isEmpty() && !servicePrice.isEmpty()) {
-		            // Use the instance variable
-		            addedItemsArea.append("Service: " + selectedService + "\n");
-		            addedItemsArea.append("Price: $" + servicePrice + "\n");
-		            addedItemsArea.append("---------------------------------\n");
+		            double price = Double.parseDouble(servicePrice);
+
+		            // Append service details to the addedItemsArea
+		            addedItemsArea.append(" Service: " + selectedService + "\n");
+		            addedItemsArea.append(" Price: ₱" + price + "\n");
+		            addedItemsArea.append(" ---------------------------------\n");
+
+		            // Store the service's price
+		            addedServicePrices.add(price);
+
+		            // Don't update the subtotal until the TOTAL button is pressed
+		            subtotaltxtfield.setText("");  // Ensure it stays empty until TOTAL is clicked
+		            totaltxtfield.setText("");     // Ensure it stays empty until TOTAL is clicked
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Please select a valid service!");
 		        }
 		    }
 		});
-		
-		JPanel TotalPanel_1 = new JPanel();
-		TotalPanel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		TotalPanel_1.setBackground(new Color(5, 59, 67));
-		TotalPanel_1.setBounds(100, 366, 205, 59);
-		ServicePanel.add(TotalPanel_1);
-		TotalPanel_1.setLayout(null);
+
 		
 		JPanel ReceiptPanel = new JPanel();
 		ReceiptPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		ReceiptPanel.setBackground(new Color(5, 59, 67));
-		ReceiptPanel.setBounds(326, 633, 205, 59);
+		ReceiptPanel.setBounds(113, 633, 205, 59);
 		panel.add(ReceiptPanel);
 		ReceiptPanel.setLayout(null);
 		
+		
 		JButton Receiptbtn = new JButton("RECEIPT");
-		Receiptbtn.setBounds(23, 10, 159, 37);
+		Receiptbtn.setBounds(20, 10, 159, 37);
 		ReceiptPanel.add(Receiptbtn);
 		Receiptbtn.setBackground(new Color(194, 192, 192));
 		Receiptbtn.setToolTipText("RECEIPT");
 		Receiptbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		
+		// ActionListener for Receipt Button
 		Receiptbtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		    	// Get necessary details
-		    	String productPrice = Productpricetxtfield.getText();
-		    	double productpriceToInt = Double.parseDouble(productPrice);
-		    	String servicePrice = textField.getText();
-		    	double servicepriceToInt = Double.parseDouble(servicePrice);
-		        String customerName = CustomerNametxtfield.getText();
-		        String subtotal = subtotaltxtfield.getText();
-		        String total = totaltxtfield.getText();
-		        double totalpriceToInt = Double.parseDouble(total);
-		        String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+		        try {
+		            // Retrieve customer and bill details
+		            String customerName = CustomerNametxtfield.getText();
+		            String date = new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date());
+		            String subtotal = subtotaltxtfield.getText().isEmpty() ? "0.00" : subtotaltxtfield.getText();
+		            String total = totaltxtfield.getText().isEmpty() ? "0.00" : totaltxtfield.getText();
+		            String payment = textField_1.getText().isEmpty() ? "0.00" : textField_1.getText();
+		            String change = textField_2.getText().isEmpty() ? "0.00" : textField_2.getText();
 
-		        posbackend.setCustomerName(CustomerNametxtfield.getText());
-		        posbackend.setProducts( Productcombobox.getSelectedItem().toString());
-		        posbackend.setServices(Servicecombobox.getSelectedItem().toString());
-		     		        
-		        new POS_backend(posbackend.getCustomerName(),posbackend.getProducts(), posbackend.getServices(),productpriceToInt,servicepriceToInt,totalpriceToInt,date);
-		        generateReceipt(posbackend.getCustomerName(), posbackend.getProducts(),productPrice , posbackend.getServices(),servicePrice , subtotal, total, date);
+		            // Check if the total is calculated
+		            if (total.equals("0.00")) {
+		                JOptionPane.showMessageDialog(null, "Please calculate the total and process payment before printing the receipt!");
+		                return;
+		            }
+
+		            // Calculate tax and discount
+		            double taxAmount = Double.parseDouble(subtotal) * 0.02;
+		            String selectedDiscount = (String) discountComboBox.getSelectedItem();
+		            double discountRate = 0.0;
+		            if ("PWD (5%)".equals(selectedDiscount)) {
+		                discountRate = 0.05;
+		            } else if ("Senior Citizen (20%)".equals(selectedDiscount)) {
+		                discountRate = 0.20;
+		            }
+		            double discountAmount = Double.parseDouble(subtotal) * discountRate;
+
+		            // Build the receipt string
+		            StringBuilder receipt = new StringBuilder();
+		            receipt.append(" ==================================\n");
+		            receipt.append("               RECEIPT\n");
+		            receipt.append(" ==================================\n");
+		            receipt.append(String.format("%-20s : %s\n", " Customer Name", customerName));
+		            receipt.append(String.format("%-20s : %s\n", " Date", date)); 
+		            receipt.append(" ==================================\n");
+		            receipt.append(addedItemsArea.getText());
+		            receipt.append(" ==================================\n");
+		            receipt.append(String.format("%-20s : ₱%s\n", " Subtotal", subtotal));
+		            receipt.append(String.format("%-20s : ₱%.2f\n", " Tax (2%)", taxAmount));
+		            receipt.append(String.format("%-20s : ₱%.2f\n", " Discount", discountAmount));
+		            receipt.append(String.format("%-20s : ₱%s\n", " Total", total));
+		            receipt.append(String.format("%-20s : ₱%s\n", " Payment", payment));
+		            receipt.append(String.format("%-20s : ₱%s\n", " Change", change));
+		            receipt.append(" ==================================\n");
+		            receipt.append("             Thank you!\n");
+		            receipt.append(" ==================================\n");
+
+		            // Display the receipt in a JTextArea for preview
+		            JTextArea receiptArea = new JTextArea(receipt.toString());
+		            receiptArea.setEditable(false);
+		            receiptArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		            JScrollPane scrollPane = new JScrollPane(receiptArea);
+		            scrollPane.setPreferredSize(new Dimension(600, 400));
+		            JDialog receiptDialog = new JDialog();
+		            receiptDialog.setTitle("Receipt");
+		            receiptDialog.setSize(350, 450);
+		            receiptDialog.setLocationRelativeTo(null);
+		            receiptDialog.setModal(true);
+		            receiptDialog.getContentPane().add(scrollPane);
+
+		            // Add a "Print" button to the dialog
+		            JButton printButton = new JButton("Print");
+		            printButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		            printButton.addActionListener(new ActionListener() {
+		                public void actionPerformed(ActionEvent evt) {
+		                    try {
+		                        // Print the JTextArea content
+		                        boolean printed = receiptArea.print();
+		                        if (printed) {
+		                            JOptionPane.showMessageDialog(null, "Receipt printed successfully!");
+		                        } else {
+		                            JOptionPane.showMessageDialog(null, "Receipt printing canceled.");
+		                        }
+		                    } catch (Exception ex) {
+		                        JOptionPane.showMessageDialog(null, "Error while printing receipt: " + ex.getMessage());
+		                    }
+		                }
+		            });
+		            receiptDialog.getContentPane().add(printButton, "South");
+
+		            receiptDialog.setVisible(true);
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(null, "Invalid numbers detected. Please ensure all inputs are correct!");
+		        }
 		    }
 		});
+
+
 		
 		JPanel ExitPanel = new JPanel();
 		ExitPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		ExitPanel.setBackground(new Color(5, 59, 67));
-		ExitPanel.setBounds(743, 633, 205, 59);
+		ExitPanel.setBounds(539, 633, 205, 59);
 		panel.add(ExitPanel);
 		ExitPanel.setLayout(null);
 		
@@ -349,46 +456,46 @@ public class POS extends JFrame {
 		Exitbtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        // Close the application when the "Exit" button is clicked
-		        dispose();
+		        System.exit(0);
 		    }
 		});
 		
 		JPanel MidPanel = new JPanel();
 		MidPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		MidPanel.setBackground(new Color(5, 59, 67));
-		MidPanel.setBounds(847, 355, 406, 250);
+		MidPanel.setBounds(847, 231, 406, 258);
 		panel.add(MidPanel);
 		MidPanel.setLayout(null);
 		
 		JLabel subtotallbl = new JLabel("SUB TOTAL");
-		subtotallbl.setBounds(40, 23, 186, 34);
+		subtotallbl.setBounds(46, 21, 186, 34);
 		subtotallbl.setForeground(new Color(194, 192, 192));
-		subtotallbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
+		subtotallbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		MidPanel.add(subtotallbl);
 		
 		JLabel totallbl = new JLabel("TOTAL");
 		totallbl.setForeground(new Color(194, 192, 192));
 		totallbl.setForeground(new Color(194, 192, 192));
-		totallbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		totallbl.setBounds(40, 121, 186, 34);
+		totallbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		totallbl.setBounds(46, 134, 186, 34);
 		MidPanel.add(totallbl);
 		
 		totaltxtfield = new JTextField();
 		totaltxtfield.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		totaltxtfield.setColumns(10);
-		totaltxtfield.setBounds(220, 123, 136, 34);
+		totaltxtfield.setBounds(226, 136, 136, 34);
 		MidPanel.add(totaltxtfield);
 		
 		subtotaltxtfield = new JTextField();
 		subtotaltxtfield.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		subtotaltxtfield.setColumns(10);
-		subtotaltxtfield.setBounds(220, 25, 136, 34);
+		subtotaltxtfield.setBounds(226, 23, 136, 34);
 		MidPanel.add(subtotaltxtfield);
 		
 				
 				
 				JPanel TotalPanel = new JPanel();
-				TotalPanel.setBounds(101, 175, 205, 59);
+				TotalPanel.setBounds(135, 189, 147, 54);
 				MidPanel.add(TotalPanel);
 				TotalPanel.setBackground(new Color(5, 59, 67));
 				TotalPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -397,7 +504,7 @@ public class POS extends JFrame {
 				
 				
 				JButton Totalbtn = new JButton("TOTAL");
-				Totalbtn.setBounds(38, 10, 126, 35);
+				Totalbtn.setBounds(10, 10, 126, 35);
 				TotalPanel.add(Totalbtn);
 				Totalbtn.setToolTipText("TOTAL");
 				Totalbtn.setBackground(new Color(194, 192, 192));
@@ -405,87 +512,174 @@ public class POS extends JFrame {
 				Totalbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
 				Totalbtn.addActionListener(new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
-				        double subtotal = 0.0;
+				        try {
+				            double subtotal = 0.0;
 
-				        // Calculate subtotal for all products
-				        for (int i = 0; i < selectedProducts.size(); i++) {
-				            subtotal += productPrices.get(i) * productQuantities.get(i);
+				            // Calculate subtotal for products
+				            for (double price : addedProductPrices) {
+				                subtotal += price;
+				            }
+
+				            // Calculate subtotal for services
+				            for (double price : addedServicePrices) {
+				                subtotal += price;
+				            }
+
+				            // Display subtotal
+				            subtotaltxtfield.setText(String.format("%.2f", subtotal));
+
+				            // Calculate tax (2%)
+				            double tax = subtotal * 0.02;
+
+				            // Get selected discount
+				            String selectedDiscount = (String) discountComboBox.getSelectedItem();
+				            double discountRate = 0.0;
+				            if ("PWD (5%)".equals(selectedDiscount)) {
+				                discountRate = 0.05;
+				            } else if ("Senior Citizen (20%)".equals(selectedDiscount)) {
+				                discountRate = 0.20;
+				            }
+
+				            // Apply discount
+				            double discount = subtotal * discountRate;
+
+				            // Calculate total
+				            double total = subtotal + tax - discount;
+
+				            // Debugging: Print values
+				            System.out.println("Subtotal: " + subtotal);
+				            System.out.println("Tax: " + tax);
+				            System.out.println("Discount Rate: " + discountRate);
+				            System.out.println("Discount: " + discount);
+				            System.out.println("Total: " + total);
+
+				            // Display total
+				            totaltxtfield.setText(String.format("%.2f", total));
+				        } catch (NumberFormatException ex) {
+				            JOptionPane.showMessageDialog(null, "Please ensure all inputs are valid numbers!");
 				        }
-
-				        // Calculate tax and total
-				        double tax = subtotal * 0.05; // 5% tax
-				        double total = subtotal + tax;
-
-				        // Update subtotal and total fields
-				        subtotaltxtfield.setText(String.format("%.2f", subtotal));
-				        totaltxtfield.setText(String.format("%.2f", total));
 				    }
 				});
-
-				
+	
 				JLabel lblTax = new JLabel("TAX");
 				lblTax.setForeground(new Color(194, 192, 192));
-				lblTax.setFont(new Font("Segoe UI", Font.BOLD, 25));
-				lblTax.setBounds(37, 73, 186, 34);
+				lblTax.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				lblTax.setBounds(46, 57, 186, 34);
 				MidPanel.add(lblTax);
 				
-				JLabel lblTax_1 = new JLabel("5%");
+				JLabel lblTax_1 = new JLabel("2%");
 				lblTax_1.setForeground(new Color(194, 192, 192));
-				lblTax_1.setFont(new Font("Segoe UI", Font.BOLD, 25));
-				lblTax_1.setBounds(220, 73, 186, 34);
+				lblTax_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				lblTax_1.setBounds(225, 57, 125, 34);
 				MidPanel.add(lblTax_1);
-				Totalbtn.addActionListener(new ActionListener() {
-				    public void actionPerformed(ActionEvent e) {
-				        double subtotal = 0.0;
+				
+				JLabel lblDiscount = new JLabel("DISCOUNT");
+				lblDiscount.setForeground(new Color(194, 192, 192));
+				lblDiscount.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				lblDiscount.setBounds(46, 90, 186, 34);
+				MidPanel.add(lblDiscount);
+				
+				discountComboBox = new JComboBox<>(new String[] {
+					    "", "PWD (5%)", "Senior Citizen (20%)"
+					});
+					discountComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+					discountComboBox.setBounds(226, 92, 136, 34);
+					MidPanel.add(discountComboBox);
 
-				        // Check if a product is selected and compute the product's subtotal
-				        if (!Productpricetxtfield.getText().isEmpty() && Qtyspinner.getValue() != null) {
-				            double productPrice = Double.parseDouble(Productpricetxtfield.getText()); // Get product price
-				            int productQty = (Integer) Qtyspinner.getValue(); // Get product quantity
-				            subtotal += productPrice * productQty; // Add to subtotal
-				        }
-
-				        // Check if a service is selected and compute the service's subtotal
-				        if (Servicecombobox.getSelectedItem() != null && !Servicecombobox.getSelectedItem().toString().isEmpty()) {
-				            // Assuming the service price is stored in the textField (Service price)
-				            double servicePrice = Double.parseDouble(textField.getText()); // Get service price
-				            subtotal += servicePrice; // Add to subtotal
-				        }
-
-				        // Set Subtotal TextField
-				        subtotaltxtfield.setText(String.format("%.2f", subtotal)); // Format subtotal to 2 decimal places
-
-				        // Calculate and Set Total with 5% tax
-				        double tax = subtotal * 0.05; // Calculate 5% tax
-				        double total = subtotal + tax; // Add tax to subtotal
-				        totaltxtfield.setText(String.format("%.2f", total)); // Format total to 2 decimal places
-				    }
-				});
+				
 				
 				JLabel lblCustomerDetails = new JLabel("CUSTOMER DETAILS:");
 				lblCustomerDetails.setForeground(new Color(194, 192, 192));
 				lblCustomerDetails.setFont(new Font("Segoe UI", Font.BOLD, 20));
-				lblCustomerDetails.setBounds(27, 22, 323, 34);
+				lblCustomerDetails.setBounds(27, 0, 323, 34);
 				panel.add(lblCustomerDetails);
-				
-															
-							JLabel ContentBackG = new JLabel("");
-							ContentBackG.setIcon(new ImageIcon(POS.class.getResource("/Resources/background (2).png")));
-							ContentBackG.setBounds(0, 0, 1286, 713);
-							panel.add(ContentBackG);
-		
-							// Define product prices in a map
-							Map<String, Double> productPrices = new HashMap<>();
-							productPrices.put("Colgate Optic White", 170.0);
-							productPrices.put("Oral-B Pro Health", 75.0);
-							productPrices.put("Oral-B Toothbrush", 440.0);
-							productPrices.put("Colgate Plax Mouthwash", 135.0);
-							productPrices.put("Oral-B Floss Sticks", 60.0);
-							productPrices.put("Colgate Optic White Teeth Whitening Pen", 1250.0);
-							productPrices.put("Colgate Kids Toothpaste", 80.0);
-							productPrices.put("Oral-B Pro 1000 Electric Toothbrush", 3137.0);
 							
-					        
+							JPanel panel_1 = new JPanel();
+							panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+							panel_1.setBackground(new Color(5, 59, 67));
+							panel_1.setBounds(847, 499, 406, 193);
+							panel.add(panel_1);
+							panel_1.setLayout(null);
+							
+							JLabel lblPayment = new JLabel("PAYMENT");
+							lblPayment.setBounds(47, 18, 186, 34);
+							panel_1.add(lblPayment);
+							lblPayment.setForeground(new Color(194, 192, 192));
+							lblPayment.setFont(new Font("Segoe UI", Font.BOLD, 25));
+							
+							JLabel lblChange = new JLabel("CHANGE");
+							lblChange.setBounds(47, 62, 186, 34);
+							panel_1.add(lblChange);
+							lblChange.setForeground(new Color(194, 192, 192));
+							lblChange.setFont(new Font("Segoe UI", Font.BOLD, 25));
+							
+							textField_2 = new JTextField();
+							textField_2.setBounds(227, 64, 136, 34);
+							panel_1.add(textField_2);
+							textField_2.setFont(new Font("Segoe UI", Font.BOLD, 20));
+							textField_2.setColumns(10);
+							
+							textField_1 = new JTextField();
+							textField_1.setBounds(227, 20, 136, 34);
+							panel_1.add(textField_1);
+							textField_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+							textField_1.setColumns(10);
+							
+							JPanel TotalPanel_2 = new JPanel();
+							TotalPanel_2.setBounds(134, 126, 147, 54);
+							panel_1.add(TotalPanel_2);
+							TotalPanel_2.setLayout(null);
+							TotalPanel_2.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+							TotalPanel_2.setBackground(new Color(5, 59, 67));
+							
+							JButton btnPay = new JButton("PAY");
+							btnPay.setToolTipText("TOTAL");
+							btnPay.setForeground(Color.BLACK);
+							btnPay.setFont(new Font("Segoe UI", Font.BOLD, 20));
+							btnPay.setBackground(new Color(194, 192, 192));
+							btnPay.setBounds(10, 10, 126, 35);
+							TotalPanel_2.add(btnPay);
+							btnPay.addActionListener(new ActionListener() {
+							    public void actionPerformed(ActionEvent e) {
+							        try {
+							            // Parse total amount and payment entered
+							            double totalAmount = Double.parseDouble(totaltxtfield.getText());
+							            double paymentAmount = Double.parseDouble(textField_1.getText());
+							            
+							            if (paymentAmount >= totalAmount) {
+							                // Calculate change
+							                double change = paymentAmount - totalAmount;
+
+							                // Display change in the appropriate text field
+							                textField_2.setText(String.format("%.2f", change));
+							            } else {
+							                // Show error message if payment is insufficient
+							                JOptionPane.showMessageDialog(null, "Insufficient payment! Please enter an amount greater than or equal to the total.");
+							            }
+							        } catch (NumberFormatException ex) {
+							            // Show error message if input is invalid
+							            JOptionPane.showMessageDialog(null, "Invalid payment or total amount. Please ensure they are valid numbers.");
+							        }
+							    }
+							});
+
+							
+																		
+										JLabel ContentBackG = new JLabel("");
+										ContentBackG.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\backG.png"));
+										ContentBackG.setBounds(0, 0, 1286, 713);
+										panel.add(ContentBackG);
+		
+		 Map<String, Double> productPrices = new HashMap<>();
+	        productPrices.put("Colgate Optic White", 170.0);
+	        productPrices.put("Oral-B Pro Health", 75.0);
+	        productPrices.put("Oral-B Toothbrush", 440.0);
+	        productPrices.put("Colgate Plax Mouthwash", 135.0);
+	        productPrices.put("Oral-B Floss Sticks", 60.0);
+	        productPrices.put("Colgate Optic White Teeth Whitening Pen", 1250.0);
+	        productPrices.put("Colgate Kids Toothbrush", 80.0);
+	        productPrices.put("Oral-B Pro 1000 Electric Toothbrush", 3137.0);
+
 	        Map<String, Double> servicePrices = new HashMap<>();
 	        servicePrices.put("Consultation", 500.0);
 	        servicePrices.put("Braces", 1500.0);
@@ -502,17 +696,14 @@ public class POS extends JFrame {
 	        servicePrices.put("X-Ray", 500.0);
 	        servicePrices.put("Pediatric Dentistry (Consultation)", 300.0);
 
-	        
 	        Productcombobox.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			        String selectedProduct = (String) Productcombobox.getSelectedItem();
-			        if (selectedProduct != null && productPrices.containsKey(selectedProduct)) {
-			            Productpricetxtfield.setText(String.valueOf(productPrices.get(selectedProduct)));
-			        } else {
-			            Productpricetxtfield.setText(""); // Clear the field if no valid selection
-			        }
-			    }
-			});
+	            public void actionPerformed(ActionEvent e) {
+	    	                String selectedProduct = (String) Productcombobox.getSelectedItem();
+	    	                if (selectedProduct != null && productPrices.containsKey(selectedProduct)) {
+	    	                    Productprice.setText(String.valueOf(productPrices.get(selectedProduct)));
+	    	                }
+	    	            }
+	    	        });
 	        // Service ComboBox Listener
 	        Servicecombobox.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
@@ -522,34 +713,6 @@ public class POS extends JFrame {
 	                }
 	            }
 	        });
-	    }
-	public void generateReceipt(String customerName, String productName, String productPrice, String serviceName, String servicePrice, String subtotal, String total, String date) {
-	    StringBuilder receipt = new StringBuilder();
-	    receipt.append("=================================\n");
-	    receipt.append("            RECEIPT\n");
-	    receipt.append("=================================\n");
-	    receipt.append(String.format("%-20s : %s\n", "Customer Name", customerName));
-	    receipt.append(String.format("%-20s : %s\n", "Date", date));
-	    receipt.append("=================================\n");
-	    receipt.append(String.format("Product: %-10s $%s\n", productName, productPrice));
-	    receipt.append(String.format("Service: %-10s $%s\n", serviceName, servicePrice));
-	    receipt.append("=================================\n");
-	    receipt.append(String.format("%-20s : $%s\n", "Subtotal", subtotal));
-	    receipt.append(String.format("%-20s : $%s\n", "Total", total));
-	    receipt.append("=================================\n");
-	    receipt.append("            Thank you!\n");
-	    receipt.append("=================================\n");
 
-	    JTextArea receiptArea = new JTextArea(receipt.toString());
-	    receiptArea.setEditable(false);
-	    receiptArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
-	    JScrollPane scrollPane = new JScrollPane(receiptArea);
-
-	    JDialog receiptDialog = new JDialog();
-	    receiptDialog.setTitle("Receipt");
-	    receiptDialog.setSize(400, 500);
-	    receiptDialog.setLocationRelativeTo(null);
-	    receiptDialog.getContentPane().add(scrollPane);
-	    receiptDialog.setVisible(true);
 	}
 }
