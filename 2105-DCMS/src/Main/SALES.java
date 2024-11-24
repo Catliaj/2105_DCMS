@@ -237,7 +237,7 @@ public class SALES extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Logoutbtn)
 		{
-		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to Logout?", "Logout", JOptionPane.YES_NO_OPTION);
 		    if (confirm == JOptionPane.YES_OPTION) {
 		    	dispose();
 		    	new LogInPage();

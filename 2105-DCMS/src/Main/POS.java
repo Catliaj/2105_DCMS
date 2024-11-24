@@ -452,11 +452,18 @@ public class POS extends JFrame {
 		Exitbtn.setToolTipText("EXIT");
 		Exitbtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		
-		// Exit Button ActionListener
 		Exitbtn.addActionListener(new ActionListener() {
+		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        // Close the application when the "Exit" button is clicked
-		        System.exit(0);
+		        int confirm = JOptionPane.showConfirmDialog(
+		            POS.this,
+		            "Are you sure you want to exit?",
+		            "Exit Confirmation",
+		            JOptionPane.YES_NO_OPTION
+		        );
+		        if (confirm == JOptionPane.YES_OPTION) {
+		            System.exit(0); // Exit the application
+		        }
 		    }
 		});
 		

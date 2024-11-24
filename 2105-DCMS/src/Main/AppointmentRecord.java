@@ -199,7 +199,7 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	        String amPm = (String) amPmComboBox.getSelectedItem();
 	        String time = hour + ":" + minute + " " + amPm;
 	      
-		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this patient?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this patient?", "Confirm Booking", JOptionPane.YES_NO_OPTION);
 
 		    if (confirm == JOptionPane.YES_OPTION) {
 	        new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);

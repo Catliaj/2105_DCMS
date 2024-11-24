@@ -561,27 +561,8 @@ public class ProductAdmin extends JFrame {
 	        		 	        lblNewLabel_4.setBounds(0, 0, 229, 613);
 	        		 	        panel_4.add(lblNewLabel_4);
 	        		 	        
-	        		 	        JPanel panel_5 = new JPanel();
-	        		 	        panel_5.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-	        		 	        panel_5.setBackground(new Color(5, 59, 67));
-	        		 	        panel_5.setBounds(799, 630, 145, 55);
-	        		 	        panel.add(panel_5);
-	        		 	        panel_5.setLayout(null);
-	        		 	        
-	        		 	        JButton btnBACK = new JButton("BACK");
-	        		 	        btnBACK.setBackground(new Color(203, 201, 201));
-	        		 	        btnBACK.setBounds(10, 10, 125, 35);
-	        		 	        panel_5.add(btnBACK);
-	        		 	        btnBACK.addActionListener(new ActionListener() {
-	        		 	        	public void actionPerformed(ActionEvent e) {
-	        		 	        		dispose();
-	        		 	        		new Dashboard();
-	        		 	        	}
-	        		 	        });
-	        		 	        btnBACK.setFont(new Font("Segoe UI", Font.BOLD, 20));
-	        		 	        
 	        		 	        JPanel panel_5_1 = new JPanel();
-	        		 	        panel_5_1.setBounds(1035, 630, 145, 55);
+	        		 	        panel_5_1.setBounds(923, 634, 145, 55);
 	        		 	        panel.add(panel_5_1);
 	        		 	        panel_5_1.setLayout(null);
 	        		 	        panel_5_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
