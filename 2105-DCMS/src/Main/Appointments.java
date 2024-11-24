@@ -43,7 +43,8 @@ public class Appointments extends JFrame implements ActionListener{
     private JButton ProductSalesbtn;
     private JButton btnBookAppointment;
     private JButton btnRefresh;
-    private JTextField textField;
+    private JTextField Searchfield;
+    private JButton btnViewAppointment;
 
     /**
      * Launch the application.
@@ -227,13 +228,15 @@ public class Appointments extends JFrame implements ActionListener{
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnRefresh.setBackground(new Color(194, 192, 192));
         btnRefresh.setBounds(989, 642, 265, 50);
+        btnRefresh.addActionListener(this);
         panel.add(btnRefresh);
         
-        JButton btnViewAppointment = new JButton("VIEW APPOINTMENT");
+        btnViewAppointment = new JButton("VIEW APPOINTMENT");
         btnViewAppointment.setForeground(Color.BLACK);
         btnViewAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewAppointment.setBackground(new Color(194, 192, 192));
         btnViewAppointment.setBounds(623, 642, 265, 50);
+        btnViewAppointment.addActionListener(this);
         panel.add(btnViewAppointment);
         
         JPanel panel_2 = new JPanel();
@@ -243,20 +246,25 @@ public class Appointments extends JFrame implements ActionListener{
         panel.add(panel_2);
         panel_2.setLayout(null);
         
-        textField = new JTextField();
-        textField.setBounds(53, 10, 193, 30);
-        panel_2.add(textField);
-        textField.setColumns(10);
+        Searchfield = new JTextField();
+        Searchfield.setBounds(53, 10, 193, 30);
+        panel_2.add(Searchfield);
+        Searchfield.addActionListener(this);
+        Searchfield.setColumns(10);
         
         JLabel lblNewLabel_6 = new JLabel("");
         lblNewLabel_6.setBounds(4, 2, 81, 44);
         panel_2.add(lblNewLabel_6);
-        lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\people (1).png"));
+        lblNewLabel_6.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/people.png")));
         
         JComboBox SortcomboBox = new JComboBox<>(new String[]{"SORT BY", "PATIENT ID", "NAME", "DATE"});
         SortcomboBox.setBackground(new Color(194, 192, 192));
         SortcomboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
         SortcomboBox.setBounds(1128, 246, 126, 20);
+        SortcomboBox.addActionListener(e -> {
+            String selected = (String) SortcomboBox.getSelectedItem();
+            sortTable(selected);
+        });
         panel.add(SortcomboBox);
         
         JLabel lblNewLabel_7 = new JLabel("SEARCH:");
@@ -319,6 +327,7 @@ public class Appointments extends JFrame implements ActionListener{
 			dispose();
 			new Appointments();
 		}
+		
 		else if(e.getSource() == Logoutbtn)
 		{
 		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
@@ -327,7 +336,28 @@ public class Appointments extends JFrame implements ActionListener{
 		    	new LogInPage();
 		    }
 		}
+		else if(e.getSource() ==  btnViewAppointment)
+		{
+			new AppointmentRecord();
+			
+	       
+	          int selectedRow = table_2.getSelectedRow();
+	          if (selectedRow != -1) { // Ensure a row is selected
+	                  String patientID = table_2.getValueAt(selectedRow, 0).toString();
+	                    new AppointmentRecord(patientID); // Pass patient ID to PatientRecord
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "Please select a appointment from the list.");
+	                }
+		}
 
+		 else if (e.getSource() == Searchfield) { // Trigger search on Enter key in the text field
+		        String query = Searchfield.getText().trim();
+		        if (!query.isEmpty()) {
+		            searchAppointments(query); // Perform the search
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Please enter a search term.");
+		        }
+		    }
 		
 	}
 	
@@ -349,4 +379,32 @@ public class Appointments extends JFrame implements ActionListener{
 	        model.addRow(row);
 	    }
 	}
+	
+	   private void sortTable(String criterion) {
+	        DefaultTableModel model = (DefaultTableModel) table_2.getModel();
+	        model.setRowCount(0);
+
+	        ApointmentForm_backend backend = new ApointmentForm_backend();
+	        List<String[]> sortedData = backend.getAppointmentsSortedBy(criterion); // Add in backend
+	        for (String[] row : sortedData) {
+	            model.addRow(row);
+	        }
+	    }
+	   
+	   private void searchAppointments(String query) {
+		    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
+		    model.setRowCount(0); // Clear the table
+
+		    ApointmentForm_backend backend = new ApointmentForm_backend();
+		    List<String[]> searchResults = backend.searchAppointments(query); // Backend method for searching
+		    if (searchResults.isEmpty()) {
+		        JOptionPane.showMessageDialog(this, "No appointments found matching: " + query);
+		        return;
+		    }
+
+		    // Populate table with search results
+		    for (String[] row : searchResults) {
+		        model.addRow(row);
+		    }
+		}
 }

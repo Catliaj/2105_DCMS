@@ -20,6 +20,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import DCMS_DB_CONNECTION.DB_DCMSConnection;
 import backend.ApointmentForm_backend;
+import backend.newPatient_Backend;
+
 import java.sql.*;
 
 public class AppointmentRecord extends JFrame implements ActionListener{
@@ -34,6 +36,8 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	private JComboBox<String> minuteComboBox;
 	private JComboBox<String> amPmComboBox;
 	private JComboBox<String> ReasoncomboBox;
+	private JButton btnUpdate;
+	 private String appointmentID;
 	
 	
 	/**
@@ -59,12 +63,12 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	public AppointmentRecord() {
 		setResizable(false);
 		setVisible(true);
-		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 576);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
+		setVisible(true);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -167,11 +171,12 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		btnNewButton.setBounds(71, 464, 125, 40);
 		panel.add(btnNewButton);
 		
-		JButton btnUpdate = new JButton("UPDATE");
+	    btnUpdate = new JButton("UPDATE");
 		btnUpdate.setForeground(new Color(194, 192, 192));
 		btnUpdate.setBackground(new Color(5, 59, 67));
 		btnUpdate.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnUpdate.setBounds(234, 464, 125, 40);
+		btnUpdate.addActionListener(this);
 		panel.add(btnUpdate);
 		
 		JLabel lblNewLabel = new JLabel("");
@@ -199,7 +204,105 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		    if (confirm == JOptionPane.YES_OPTION) {
 	        new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);
 		    }
+		    
+	    }
+	    else if(e.getSource() == btnUpdate)
+	    {
+
+	        updateAppointmentDetails();
+
 	    }
 	}
+
+	public AppointmentRecord(String AppointmentID) {
+	    this(); // Call the default constructor to set up the UI
+
+	    if (AppointmentID != null && !AppointmentID.isEmpty()) {
+	    	populateAppointmentDetails(AppointmentID); // Populate fields with patient data
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Invalid Patient ID provided.");
+	    }
+	}
+	
+	private void populateAppointmentDetails(String appointmentID) {
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    String[] appointmentDetails = backend.getAppointmentByID(appointmentID); // Create this method in the backend
+
+	    if (appointmentDetails != null) {
+	        // Set text fields
+	        NameTxtField.setText(appointmentDetails[1]); // Name
+	        EmailTxtField.setText(appointmentDetails[6]); // Email
+	        CotactTxtField.setText(appointmentDetails[5]); // Contact Number
+
+	        // Set date chooser
+	        try {
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+	            java.util.Date date = dateFormat.parse(appointmentDetails[2]); // Parse date from string
+	            dateChooser.setDate(date); // Set date
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            JOptionPane.showMessageDialog(this, "Invalid date format: " + appointmentDetails[2]);
+	        }
+
+	        // Set time combo boxes
+	        String time = appointmentDetails[3]; // Example: "10:30 AM"
+	        String[] timeParts = time.split(":| "); // Split into ["10", "30", "AM"]
+	        if (timeParts.length == 3) {
+	            hourComboBox.setSelectedItem(timeParts[0]); // Set hour
+	            minuteComboBox.setSelectedItem(timeParts[1]); // Set minute
+	            amPmComboBox.setSelectedItem(timeParts[2]); // Set AM/PM
+	        }
+
+	        // Set reason combo box
+	        String reason = appointmentDetails[4]; // Reason
+	        ReasoncomboBox.setSelectedItem(reason); // Match reason to combo box item
+	    } else {
+	        JOptionPane.showMessageDialog(this, "No appointment data found for ID: " + appointmentID);
+	    }
+	}
+	
+	private void updateAppointmentDetails() {
+	    // Get updated data from fields
+	    String name = NameTxtField.getText().trim();
+	    String email = EmailTxtField.getText().trim();
+	    String phoneNumber = CotactTxtField.getText().trim();
+	    String reason = (String) ReasoncomboBox.getSelectedItem();
+
+	    // Format date
+	    String date = "";
+	    try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+	        date = dateFormat.format(dateChooser.getDate());
+	    } catch (Exception e) {
+	        JOptionPane.showMessageDialog(this, "Please select a valid date.");
+	        return;
+	    }
+
+	    // Format time
+	    String hour = (String) hourComboBox.getSelectedItem();
+	    String minute = (String) minuteComboBox.getSelectedItem();
+	    String amPm = (String) amPmComboBox.getSelectedItem();
+	    String time = hour + ":" + minute + " " + amPm;
+
+	    // Validate input fields
+	    if (name.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || reason.isEmpty() || date.isEmpty() || time.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "All fields are required.");
+	        return;
+	    }
+
+	    // Update in the backend
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    boolean isUpdated = backend.updateAppointment(appointmentID, name, email, phoneNumber, date, time, reason);
+
+	    if (isUpdated) {
+	        JOptionPane.showMessageDialog(this, "Appointment updated successfully!");
+	        dispose(); // Close the form
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Failed to update appointment. Please try again.");
+	    }
+	}
+
+	
+	
 
 }

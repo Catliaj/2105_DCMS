@@ -191,7 +191,7 @@ public class AppointmentForm extends JFrame implements ActionListener{
 		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this patient?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 
 		    if (confirm == JOptionPane.YES_OPTION) {
-	        new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);
+		    	new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);
 		    }
 	    }
 	}

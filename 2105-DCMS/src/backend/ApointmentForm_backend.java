@@ -20,6 +20,7 @@ public class ApointmentForm_backend extends newPatient_Backend
 	{
         try 
         { 
+        	String status = "In Progress";
         	setName(name);
         	setEmail(email);
         	setPhoneNumber(phonenumber);
@@ -27,14 +28,14 @@ public class ApointmentForm_backend extends newPatient_Backend
         	setTime(Time);
         	setReason(Reason);
         	connection = dcmsConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO appointments (Name, Email, PhoneNumber, Date, Time, Reason) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO appointments (Name, Email, PhoneNumber, Date, Time, Reason, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, getName());
             ps.setString(2, getEmail());
             ps.setString(3, getPhoneNumber());
             ps.setString(4, getDate());
             ps.setString(5, getTime());
             ps.setString(6, getReason());
-            
+            ps.setString(7, status);
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) 
@@ -152,4 +153,139 @@ public class ApointmentForm_backend extends newPatient_Backend
 	        }
 	        return appointments;
 	    }
+	
+	public List<String[]> getAppointmentsSortedBy(String column) {
+	    List<String[]> sortedAppointments = new ArrayList<>();
+	    String query = "SELECT AppointmentID, Name, Date, Time, reason, Phonenumber, email,  Status FROM appointments ORDER BY " + column;
+
+	    try
+	    {
+	    	connection = dcmsConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+	        while (resultSet.next()) {
+	            String[] row = new String[8];
+	            row[0] = resultSet.getString("AppointmentID");
+	            row[1] = resultSet.getString("Name");
+	            row[2] = resultSet.getString("Date");
+	            row[3] = resultSet.getString("Time");
+	            row[4] = resultSet.getString("reason");
+	            row[5] = resultSet.getString("Phonenumber");
+	            row[6] = resultSet.getString("email");
+	            row[7] = resultSet.getString("Status");
+	           
+	            sortedAppointments.add(row);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return sortedAppointments;
+	}
+
+	public List<String[]> searchAppointments(String keyword) {
+	    List<String[]> results = new ArrayList<>();
+	    String query = "SELECT AppointmentID, Name, Date, Time, reason, Phonenumber, email, Status " +
+	                   "FROM appointments " +
+	                   "WHERE Name LIKE ? OR Email LIKE ? OR Phonenumber LIKE ?";
+
+	    try {
+	        connection = dcmsConnection.getConnection();
+	        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+	        // Use '%' to enable partial matching
+	        String searchKeyword = "%" + keyword + "%";
+	        preparedStatement.setString(1, searchKeyword); // For Name
+	        preparedStatement.setString(2, searchKeyword); // For Email
+	        preparedStatement.setString(3, searchKeyword); // For PhoneNumber
+
+	        ResultSet resultSet = preparedStatement.executeQuery();
+
+	        while (resultSet.next()) {
+	            String[] row = new String[8];
+	            row[0] = resultSet.getString("AppointmentID");
+	            row[1] = resultSet.getString("Name");
+	            row[2] = resultSet.getString("Date");
+	            row[3] = resultSet.getString("Time");
+	            row[4] = resultSet.getString("reason");
+	            row[5] = resultSet.getString("Phonenumber");
+	            row[6] = resultSet.getString("email");
+	            row[7] = resultSet.getString("Status");
+
+	            results.add(row);
+	        }
+
+	        resultSet.close();
+	        preparedStatement.close();
+	        connection.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Error searching for appointments: " + ex.getMessage());
+	    }
+
+	    return results;
+	}
+
+	
+	 public String[] getAppointmentByID(String AppointmentID) {
+	        String[] AppointmentDetails = null;
+
+	        try {
+	            connection = dcmsConnection.getConnection();
+	            String query = "SELECT * FROM appointments WHERE AppointmentID = ?";
+	            PreparedStatement ps = connection.prepareStatement(query);
+	            ps.setString(1, AppointmentID);
+	            ResultSet resultSet = ps.executeQuery();
+
+	            if (resultSet.next()) {
+	            	AppointmentDetails = new String[]{
+	                    resultSet.getString("AppointmentID"),
+	                    resultSet.getString("Name"),
+	                    resultSet.getString("Date"),
+	                    resultSet.getString("Time"),
+	                    resultSet.getString("Phonenumber"),
+	                    resultSet.getString("email"),
+	                    resultSet.getString("Status"),
+	                };
+	            }
+
+	            resultSet.close();
+	            ps.close();
+	            connection.close();
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	            JOptionPane.showMessageDialog(null, "Error retrieving Appointment data: " + ex.getMessage());
+	        }
+
+	        return AppointmentDetails;
+	    }
+	 
+	 public boolean updateAppointment(String appointmentID, String name, String email, String phoneNumber, 
+			 	String date, String time, String reason) 
+	 {
+				String query = "UPDATE appointments SET Name = ?, Email = ?, PhoneNumber = ?, Date = ?, Time = ?, Reason = ? WHERE AppointmentID = ?";
+				try {
+				connection = dcmsConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setString(1, name);
+				ps.setString(2, email);
+				ps.setString(3, phoneNumber);
+				ps.setString(4, date);
+				ps.setString(5, time);
+				ps.setString(6, reason);
+				ps.setString(7, appointmentID);
+				
+				int rowsAffected = ps.executeUpdate();
+				ps.close();
+				connection.close();
+				
+				return rowsAffected > 0; // Return true if rows were updated
+				} catch (Exception e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error updating appointment: " + e.getMessage());
+				return false;
+				}
+	 }
+
 }
