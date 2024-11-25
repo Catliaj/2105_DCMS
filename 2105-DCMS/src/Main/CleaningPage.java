@@ -27,7 +27,7 @@ public class CleaningPage implements ActionListener {
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
@@ -214,6 +214,7 @@ public class CleaningPage implements ActionListener {
 	        // Make frame visible
 	        CleaningPage.setVisible(true);
 	        CleaningPage.setLocationRelativeTo(null);
+	        CleaningPage.setResizable(false);
 	    }
 
 	    // Method to set button styles
@@ -253,7 +254,7 @@ public class CleaningPage implements ActionListener {
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	CleaningPage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 

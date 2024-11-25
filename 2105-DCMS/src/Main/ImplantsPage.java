@@ -27,7 +27,7 @@ public class ImplantsPage implements ActionListener{
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 	  
 	    JPanel sidePanel = new JPanel();
 	    JButton[] sideButtons = new JButton[13];
@@ -199,6 +199,7 @@ public class ImplantsPage implements ActionListener{
 	        // Make frame visible
 	        homepage.setVisible(true);
 	        homepage.setLocationRelativeTo(null);
+	        homepage.setResizable(false);
 	    }
 
 	    // Method to set button styles
@@ -232,7 +233,7 @@ public class ImplantsPage implements ActionListener{
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	homepage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 

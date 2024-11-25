@@ -28,7 +28,7 @@ public class BracesPage implements ActionListener {
     JButton servicesBtn = new JButton("SERVICES");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton feedbackBtn = new JButton("FEEDBACK");
+    JButton feedbackBtn = new JButton("EXIT");
 
 
 
@@ -210,6 +210,7 @@ public class BracesPage implements ActionListener {
         // Make frame visible
         BracesPage.setVisible(true);
         BracesPage.setLocationRelativeTo(null);
+        BracesPage.setResizable(false);
     }
 
     // Method to set button styles
@@ -247,7 +248,7 @@ public class BracesPage implements ActionListener {
         else if(e.getSource() == feedbackBtn)
         {
         	BracesPage.dispose();
-        	new FeedbackForm();
+        	new User_Admin();
         }
         else if(e.getSource() == productsBtn)
         {

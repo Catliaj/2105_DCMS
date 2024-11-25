@@ -27,7 +27,7 @@ public class ExtractionPage implements ActionListener{
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 
 
 	    // Create a side panel with 13 buttons
@@ -201,6 +201,7 @@ public class ExtractionPage implements ActionListener{
 	        // Make frame visible
 	        ExtractionPage.setVisible(true);
 	        ExtractionPage.setLocationRelativeTo(null);
+	        ExtractionPage.setResizable(false);
 	    }
 
 	    // Method to set button styles
@@ -239,7 +240,7 @@ public class ExtractionPage implements ActionListener{
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	ExtractionPage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 

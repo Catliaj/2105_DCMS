@@ -27,7 +27,7 @@ public class XrayPage implements ActionListener{
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 
 
 	  
@@ -202,6 +202,7 @@ public class XrayPage implements ActionListener{
 	        // Make frame visible
 	        homepage.setVisible(true);
 	        homepage.setLocationRelativeTo(null);
+	        homepage.setResizable(false);
 	    }
 
 	    // Method to set button styles
@@ -241,7 +242,7 @@ public class XrayPage implements ActionListener{
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	homepage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 

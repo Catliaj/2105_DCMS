@@ -27,7 +27,7 @@ public class GCPage implements ActionListener {
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
 	    JButton[] sideButtons = new JButton[13];
@@ -203,6 +203,7 @@ public class GCPage implements ActionListener {
 	        // Make frame visible
 	        GCPage.setVisible(true);
 	        GCPage.setLocationRelativeTo(null);
+	        GCPage.setResizable(false);
 	    }
 
 	    // Method to set button styles
@@ -240,7 +241,7 @@ public class GCPage implements ActionListener {
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	GCPage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 

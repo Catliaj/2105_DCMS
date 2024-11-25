@@ -27,7 +27,7 @@ public class RCTPage implements ActionListener{
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 	  
 	    JPanel sidePanel = new JPanel();
 	    JButton[] sideButtons = new JButton[13];
@@ -239,7 +239,7 @@ public class RCTPage implements ActionListener{
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	RCTPage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 

@@ -27,7 +27,7 @@ public class TWPage implements ActionListener {
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
@@ -199,6 +199,7 @@ public class TWPage implements ActionListener {
 	        // Make frame visible
 	        homepage.setVisible(true);
 	        homepage.setLocationRelativeTo(null);
+	        homepage.setResizable(false);
 	    }
 
 	    // Method to set button styles
@@ -238,7 +239,7 @@ public class TWPage implements ActionListener {
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	homepage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 	        // Handle side button actions if needed

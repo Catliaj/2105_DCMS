@@ -27,7 +27,7 @@ public class FillingsPage implements ActionListener{
 	    JButton servicesBtn = new JButton("SERVICES");
 	    JButton productsBtn = new JButton("PRODUCTS");
 	    JButton contactUsBtn = new JButton("CONTACT US");
-	    JButton feedbackBtn = new JButton("FEEDBACK");
+	    JButton feedbackBtn = new JButton("EXIT");
 	    // Create a side panel with 13 buttons
 	    JPanel sidePanel = new JPanel();
 	    JButton[] sideButtons = new JButton[13];
@@ -211,6 +211,7 @@ public class FillingsPage implements ActionListener{
 	        // Make frame visible
 	        FillingsPage.setVisible(true);
 	        FillingsPage.setLocationRelativeTo(null);
+	        FillingsPage.setResizable(false);
 	    }
 
 	    // Method to set button styles
@@ -249,7 +250,7 @@ public class FillingsPage implements ActionListener{
 	        else if(e.getSource() == feedbackBtn)
 	        {
 	        	FillingsPage.dispose();
-	        	new FeedbackForm();
+	        	new User_Admin();
 	        }
 
 

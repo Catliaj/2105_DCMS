@@ -15,7 +15,7 @@ public class aboutUs implements ActionListener {
     JButton servicesBtn = new JButton("SERVICES");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton feedbackBtn = new JButton("FEEDBACK");
+    JButton feedbackBtn = new JButton("EXIT");
 
 
     JPanel header = new JPanel();
@@ -100,7 +100,7 @@ public class aboutUs implements ActionListener {
         titlePanel.add(clinicName);  
         
         smallPanel.add(titlePanel, BorderLayout.NORTH); 
-
+        aboutpage.setResizable(false);
         // Subtext section
         JLabel subText = new JLabel(
               "<html>" + 
@@ -165,7 +165,7 @@ public class aboutUs implements ActionListener {
         else if(e.getSource() == feedbackBtn)
         {
         	aboutpage.dispose();
-        	new FeedbackForm();
+        	new User_Admin();
         }
         else if(e.getSource() == productsBtn)
         {

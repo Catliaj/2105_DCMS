@@ -28,7 +28,7 @@ public class CABPage implements ActionListener {
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
 
-    JButton feedbackBtn = new JButton("FEEDBACK");
+    JButton feedbackBtn = new JButton("EXIT");
 
 
     // Create a side panel with 13 buttons
@@ -217,6 +217,7 @@ public class CABPage implements ActionListener {
         // Make frame visible
         CABPage.setVisible(true);
         CABPage.setLocationRelativeTo(null);
+        CABPage.setResizable(false);
     }
 
     // Method to set button styles
@@ -252,7 +253,7 @@ public class CABPage implements ActionListener {
         else if(e.getSource() == feedbackBtn)
         {
         	CABPage.dispose();
-        	new FeedbackForm();
+        	new User_Admin();
         }
         // Handle side button actions if needed
         for (int i = 0; i < sideButtons.length; i++) {

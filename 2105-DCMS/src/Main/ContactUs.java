@@ -24,7 +24,7 @@ public class ContactUs implements ActionListener {
     JButton servicesBtn = new JButton("SERVICES");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton feedbackBtn = new JButton("FEEDBACK");
+    JButton feedbackBtn = new JButton("EXIT");
     JPanel header = new JPanel();
     JPanel content = new BackgroundPanel("/Resources/AUBackG.png"); // Use custom panel with background
 
@@ -165,6 +165,7 @@ public class ContactUs implements ActionListener {
         // Make frame visible
         ContactUs.setVisible(true);
         ContactUs.setLocationRelativeTo(null);
+        ContactUs.setResizable(false);
     }
 
     // Method to create a small panel with an image, main text, and two subtexts
@@ -246,7 +247,7 @@ public class ContactUs implements ActionListener {
         else if(e.getSource() == feedbackBtn)
         {
         	ContactUs.dispose();
-        	new FeedbackForm();
+        	new User_Admin();
         }
         else if(e.getSource() == productsBtn)
         {

@@ -36,7 +36,7 @@ public class homePage implements ActionListener
     JButton servicesBtn = new JButton("SERVICES");
     JButton productsBtn = new JButton("PRODUCTS");
     JButton contactUsBtn = new JButton("CONTACT US");
-    JButton feedbackBtn = new JButton("FEEDBACK");
+    JButton feedbackBtn = new JButton("EXIT");
     JPanel header = new JPanel();
 
     JPanel content = new BackgroundPanel("/Resources/Background (2).png"); 
@@ -155,6 +155,7 @@ public class homePage implements ActionListener
         // Make frame visible
         homepage.setVisible(true);
         homepage.setLocationRelativeTo(null);
+        homepage.setResizable(false);
         textPanel.setOpaque(false);
         clinicName.setOpaque(false);
         subText.setOpaque(false);
@@ -205,7 +206,7 @@ public class homePage implements ActionListener
         else if(e.getSource() == feedbackBtn)
         {
         	homepage.dispose();
-        	new FeedbackForm();
+        	new User_Admin();
         }
         else if(e.getSource() == productsBtn)
         {
