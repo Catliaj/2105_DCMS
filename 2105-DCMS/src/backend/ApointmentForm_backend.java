@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import DCMS_DB_CONNECTION.DB_DCMSConnection;
+import backend.newPatient_Backend;
 
 public class ApointmentForm_backend extends newPatient_Backend
 {
@@ -126,7 +127,7 @@ public class ApointmentForm_backend extends newPatient_Backend
 	       {
 	            connection = dcmsConnection.getConnection();
 	            Statement statement = connection.createStatement();
-	            String query = "SELECT AppointmentID, Name, date, time,reason,Phonenumber,email FROM appointments";
+	            String query = "SELECT AppointmentID, Name, date, time,reason,Phonenumber,email, status FROM appointments";
 	            ResultSet resultSet = statement.executeQuery(query);
 	            
 	            while (resultSet.next()) 
@@ -138,8 +139,9 @@ public class ApointmentForm_backend extends newPatient_Backend
 	                String reason = resultSet.getString("reason");
 	                String Phonenumber = resultSet.getString("Phonenumber");
 	                String email = resultSet.getString("email");
+	                String status = resultSet.getString("status");
 	                
-	                appointments.add(new String[]{appointmentid, Name, date, time,reason,Phonenumber,email});
+	                appointments.add(new String[]{appointmentid, Name, date, time,reason,Phonenumber,email,status});
 	            }
 	         
 	            resultSet.close();
@@ -246,7 +248,7 @@ public class ApointmentForm_backend extends newPatient_Backend
 	                    resultSet.getString("Time"),
 	                    resultSet.getString("Phonenumber"),
 	                    resultSet.getString("email"),
-	                    resultSet.getString("Status"),
+	                    resultSet.getString("status"),
 	                };
 	            }
 
@@ -262,9 +264,9 @@ public class ApointmentForm_backend extends newPatient_Backend
 	    }
 	 
 	 public boolean updateAppointment(String appointmentID, String name, String email, String phoneNumber, 
-			 	String date, String time, String reason) 
+             String date, String time, String reason, String Status) 
 	 {
-				String query = "UPDATE appointments SET Name = ?, Email = ?, PhoneNumber = ?, Date = ?, Time = ?, Reason = ? WHERE AppointmentID = ?";
+				String query = "UPDATE appointments SET Name = ?, Email = ?, PhoneNumber = ?, Date = ?, Time = ?, Reason = ? , Status = ? WHERE AppointmentID = ?";
 				try {
 				connection = dcmsConnection.getConnection();
 				PreparedStatement ps = connection.prepareStatement(query);
@@ -274,8 +276,8 @@ public class ApointmentForm_backend extends newPatient_Backend
 				ps.setString(4, date);
 				ps.setString(5, time);
 				ps.setString(6, reason);
-				ps.setString(7, appointmentID);
-				
+				ps.setString(8, appointmentID);
+				ps.setString(7, Status);
 				int rowsAffected = ps.executeUpdate();
 				ps.close();
 				connection.close();
@@ -287,5 +289,65 @@ public class ApointmentForm_backend extends newPatient_Backend
 				return false;
 				}
 	 }
+	 
+	 public boolean deleteAppointment(String appointmentID) {
+		    String query = "DELETE FROM appointments WHERE AppointmentID = ?";
+		    try {
+		        connection = dcmsConnection.getConnection();
+		        PreparedStatement ps = connection.prepareStatement(query);
+		        ps.setString(1, appointmentID); // Set the AppointmentID in the query
 
+		        int rowsAffected = ps.executeUpdate();
+		        ps.close();
+		        connection.close();
+
+		        return rowsAffected > 0; // Return true if the deletion was successful
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        JOptionPane.showMessageDialog(null, "Error deleting appointment: " + e.getMessage());
+		        return false;
+		    }
+		}
+
+	 public List<String[]> getTodaysAppointments() {
+		    List<String[]> todaysAppointments = new ArrayList<>();
+		    try {
+		        // Establish connection to the database
+		        connection = dcmsConnection.getConnection();
+		        
+		        // SQL query to fetch today's appointments
+		        String query = "SELECT AppointmentID, Name, Date, Time, Reason, PhoneNumber, Email, Status FROM appointments WHERE DATE(Date) = CURDATE()";  // Filters today's date
+
+		        PreparedStatement ps = connection.prepareStatement(query);
+		        ResultSet rs = ps.executeQuery();
+
+		        // Loop through the result set and store appointment data in the list
+		        while (rs.next()) {
+		            String[] appointmentData = new String[8];
+		            appointmentData[0] = rs.getString("AppointmentID");
+		            appointmentData[1] = rs.getString("Name");
+		            appointmentData[2] = rs.getString("Date");
+		            appointmentData[3] = rs.getString("Time");
+		            appointmentData[4] = rs.getString("Reason");
+		            appointmentData[5] = rs.getString("PhoneNumber");
+		            appointmentData[6] = rs.getString("Email");
+		            appointmentData[7] = rs.getString("Status");
+
+		            todaysAppointments.add(appointmentData);
+		        }
+
+		        rs.close();
+		        ps.close();
+		        connection.close();
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		        JOptionPane.showMessageDialog(null, "Error retrieving today's appointments: " + ex.getMessage());
+		    }
+		    return todaysAppointments;
+		}
+
+
+
+
+	 
 }

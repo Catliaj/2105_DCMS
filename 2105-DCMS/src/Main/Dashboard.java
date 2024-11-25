@@ -2,6 +2,8 @@ package Main;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import javax.swing.Timer;
 
 import javax.swing.JFrame;
@@ -62,6 +64,7 @@ public class Dashboard extends JFrame implements ActionListener{
     /**
      * Create the frame.
      */
+    ApointmentForm_backend appointmentBackend = new ApointmentForm_backend();
     public Dashboard() {
     	setResizable(false);
     	setVisible(true);
@@ -180,7 +183,6 @@ public class Dashboard extends JFrame implements ActionListener{
         panel_1.add(lblNewLabel_4);
         
         textField = new JTextField();
-        textField.setFont(new Font("Segoe UI", Font.BOLD, 25));
         textField.setBounds(123, 46, 96, 53);
         panel_1.add(textField);
         textField.setColumns(10);
@@ -204,7 +206,6 @@ public class Dashboard extends JFrame implements ActionListener{
         panel_1_1.add(lblNewLabel_4_1);
         
         textField_1 = new JTextField();
-        textField_1.setFont(new Font("Segoe UI", Font.BOLD, 25));
         textField_1.setColumns(10);
         textField_1.setBounds(125, 46, 96, 53);
         panel_1_1.add(textField_1);
@@ -237,7 +238,7 @@ public class Dashboard extends JFrame implements ActionListener{
         lblNewLabel_1.setBounds(10, 72, 1286, 743);
         panel.add(lblNewLabel_1);
     
-        textField.setText(String.valueOf(getPatientsToday())); 
+        displayTodaysAppointments();
         textField_1.setText(String.valueOf(getTotalPatients())); 
 
     }
@@ -279,7 +280,7 @@ public class Dashboard extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Logoutbtn)
 		{
-		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to Logout?", "Logout", JOptionPane.YES_NO_OPTION);
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
 		    if (confirm == JOptionPane.YES_OPTION) {
 		    	dispose();
 		    	new LogInPage();
@@ -308,21 +309,21 @@ public class Dashboard extends JFrame implements ActionListener{
 	}
 
 	// Method to get today's patients from the database
-	private int getPatientsToday() {
-	    int patientsToday = 0;
-	    try {
-	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "admin", "admin");
-	        String query = "SELECT COUNT(*) AS patients_today FROM appointments WHERE DATE(date) = CURDATE()";
-	        PreparedStatement pst = con.prepareStatement(query);
-	        ResultSet rs = pst.executeQuery();
-	        if (rs.next()) {
-	            patientsToday = rs.getInt("patients_today");
-	        }
-	        con.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
+
+
+	private void displayTodaysAppointments() {
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    List<String[]> todaysAppointments = backend.getTodaysAppointments();
+
+	    // Count today's appointments
+	    int count = todaysAppointments.size();
+	    textField.setText(String.valueOf(count)); // Update the text field with the count
+
+	    // Optional: Print details to the console for debugging
+	    System.out.println("Today's Appointments:");
+	    for (String[] appointment : todaysAppointments) {
+	        System.out.println(String.join(", ", appointment));
 	    }
-	    return patientsToday;
 	}
 
 }

@@ -183,10 +183,7 @@ public class Appointments extends JFrame implements ActionListener{
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table);
-     
-
-        
-        scrollPane.setViewportView(table);
+       
         
         table_2 = new JTable();
         table_2.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -194,7 +191,7 @@ public class Appointments extends JFrame implements ActionListener{
         table_2.setModel(new DefaultTableModel(
         	new Object[][] {},
         	new String[] {
-        		"PATIENT ID", "NAME", "DATE", "TIME", "SERVICE", "CONTACT NO. ", "EMAIL", "PRICE", "STATUS"
+        		"PATIENT ID", "NAME", "DATE", "TIME", "SERVICE", "CONTACT NO. ", "EMAIL" ,"STATUS"
         	}
         ));
         table_2.getColumnModel().getColumn(0).setPreferredWidth(70);
@@ -205,7 +202,9 @@ public class Appointments extends JFrame implements ActionListener{
         table_2.getColumnModel().getColumn(5).setPreferredWidth(100);
         table_2.getColumnModel().getColumn(6).setPreferredWidth(100);
         table_2.getColumnModel().getColumn(7).setPreferredWidth(50);
-        table_2.getColumnModel().getColumn(8).setPreferredWidth(100);
+    
+
+
         
         table_2.setRowHeight(30);
         
@@ -302,6 +301,7 @@ public class Appointments extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Productbtn)
 		{
+			dispose();
 			new ProductAdmin();
 		}
 		else if(e.getSource() == Billingbtn)
@@ -330,24 +330,30 @@ public class Appointments extends JFrame implements ActionListener{
 		
 		else if(e.getSource() == Logoutbtn)
 		{
-		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to Logout?", "Logout", JOptionPane.YES_NO_OPTION);
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
 		    if (confirm == JOptionPane.YES_OPTION) {
 		    	dispose();
 		    	new LogInPage();
 		    }
 		}
 		else if(e.getSource() ==  btnViewAppointment)
-		{
-			new AppointmentRecord();
-			
-	       
-	          int selectedRow = table_2.getSelectedRow();
-	          if (selectedRow != -1) { // Ensure a row is selected
-	                  String patientID = table_2.getValueAt(selectedRow, 0).toString();
-	                    new AppointmentRecord(patientID); // Pass patient ID to PatientRecord
-	                } else {
-	                    JOptionPane.showMessageDialog(null, "Please select a appointment from the list.");
-	                }
+		{	  
+			 int selectedRow = table_2.getSelectedRow(); // Get the selected row index
+		        if (selectedRow != -1) { // Ensure a row is selected
+		            // Fetch data from the table using correct column indices
+		            String appointmentID = table_2.getValueAt(selectedRow, 0).toString(); // Column 0 for AppointmentID
+		            String name = table_2.getValueAt(selectedRow, 1).toString();          // Column 1 for Name
+		            String date = table_2.getValueAt(selectedRow, 2).toString();          // Column 2 for Date
+		            String time = table_2.getValueAt(selectedRow, 3).toString();          // Column 3 for Time
+		            String reason = table_2.getValueAt(selectedRow, 4).toString();        // Column 4 for Reason
+		            String phone = table_2.getValueAt(selectedRow, 5).toString();         // Column 5 for PhoneNumber
+		            String email = table_2.getValueAt(selectedRow, 6).toString();         // Column 6 for Email
+		            String status = table_2.getValueAt(selectedRow, 7).toString(); 
+		            // Pass the data to a new AppointmentRecord instance
+		            new AppointmentRecord(appointmentID, name, date, time, reason, phone, email,status);
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Please select an appointment from the table.");
+		        }
 		}
 
 		 else if (e.getSource() == Searchfield) { // Trigger search on Enter key in the text field

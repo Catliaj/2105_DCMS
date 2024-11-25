@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
@@ -17,12 +20,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
+import backend.ApointmentForm_backend;
 import backend.newPatient_Backend;
 
 import javax.swing.border.BevelBorder;
 
-public class PatientRecord extends JFrame {
+public class PatientRecord extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -35,6 +38,7 @@ public class PatientRecord extends JFrame {
 	private	JTextPane Addresstxtpane;
 	private	JTextPane PIDtxtpane;
 	private	JTextPane Nametxtpane;
+	private JButton Deletebtn;
 	
 
 	/**
@@ -152,11 +156,12 @@ public class PatientRecord extends JFrame {
 		GenInfolbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		panel.add(GenInfolbl);
 		
-		JButton Deletebtn = new JButton("DELETE");
+	    Deletebtn = new JButton("DELETE");
 		Deletebtn.setForeground(new Color(194, 192, 192));
 		Deletebtn.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		Deletebtn.setBackground(new Color(5, 59, 67));
 		Deletebtn.setBounds(17, 242, 117, 34);
+		Deletebtn.addActionListener(this);
 		panel.add(Deletebtn);
 		
 	    PIDtxtpane = new JTextPane();
@@ -235,12 +240,16 @@ public class PatientRecord extends JFrame {
 		    }
 
 		    newPatient_Backend backend = new newPatient_Backend();
-		    boolean isUpdated = backend.updatePatientData(patientID, firstName, middleInitial, lastName, dob, age, gender, email, address, contactNumber);
+		    
+		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to Update this patient?", "Confirm Update", JOptionPane.YES_NO_OPTION);
 
-		    if (isUpdated) {
-		        JOptionPane.showMessageDialog(this, "Patient details updated successfully!");
-		    } else {
-		        JOptionPane.showMessageDialog(this, "Failed to update patient details. Please try again.");
+		    if (confirm == JOptionPane.YES_OPTION) {
+		    	 boolean isUpdated = backend.updatePatientData(patientID, firstName, middleInitial, lastName, dob, age, gender, email, address, contactNumber);
+				    if (isUpdated) {
+				        JOptionPane.showMessageDialog(this, "Patient details updated successfully!");
+				    } else {
+				        JOptionPane.showMessageDialog(this, "Failed to update patient details. Please try again.");
+				    }
 		    }
 		});
 
@@ -276,6 +285,44 @@ public class PatientRecord extends JFrame {
 	        JOptionPane.showMessageDialog(this, "No patient data found for ID: " + patientID);
 	    }
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	    if (e.getSource() == Deletebtn) {
+	        // Get patient ID from the form
+	        String patientID = PIDtxtpane.getText().trim();
+
+	        if (patientID.isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Patient ID is required for deletion.");
+	            return;
+	        }
+
+	        // Ask for confirmation before deleting
+	        int confirm = JOptionPane.showConfirmDialog(this, 
+	            "Are you sure you want to delete this patient?", 
+	            "Confirm Deletion", 
+	            JOptionPane.YES_NO_OPTION);
+
+	        if (confirm == JOptionPane.YES_OPTION) {
+	            // Call deletePatient method to remove the patient from the database
+	            deletePatient(patientID);
+	        }
+	    }
+	}
+
+	private void deletePatient(String patientID) {
+	    newPatient_Backend backend = new newPatient_Backend();
+	    boolean isDeleted = backend.deletePatientByID(patientID); // Call the backend method
+
+	    if (isDeleted) {
+	        JOptionPane.showMessageDialog(this, "Patient deleted successfully!");
+	        dispose(); // Close the form after successful deletion
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Failed to delete patient. Please try again.");
+	    }
+	}
+
+
 	
 }
 

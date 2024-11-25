@@ -25,7 +25,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import backend.newPatient_Backend;
+
 import javax.swing.border.BevelBorder;
 public class Patients extends JFrame implements ActionListener{
 
@@ -47,7 +49,7 @@ public class Patients extends JFrame implements ActionListener{
     private JComboBox<String> sortComboBox;
 
     private JPanel panel_4;
-    private JTextField textField;
+    private JTextField searchTextField;
     private JLabel SearchIDlbl;
     private JLabel lblNewLabel_6;
 
@@ -142,12 +144,11 @@ public class Patients extends JFrame implements ActionListener{
         sortComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedSort = sortComboBox.getSelectedItem().toString();
-                if (!selectedSort.equals("Sort By")) {
-                    loadPatientData(selectedSort);
+                if (!selectedSort.equals("SORT BY")) {
+                    loadPatientData(selectedSort);  // Trigger the sorting based on selected criteria
                 }
             }
         });
-
         
         Productbtn = new JButton("PRODUCT");
         Productbtn.setFont(new Font("Segoe UI", Font.BOLD, 25));
@@ -279,15 +280,16 @@ public class Patients extends JFrame implements ActionListener{
         panel.add(panel_4);
         panel_4.setLayout(null);
         
-        textField = new JTextField();
-        textField.setBounds(53, 9, 173, 32);
-        panel_4.add(textField);
-        textField.setColumns(10);
+        searchTextField = new JTextField();
+        searchTextField.setBounds(53, 9, 173, 32);
+        panel_4.add(searchTextField);
+        searchTextField.setColumns(10);
+        searchTextField.addActionListener(this);
         
         lblNewLabel_6 = new JLabel("");
         lblNewLabel_6.setBounds(6, 0, 59, 50);
         panel_4.add(lblNewLabel_6);
-        lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\people (1).png"));
+        lblNewLabel_6.setIcon(new ImageIcon(Patients.class.getResource("/Resources/people.png")));
         
         SearchIDlbl = new JLabel("SEARCH: ");
         SearchIDlbl.setForeground(new Color(194, 192, 192));
@@ -337,6 +339,7 @@ public class Patients extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Productbtn)
 		{
+			dispose();
 			new ProductAdmin();
 		}
 		else if(e.getSource() == ProductSalesbtn )
@@ -365,6 +368,10 @@ public class Patients extends JFrame implements ActionListener{
 		    	new LogInPage();
 		    }
 		}
+		else if (e.getSource() == searchTextField) {
+            String searchQuery = searchTextField.getText().toLowerCase();
+            filterPatientData(searchQuery); // Trigger filtering when the user types in the search field
+        }
 
 
 	}
@@ -376,28 +383,50 @@ public class Patients extends JFrame implements ActionListener{
 	    List<String[]> patientData = patientBackend.getPatientData(); // Fetch patient data
 
 	    // Sort the data based on the selected criteria
-	    if (sortBy.equals("PatientID")) {
+	    if (sortBy.equals("PATIENT ID")) {
 	        patientData.sort((a, b) -> {
 	            try {
 	                int id1 = Integer.parseInt(a[0]);
 	                int id2 = Integer.parseInt(b[0]);
-	                return Integer.compare(id1, id2);
+	                return Integer.compare(id1, id2); // Numeric comparison
 	            } catch (NumberFormatException e) {
-	                return a[0].compareTo(b[0]); // Fallback to string comparison
+	                return a[0].compareTo(b[0]); // Fallback to lexicographical comparison if not numeric
 	            }
 	        });
-	    }
-	    else if (sortBy.equals("First Name")) {
-	        patientData.sort((a, b) -> a[1].compareToIgnoreCase(b[1])); // Sort by First Name
-	    } else if (sortBy.equals("Last Name")) {
-	        patientData.sort((a, b) -> a[3].compareToIgnoreCase(b[3])); // Sort by Last Name
+	    } else if (sortBy.equals("FIRST NAME")) {
+	        patientData.sort((a, b) -> a[1].compareToIgnoreCase(b[1])); // Sort by First Name (case-insensitive)
+	    } else if (sortBy.equals("LAST NAME")) {
+	        patientData.sort((a, b) -> a[3].compareToIgnoreCase(b[3])); // Sort by Last Name (case-insensitive)
 	    }
 
-	    // Loop through the sorted list and add rows to the table
+	    // Add sorted data to the table
 	    for (String[] row : patientData) {
 	        model.addRow(row);
 	    }
 	}
+	
+	  private void filterPatientData(String searchQuery) {
+	        DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+	        model.setRowCount(0); // Clear existing data
+
+	        // Get the list of patient data
+	        newPatient_Backend patientBackend = new newPatient_Backend();
+	        List<String[]> patientData = patientBackend.getPatientData();
+
+	        // Loop through the data and check if it matches the search query
+	        for (String[] row : patientData) {
+	            // You can modify the search to match by PatientID, First Name, or Last Name
+	            String patientID = row[0].toLowerCase();
+	            String firstName = row[1].toLowerCase();
+	            String lastName = row[3].toLowerCase();
+
+	            // Check if any of the columns match the search query
+	            if (patientID.contains(searchQuery) || firstName.contains(searchQuery) || lastName.contains(searchQuery)) {
+	                model.addRow(row); // Add matching rows to the table
+	            }
+	        }
+	    }
+
 
 	// Overload to load data without sorting (default)
 	private void loadPatientData() {

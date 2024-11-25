@@ -80,12 +80,13 @@ public class POS extends JFrame {
 		setResizable(false);
 		setBackground(new Color(5, 59, 67));
 		setTitle("POS");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\Adminiconlogo.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(POS.class.getResource("/Resources/Adminicon.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
+		setVisible(true);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -673,7 +674,7 @@ public class POS extends JFrame {
 							
 																		
 										JLabel ContentBackG = new JLabel("");
-										ContentBackG.setIcon(new ImageIcon("C:\\Users\\ARAVHEIYL FELICISIMO\\Downloads\\backG.png"));
+										ContentBackG.setIcon(new ImageIcon(POS.class.getResource("/Resources/Background (2).png")));
 										ContentBackG.setBounds(0, 0, 1286, 713);
 										panel.add(ContentBackG);
 		

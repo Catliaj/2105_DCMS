@@ -181,7 +181,7 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	    	String email = EmailTxtField.getText();
 	    	String PhoneNumber = CotactTxtField.getText();
 	    	String reason = (String) ReasoncomboBox.getSelectedItem();
-	    	SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+	    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    	String date = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()): "Not Selected";
 	        String hour = (String) hourComboBox.getSelectedItem();
 	        String minute = (String) minuteComboBox.getSelectedItem();
@@ -195,5 +195,7 @@ public class AppointmentForm extends JFrame implements ActionListener{
 		    }
 	    }
 	}
+	
+	
 
 }

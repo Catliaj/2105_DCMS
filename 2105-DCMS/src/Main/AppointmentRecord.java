@@ -36,8 +36,10 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	private JComboBox<String> minuteComboBox;
 	private JComboBox<String> amPmComboBox;
 	private JComboBox<String> ReasoncomboBox;
+	private JComboBox<String> StatusBox;
 	private JButton btnUpdate;
 	 private String appointmentID;
+	private JButton btnDeleteButton;
 	
 	
 	/**
@@ -59,6 +61,12 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	ApointmentForm_backend backend =new ApointmentForm_backend();
+    public AppointmentRecord(String appointmentID, String name, String date, String time, 
+            String reason, String phone, String email, String status) {
+    	this(); // Call default constructor to set up UI
+	this.appointmentID = appointmentID; // Set appointment ID
+	populateAppointmentDetails(name, date, time, reason, phone, email, status);
+}
 	
 	public AppointmentRecord() {
 		setResizable(false);
@@ -98,6 +106,8 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		EmailTxtField.setColumns(10);
 		EmailTxtField.setBounds(51, 187, 333, 27);
 		panel.add(EmailTxtField);
+		
+		
 		
 		JLabel EmailLabel = new JLabel("EMAIL");
 		EmailLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -159,17 +169,25 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		ReasoncomboBox.setBounds(51, 408, 333, 27);
 		panel.add(ReasoncomboBox);
 		
+		
+		String[] Status = {"In Progress", "Done"};
+		StatusBox = new JComboBox<>(Status);
+		StatusBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		StatusBox.setBounds(51, 435, 333, 27);
+		panel.add(StatusBox);
+		
 		JLabel RsnBookingLabel = new JLabel("REASON OF YOUR BOOKING:");
 		RsnBookingLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		RsnBookingLabel.setBounds(51, 385, 327, 13);
 		panel.add(RsnBookingLabel);
 		
-		JButton btnNewButton = new JButton("DELETE");
-		btnNewButton.setForeground(new Color(194, 192, 192));
-		btnNewButton.setBackground(new Color(5, 59, 67));
-		btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnNewButton.setBounds(71, 464, 125, 40);
-		panel.add(btnNewButton);
+	    btnDeleteButton = new JButton("DELETE");
+	    btnDeleteButton.setForeground(new Color(194, 192, 192));
+	    btnDeleteButton.setBackground(new Color(5, 59, 67));
+	    btnDeleteButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
+	    btnDeleteButton.setBounds(71, 464, 125, 40);
+	    btnDeleteButton.addActionListener(this);
+		panel.add(btnDeleteButton);
 		
 	    btnUpdate = new JButton("UPDATE");
 		btnUpdate.setForeground(new Color(194, 192, 192));
@@ -199,7 +217,7 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	        String amPm = (String) amPmComboBox.getSelectedItem();
 	        String time = hour + ":" + minute + " " + amPm;
 	      
-		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this patient?", "Confirm Booking", JOptionPane.YES_NO_OPTION);
+		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this patient?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 
 		    if (confirm == JOptionPane.YES_OPTION) {
 	        new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);
@@ -208,58 +226,67 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	    }
 	    else if(e.getSource() == btnUpdate)
 	    {
+	    	
+	    	 int confirm = JOptionPane.showConfirmDialog(this, 
+	    	            "Are you sure you want to Ppdate this appointment?", 
+	    	            "Confirm Update", 
+	    	            JOptionPane.YES_NO_OPTION);
+
+	    	        if (confirm == JOptionPane.YES_OPTION) {
+	    	            // Call deleteAppointment function with the current appointmentID
+	    	        	updateAppointmentDetails();
+	    	        }
 
 	        updateAppointmentDetails();
 
 	    }
-	}
+	    else if(e.getSource() == btnDeleteButton)
+	    {
+	    	 int confirm = JOptionPane.showConfirmDialog(this, 
+	    	            "Are you sure you want to delete this appointment?", 
+	    	            "Confirm Deletion", 
+	    	            JOptionPane.YES_NO_OPTION);
 
-	public AppointmentRecord(String AppointmentID) {
-	    this(); // Call the default constructor to set up the UI
-
-	    if (AppointmentID != null && !AppointmentID.isEmpty()) {
-	    	populateAppointmentDetails(AppointmentID); // Populate fields with patient data
-	    } else {
-	        JOptionPane.showMessageDialog(this, "Invalid Patient ID provided.");
+	    	        if (confirm == JOptionPane.YES_OPTION) {
+	    	            // Call deleteAppointment function with the current appointmentID
+	    	            deleteAppointment(appointmentID);
+	    	        }
+	    	            
 	    }
 	}
+
+	 
+
 	
-	private void populateAppointmentDetails(String appointmentID) {
-	    ApointmentForm_backend backend = new ApointmentForm_backend();
-	    String[] appointmentDetails = backend.getAppointmentByID(appointmentID); // Create this method in the backend
+	 private void populateAppointmentDetails(String name, String date, String time, 
+             String reason, String phone, String email, String status) {
+try {
+NameTxtField.setText(name);
+EmailTxtField.setText(email);
+CotactTxtField.setText(phone);
 
-	    if (appointmentDetails != null) {
-	        // Set text fields
-	        NameTxtField.setText(appointmentDetails[1]); // Name
-	        EmailTxtField.setText(appointmentDetails[6]); // Email
-	        CotactTxtField.setText(appointmentDetails[5]); // Contact Number
+if (date != null && !date.isEmpty()) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adjust format as needed
+    dateChooser.setDate(dateFormat.parse(date));
+} else {
+    dateChooser.setDate(null); // Clear the field if date is empty
+}
 
-	        // Set date chooser
-	        try {
-	            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-	            java.util.Date date = dateFormat.parse(appointmentDetails[2]); // Parse date from string
-	            dateChooser.setDate(date); // Set date
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            JOptionPane.showMessageDialog(this, "Invalid date format: " + appointmentDetails[2]);
-	        }
+// Parse and set the time
+if (time != null && !time.isEmpty()) {
+    String[] timeParts = time.split(" ");
+    String[] hourMinute = timeParts[0].split(":");
+    hourComboBox.setSelectedItem(hourMinute[0]); // Hour
+    minuteComboBox.setSelectedItem(hourMinute[1]); // Minute
+    amPmComboBox.setSelectedItem(timeParts[1]); // AM/PM
+}
 
-	        // Set time combo boxes
-	        String time = appointmentDetails[3]; // Example: "10:30 AM"
-	        String[] timeParts = time.split(":| "); // Split into ["10", "30", "AM"]
-	        if (timeParts.length == 3) {
-	            hourComboBox.setSelectedItem(timeParts[0]); // Set hour
-	            minuteComboBox.setSelectedItem(timeParts[1]); // Set minute
-	            amPmComboBox.setSelectedItem(timeParts[2]); // Set AM/PM
-	        }
-
-	        // Set reason combo box
-	        String reason = appointmentDetails[4]; // Reason
-	        ReasoncomboBox.setSelectedItem(reason); // Match reason to combo box item
-	    } else {
-	        JOptionPane.showMessageDialog(this, "No appointment data found for ID: " + appointmentID);
-	    }
-	}
+ReasoncomboBox.setSelectedItem(reason);
+StatusBox.setSelectedItem(status);
+} catch (Exception e) {
+JOptionPane.showMessageDialog(this, "Error parsing appointment details: " + e.getMessage());
+}
+}
 	
 	private void updateAppointmentDetails() {
 	    // Get updated data from fields
@@ -267,7 +294,8 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	    String email = EmailTxtField.getText().trim();
 	    String phoneNumber = CotactTxtField.getText().trim();
 	    String reason = (String) ReasoncomboBox.getSelectedItem();
-
+	    String status = (String) StatusBox.getSelectedItem();
+	    
 	    // Format date
 	    String date = "";
 	    try {
@@ -285,14 +313,16 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	    String time = hour + ":" + minute + " " + amPm;
 
 	    // Validate input fields
-	    if (name.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || reason.isEmpty() || date.isEmpty() || time.isEmpty()) {
+	    if (name.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || reason.isEmpty() || date.isEmpty() || time.isEmpty() || status.isEmpty()) {
 	        JOptionPane.showMessageDialog(this, "All fields are required.");
 	        return;
 	    }
 
 	    // Update in the backend
 	    ApointmentForm_backend backend = new ApointmentForm_backend();
-	    boolean isUpdated = backend.updateAppointment(appointmentID, name, email, phoneNumber, date, time, reason);
+	    
+	    
+     boolean isUpdated = backend.updateAppointment(appointmentID, name, email, phoneNumber, date, time, reason,status);
 
 	    if (isUpdated) {
 	        JOptionPane.showMessageDialog(this, "Appointment updated successfully!");
@@ -302,7 +332,20 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	    }
 	}
 
+	private void deleteAppointment(String appointmentID) {
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    boolean isDeleted = backend.deleteAppointment(appointmentID);
+
+	    if (isDeleted) {
+	        JOptionPane.showMessageDialog(this, "Appointment deleted successfully!");
+	        dispose(); // Close the form after successful deletion
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Failed to delete appointment. Please try again.");
+	    }
+	}
 	
+	
+
 	
 
 }

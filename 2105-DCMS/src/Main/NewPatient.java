@@ -184,19 +184,20 @@ public class NewPatient extends JFrame implements ActionListener {
         JRadioButton MaleRdBtn = new JRadioButton("MALE");
         MaleRdBtn.setFont(new Font("Segoe UI", Font.BOLD, 15));
         MaleRdBtn.setBounds(167, 200, 79, 29);
-        MaleRdBtn.addActionListener(this);
+        MaleRdBtn.addActionListener(e -> selectedGender = "Male"); // Update selectedGender when clicked
         panel.add(MaleRdBtn);
-        
+
         JRadioButton FemaleRdBtn = new JRadioButton("FEMALE");
         FemaleRdBtn.setFont(new Font("Segoe UI", Font.BOLD, 15));
         FemaleRdBtn.setBounds(264, 200, 97, 29);
-        FemaleRdBtn.addActionListener(this);
+        FemaleRdBtn.addActionListener(e -> selectedGender = "Female"); // Update selectedGender when clicked
         panel.add(FemaleRdBtn);
-        
+
         // Group the radio buttons to allow only one selection
         ButtonGroup genderGroup = new ButtonGroup();
         genderGroup.add(MaleRdBtn);
         genderGroup.add(FemaleRdBtn);
+
         
         CancelBtn = new JButton("CANCEL");
         CancelBtn.setForeground(new Color(194, 192, 192));
@@ -225,7 +226,6 @@ public class NewPatient extends JFrame implements ActionListener {
         if (e.getSource() == CancelBtn) {
             dispose();
         } else if (e.getSource() == SaveBtn) {
-            // Extract data from the form
             String firstName = FirstNameTxtField.getText();
             String lastName = LastNameTxtField.getText();
             String mi = MITxtField.getText();
@@ -234,23 +234,30 @@ public class NewPatient extends JFrame implements ActionListener {
             String address = AddressTxtField.getText();
             String ageText = AgeTxtField.getText();
             Integer age = 0;
-            
 
+            // Validate age
             try {
                 age = Integer.parseInt(ageText);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid number for age.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+            // Validate gender
+            if (selectedGender.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please select a gender.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
             String dateOfBirth = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()) : "Not Selected";
 
             int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to add this patient?");
-            	if(confirm ==JOptionPane.YES_OPTION)
-            	{
-            		new newPatient_Backend(firstName,mi,lastName,selectedGender,contact,dateOfBirth,email,address,age);
-            		dispose();
-            	}
+            if (confirm == JOptionPane.YES_OPTION) {
+                new newPatient_Backend(firstName, mi, lastName, selectedGender, contact, dateOfBirth, email, address, age);
+                dispose();
+            }
         }
     }
+
 }

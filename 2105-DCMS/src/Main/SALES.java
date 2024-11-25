@@ -21,6 +21,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+
 import javax.swing.SwingConstants;
 
 public class SALES extends JFrame implements ActionListener{
@@ -214,6 +216,7 @@ public class SALES extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Productbtn)
 		{
+			dispose();
 			new ProductAdmin();
 		}
 		else if(e.getSource() == Billingbtn)
@@ -237,7 +240,7 @@ public class SALES extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == Logoutbtn)
 		{
-		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to Logout?", "Logout", JOptionPane.YES_NO_OPTION);
+		    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this page?", "Logout", JOptionPane.YES_NO_OPTION);
 		    if (confirm == JOptionPane.YES_OPTION) {
 		    	dispose();
 		    	new LogInPage();
