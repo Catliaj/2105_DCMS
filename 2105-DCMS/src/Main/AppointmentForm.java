@@ -20,6 +20,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import DCMS_DB_CONNECTION.DB_DCMSConnection;
 import backend.ApointmentForm_backend;
+import backend.newPatient_Backend;
+
 import java.sql.*;
 
 public class AppointmentForm extends JFrame implements ActionListener{
@@ -55,6 +57,16 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	ApointmentForm_backend backend =new ApointmentForm_backend();
+	
+	public AppointmentForm(String firstName, String middleInitial, String lastName, String email, String phone) {
+	    this(); // Call the default constructor to set up the UI
+
+	    // Set the fields
+	    NameTxtField.setText(firstName + " " + middleInitial + " " + lastName);
+	    EmailTxtField.setText(email);
+	    CotactTxtField.setText(phone);
+	}
+
 	
 	public AppointmentForm() {
 		setResizable(false);
@@ -176,25 +188,57 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	    if (e.getActionCommand().equals("BOOK APPOINTMENT")) {
-	    	
-	    	String name = NameTxtField.getText();
-	    	String email = EmailTxtField.getText();
-	    	String PhoneNumber = CotactTxtField.getText();
-	    	String reason = (String) ReasoncomboBox.getSelectedItem();
-	    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	    	String date = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()): "Not Selected";
+	        // Collect data from the form
+	        String fullName = NameTxtField.getText().trim();
+	        String[] nameParts = fullName.split(" "); // Split the name based on spaces
+
+	        String firstName = nameParts[0];  // First Name
+	        String middleInitial = nameParts.length > 1 ? nameParts[1] : "";  // Middle Initial
+	        String lastName = nameParts.length > 2 ? nameParts[2] : "";  // Last Name
+
+	        String email = EmailTxtField.getText().trim();
+	        String phone = CotactTxtField.getText().trim();
+	        String reason = (String) ReasoncomboBox.getSelectedItem();
+	        
+	        // Format the date
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yy,MM,dd");
+	        String date = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()) : "Not Selected";
+
+	        // Format time
 	        String hour = (String) hourComboBox.getSelectedItem();
 	        String minute = (String) minuteComboBox.getSelectedItem();
 	        String amPm = (String) amPmComboBox.getSelectedItem();
 	        String time = hour + ":" + minute + " " + amPm;
-	      
-		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this patient?", "Confirm Booking", JOptionPane.YES_NO_OPTION);
 
-		    if (confirm == JOptionPane.YES_OPTION) {
-		    	new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);
-		    }
+	        // Confirm before saving the data
+	        int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this appointment?", "Confirm Appointment", JOptionPane.YES_NO_OPTION);
+
+	        if (confirm == JOptionPane.YES_OPTION) {
+	            // Check if the patient already exists based on phone number or email
+	            newPatient_Backend patientBackend = new newPatient_Backend();
+	            String patientID = patientBackend.getPatientIDByContact(phone); // Or use email for lookup
+
+	            // If the patient doesn't exist, add a new patient
+	            if (patientID == null) {
+	                patientID = patientBackend.addNewPatient(firstName, middleInitial, lastName, email, phone);  // Save full patient data
+	            }
+
+	            // Add the appointment
+	            ApointmentForm_backend backend = new ApointmentForm_backend();
+	            String status = "In Progress";
+	            boolean appointmentAdded = backend.addNewAppointment(patientID, date, time,reason ,status);
+
+	            if (appointmentAdded) {
+	                JOptionPane.showMessageDialog(null, "Appointment booked successfully!");
+	            } else {
+	                JOptionPane.showMessageDialog(null, "Failed to book the appointment. Please try again.");
+	            }
+	        }
 	    }
+	    
+	
 	}
+
 	
 	
 

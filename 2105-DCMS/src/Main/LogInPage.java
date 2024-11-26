@@ -27,12 +27,19 @@ public class LogInPage implements ActionListener {
     private final JPanel panel = new JPanel();
     private final JLabel lblNewLabel_1 = new JLabel("LOG IN");
     private final JLabel linetxt = new JLabel("");
+    private JButton btnExitButton;
 
     public LogInPage() {
         messageLabel.setBounds(813, 100, 406, 50);
         messageLabel.setFont(new Font("Arial", Font.ITALIC, 20));
         messageLabel.setForeground(Color.WHITE);
         logInFrame.getContentPane().setLayout(null);
+        
+        btnExitButton = new JButton("Exit");
+        btnExitButton.setBounds(668, 450, 85, 19);
+        logInFrame.getContentPane().add(btnExitButton);
+        btnExitButton.setFont(new Font("Tahoma", Font.BOLD, 17));
+        btnExitButton.addActionListener(this);
         logInFrame.getContentPane().add(messageLabel);
 
         // Frame settings
@@ -145,6 +152,10 @@ public class LogInPage implements ActionListener {
                 ex.printStackTrace();
                 messageLabel.setText("Error: " + ex.getMessage());
             }
+        } else if(action.getSource() == btnExitButton)
+        {
+        	logInFrame.dispose();
+        	new User_Admin();
         }
     }
 

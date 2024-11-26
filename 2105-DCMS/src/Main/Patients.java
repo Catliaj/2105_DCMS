@@ -72,6 +72,7 @@ public class Patients extends JFrame implements ActionListener{
     /**
      * Create the frame.
      */
+    
     public Patients() {
     	setResizable(false);
     	setVisible(true);
@@ -257,7 +258,7 @@ public class Patients extends JFrame implements ActionListener{
         btnAddPatient.setBounds(285, 610, 217, 50);
         panel.add(btnAddPatient);
                                 
-        btnViewRecord = new JButton("VIEW RECORD");
+        btnViewRecord = new JButton("VIEW PATIENT");
         btnViewRecord.setForeground(Color.BLACK);
         btnViewRecord.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewRecord.setBackground(new Color(194, 192, 192));
@@ -303,17 +304,8 @@ public class Patients extends JFrame implements ActionListener{
         panel.add(lblNewLabel_1);
         loadPatientData();
         
-        btnViewRecord.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table_1.getSelectedRow();
-                if (selectedRow != -1) { // Ensure a row is selected
-                    String patientID = table_1.getValueAt(selectedRow, 0).toString();
-                    new PatientRecord(patientID); // Pass patient ID to PatientRecord
-                } else {
-                    JOptionPane.showMessageDialog(null, "Please select a patient from the list.");
-                }
-            }
-        });
+
+       
 
     }
 
@@ -372,6 +364,18 @@ public class Patients extends JFrame implements ActionListener{
             String searchQuery = searchTextField.getText().toLowerCase();
             filterPatientData(searchQuery); // Trigger filtering when the user types in the search field
         }
+		else if (e.getSource() == btnViewRecord) {
+	        // Get the selected row from the table
+	        int selectedRow = table_1.getSelectedRow();
+	        
+	        // Check if a row is selected
+	        if (selectedRow != -1) {
+	            String patientID = table_1.getValueAt(selectedRow, 0).toString();  // Get PatientID from the first column
+	            new PatientRecord(patientID);  // Pass the PatientID to the PatientRecord window
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Please select a patient from the list.");
+	        }
+	    }
 
 
 	}

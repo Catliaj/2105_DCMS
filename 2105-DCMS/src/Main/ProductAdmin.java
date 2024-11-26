@@ -281,6 +281,7 @@ public class ProductAdmin extends JFrame {
 		                textFieldPrice.setText("");
 		                textField_4.setText("");
 		                lblIMAGE.setIcon(null);
+		                
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Error adding the product.");
 		            }

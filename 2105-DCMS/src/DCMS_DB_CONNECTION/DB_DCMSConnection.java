@@ -37,8 +37,17 @@ public class DB_DCMSConnection
 		}
 		return db;
 	}
-	public Connection getConnection()
-	{
-		return connection;
-	}
+	
+    public Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/dcfdentalclinicdb", 
+                "admin", 
+                "admin"
+            );
+        }
+        return connection;
+    }
+	
+	
 }

@@ -41,7 +41,6 @@ public class Appointments extends JFrame implements ActionListener{
     private JButton Billingbtn;
     private JButton Logoutbtn;
     private JButton ProductSalesbtn;
-    private JButton btnBookAppointment;
     private JButton btnRefresh;
     private JTextField Searchfield;
     private JButton btnViewAppointment;
@@ -133,6 +132,10 @@ public class Appointments extends JFrame implements ActionListener{
         Productbtn.setBounds(0, 265, 228, 57);
         Productbtn.addActionListener(this);
         SidePanel.add(Productbtn);
+       
+        
+        
+
 
         Billingbtn = new JButton("POS");
         Billingbtn.setBackground(new Color(194, 192, 192));
@@ -191,7 +194,7 @@ public class Appointments extends JFrame implements ActionListener{
         table_2.setModel(new DefaultTableModel(
         	new Object[][] {},
         	new String[] {
-        		"PATIENT ID", "NAME", "DATE", "TIME", "SERVICE", "CONTACT NO. ", "EMAIL" ,"STATUS"
+        		"APPOINTMENT ID", "NAME", "DATE", "TIME", "SERVICE", "CONTACT NO. ", "EMAIL" ,"STATUS"
         	}
         ));
         table_2.getColumnModel().getColumn(0).setPreferredWidth(70);
@@ -209,14 +212,6 @@ public class Appointments extends JFrame implements ActionListener{
         table_2.setRowHeight(30);
         
         scrollPane.setViewportView(table_2);
-                        
-        btnBookAppointment = new JButton("BOOK APPOINTMENT");
-        btnBookAppointment.addActionListener(this);
-        btnBookAppointment.setBackground(new Color(194, 192, 192));
-        btnBookAppointment.setForeground(new Color(0, 0, 0));
-        btnBookAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnBookAppointment.setBounds(262, 642, 265, 50);
-        panel.add(btnBookAppointment);
         
         JLabel lblNewLabel_3 = new JLabel("New label");
         lblNewLabel_3.setBounds(294, 351, 45, 13);
@@ -234,7 +229,7 @@ public class Appointments extends JFrame implements ActionListener{
         btnViewAppointment.setForeground(Color.BLACK);
         btnViewAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
         btnViewAppointment.setBackground(new Color(194, 192, 192));
-        btnViewAppointment.setBounds(623, 642, 265, 50);
+        btnViewAppointment.setBounds(282, 642, 265, 50);
         btnViewAppointment.addActionListener(this);
         panel.add(btnViewAppointment);
         
@@ -256,14 +251,16 @@ public class Appointments extends JFrame implements ActionListener{
         panel_2.add(lblNewLabel_6);
         lblNewLabel_6.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/people.png")));
         
-        JComboBox SortcomboBox = new JComboBox<>(new String[]{"SORT BY", "PATIENT ID", "NAME", "DATE"});
+        JComboBox<String> SortcomboBox = new JComboBox<>(new String[]{"Name", "Date", "Reason", "Status"});
+
         SortcomboBox.setBackground(new Color(194, 192, 192));
         SortcomboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
         SortcomboBox.setBounds(1128, 246, 126, 20);
         SortcomboBox.addActionListener(e -> {
             String selected = (String) SortcomboBox.getSelectedItem();
-            sortTable(selected);
+            sortTable(selected);  // Trigger the sorting based on selected item
         });
+
         panel.add(SortcomboBox);
         
         JLabel lblNewLabel_7 = new JLabel("SEARCH:");
@@ -276,7 +273,28 @@ public class Appointments extends JFrame implements ActionListener{
         lblNewLabel_1.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/Background (2).png")));
         lblNewLabel_1.setBounds(0, 71, 1286, 743);
         panel.add(lblNewLabel_1);
-        loadAppointmentData();
+        JComboBox<String> monthComboBox = new JComboBox<>(new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
+        JComboBox<Integer> yearComboBox = new JComboBox<>(new Integer[]{2023, 2024, 2025});
+        int selectedMonth = monthComboBox.getSelectedIndex() + 1; // Convert to 1-based index for SQL
+        int selectedYear = (int) yearComboBox.getSelectedItem();
+        JButton filterByMonthButton = new JButton("Filter by Month");
+        filterByMonthButton.addActionListener(e -> {
+            filterAppointmentsByMonth(selectedMonth, selectedYear);
+        });
+        
+         
+         
+         JPanel filterPanel = new JPanel();
+         filterPanel.setBounds(262, 236, 400, 30);
+         panel.add(filterPanel);
+         filterPanel.add(new JLabel("Month:"));
+         filterPanel.add(monthComboBox);
+         filterPanel.add(new JLabel("Year:"));
+         filterPanel.add(yearComboBox);
+         filterPanel.add(filterByMonthButton);
+
+        loadAppointments();
+        getCurrentDateTime() ;
     }
 
     // Method to get the current date and time with day and full month name
@@ -319,10 +337,6 @@ public class Appointments extends JFrame implements ActionListener{
 			dispose();
 			new LogInPage();
 		}
-		else if(e.getSource() == btnBookAppointment)
-		{
-			new AppointmentForm();
-		}
 		else if (e.getSource() == btnRefresh) {
 			dispose();
 			new Appointments();
@@ -338,23 +352,24 @@ public class Appointments extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() ==  btnViewAppointment)
 		{	  
-			 int selectedRow = table_2.getSelectedRow(); // Get the selected row index
-		        if (selectedRow != -1) { // Ensure a row is selected
-		            // Fetch data from the table using correct column indices
-		            String appointmentID = table_2.getValueAt(selectedRow, 0).toString(); // Column 0 for AppointmentID
-		            String name = table_2.getValueAt(selectedRow, 1).toString();          // Column 1 for Name
-		            String date = table_2.getValueAt(selectedRow, 2).toString();          // Column 2 for Date
-		            String time = table_2.getValueAt(selectedRow, 3).toString();          // Column 3 for Time
-		            String reason = table_2.getValueAt(selectedRow, 4).toString();        // Column 4 for Reason
-		            String phone = table_2.getValueAt(selectedRow, 5).toString();         // Column 5 for PhoneNumber
-		            String email = table_2.getValueAt(selectedRow, 6).toString();         // Column 6 for Email
-		            String status = table_2.getValueAt(selectedRow, 7).toString(); 
-		            // Pass the data to a new AppointmentRecord instance
-		            new AppointmentRecord(appointmentID, name, date, time, reason, phone, email,status);
+			 int selectedRow = table_2.getSelectedRow(); // Get selected row index
+		        if (selectedRow != -1) {
+		            // Fetch details from the table
+		            String appointmentID = table_2.getValueAt(selectedRow, 0).toString();
+		            String name = table_2.getValueAt(selectedRow, 1).toString();
+		            String date = table_2.getValueAt(selectedRow, 2).toString();
+		            String time = table_2.getValueAt(selectedRow, 3).toString();
+		            String reason = table_2.getValueAt(selectedRow, 4).toString();
+		            String phone = table_2.getValueAt(selectedRow, 5).toString();
+		            String email = table_2.getValueAt(selectedRow, 6).toString();
+		            String status = table_2.getValueAt(selectedRow, 7).toString();
+
+		            // Pass data to AppointmentRecord
+		            new AppointmentRecord(appointmentID, name, date, time, reason, phone, email, status);
 		        } else {
-		            JOptionPane.showMessageDialog(null, "Please select an appointment from the table.");
+		            JOptionPane.showMessageDialog(this, "Please select an appointment from the table.");
 		        }
-		}
+		    }
 
 		 else if (e.getSource() == Searchfield) { // Trigger search on Enter key in the text field
 		        String query = Searchfield.getText().trim();
@@ -366,51 +381,97 @@ public class Appointments extends JFrame implements ActionListener{
 		    }
 		
 	}
-	
-	private void loadAppointmentData() 
-	{
-		
+	private void loadAppointments() {
+	    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
+	    model.setRowCount(0); // Clear existing table data
+
+	    // Backend call to fetch all appointments
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    List<String[]> appointments = backend.getAppointment(); // Backend method to fetch all appointments
+
+	    // Populate the table with fetched data
+	    for (String[] appointment : appointments) {
+	        model.addRow(appointment);
+	    }
+	}
+
+	private void loadAppointments(String keyword, String sortBy, String sortOrder) {
 	    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
 	    model.setRowCount(0); // Clear existing data
-	   
+
 	    ApointmentForm_backend backend = new ApointmentForm_backend();
-	    List<String[]> appointmentData = backend.getAppointment();
-	    // Check if there is any data to display
-	    if (appointmentData.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "No patient data found.");
-	        return;
+	    List<String[]> appointments = backend.searchAppointments(keyword, sortBy, sortOrder);
+
+	    for (String[] appointment : appointments) {
+	        model.addRow(appointment);
 	    }
-	    // Loop through the list and add rows to the table
-	    for (String[] row : appointmentData) {
+
+	    if (appointments.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No appointments found for the given search and sort criteria.");
+	    }
+	}
+
+
+
+	
+	private void sortTable(String criterion) {
+	    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
+	    model.setRowCount(0); // Clear the table
+
+	    // Map sorting criterion to database column names
+	    String sortBy = switch (criterion) {
+	        case "Name" -> "Name";
+	        case "AppointmentDate" -> "AppointmentDate";
+	        case "Service" -> "Service";
+	        case "Status" -> "Status";
+	        default -> "Date"; // Default to Date
+	    };
+
+	    // Backend call to fetch sorted data
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    List<String[]> sortedData = backend.getAppointmentsSortedBy(sortBy);
+
+	    // Populate the table with sorted data
+	    for (String[] row : sortedData) {
 	        model.addRow(row);
 	    }
 	}
-	
-	   private void sortTable(String criterion) {
-	        DefaultTableModel model = (DefaultTableModel) table_2.getModel();
-	        model.setRowCount(0);
 
-	        ApointmentForm_backend backend = new ApointmentForm_backend();
-	        List<String[]> sortedData = backend.getAppointmentsSortedBy(criterion); // Add in backend
-	        for (String[] row : sortedData) {
-	            model.addRow(row);
-	        }
-	    }
+
 	   
-	   private void searchAppointments(String query) {
-		    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
-		    model.setRowCount(0); // Clear the table
+	private void searchAppointments(String query) {
+	    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
+	    model.setRowCount(0); // Clear table rows
 
-		    ApointmentForm_backend backend = new ApointmentForm_backend();
-		    List<String[]> searchResults = backend.searchAppointments(query); // Backend method for searching
-		    if (searchResults.isEmpty()) {
-		        JOptionPane.showMessageDialog(this, "No appointments found matching: " + query);
-		        return;
-		    }
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    List<String[]> searchResults = backend.searchAppointments(query);
 
-		    // Populate table with search results
-		    for (String[] row : searchResults) {
-		        model.addRow(row);
-		    }
-		}
+	    if (searchResults.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No results found for: " + query);
+	        return;
+	    }
+
+	    for (String[] row : searchResults) {
+	        model.addRow(row);
+	    }
+	}
+
+	private void filterAppointmentsByMonth(int month, int year) {
+	    DefaultTableModel model = (DefaultTableModel) table_2.getModel();
+	    model.setRowCount(0); // Clear existing data
+
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    List<String[]> appointments = backend.getAppointmentsByMonth(month, year);
+
+	    for (String[] appointment : appointments) {
+	        model.addRow(appointment);
+	    }
+
+	    if (appointments.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No appointments found for the selected month and year.");
+	    }
+	}
+
+
+
 }

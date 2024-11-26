@@ -30,7 +30,7 @@ import com.toedter.calendar.JDateChooser;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Toolkit;
-
+import backend.POS_backend;
 
 public class POS extends JFrame {
 
@@ -44,6 +44,7 @@ public class POS extends JFrame {
 	private JTextArea addedItemsArea;
 	private JComboBox<String> discountComboBox;
 	private JTextField Productprice;
+	private JSpinner Qtyspinner;
 
 	// Declare lists to store selected products and services
 	List<String> selectedProducts = new ArrayList<>();
@@ -76,6 +77,7 @@ public class POS extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+
 	public POS() {
 		setResizable(false);
 		setBackground(new Color(5, 59, 67));
@@ -150,7 +152,7 @@ public class POS extends JFrame {
 		ProductPanel.add(Productcombobox);
 		
 		
-		JSpinner Qtyspinner = new JSpinner();
+	    Qtyspinner = new JSpinner();
 		Qtyspinner.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		Qtyspinner.setBounds(61, 285, 101, 40);
 		Qtyspinner.setValue(1);  
@@ -220,10 +222,13 @@ public class POS extends JFrame {
 		                addedItemsArea.append(" Subtotal: ₱" + subtotal + "\n");
 		                addedItemsArea.append(" ---------------------------------\n");
 
-		                // Add the price to the list for calculations
+		                // Update the lists
+		                selectedProducts.add(selectedProduct); // Add product name
 		                for (int i = 0; i < quantity; i++) {
-		                    addedProductPrices.add(price);
+		                    addedProductPrices.add(price); // Add price multiple times for quantity
 		                }
+
+		                
 		            } catch (NumberFormatException ex) {
 		                JOptionPane.showMessageDialog(null, "Invalid price format!");
 		            }
@@ -232,6 +237,7 @@ public class POS extends JFrame {
 		        }
 		    }
 		});
+
 
 
 
@@ -314,24 +320,28 @@ public class POS extends JFrame {
 		        String servicePrice = textField.getText();
 
 		        if (!selectedService.isEmpty() && !servicePrice.isEmpty()) {
-		            double price = Double.parseDouble(servicePrice);
+		            try {
+		                double price = Double.parseDouble(servicePrice);
 
-		            // Append service details to the addedItemsArea
-		            addedItemsArea.append(" Service: " + selectedService + "\n");
-		            addedItemsArea.append(" Price: ₱" + price + "\n");
-		            addedItemsArea.append(" ---------------------------------\n");
+		                // Append service details to the addedItemsArea
+		                addedItemsArea.append(" Service: " + selectedService + "\n");
+		                addedItemsArea.append(" Price: ₱" + price + "\n");
+		                addedItemsArea.append(" ---------------------------------\n");
 
-		            // Store the service's price
-		            addedServicePrices.add(price);
+		                // Update the lists
+		                selectedServices.add(selectedService); // Add service name
+		                addedServicePrices.add(price); // Add service price
 
-		            // Don't update the subtotal until the TOTAL button is pressed
-		            subtotaltxtfield.setText("");  // Ensure it stays empty until TOTAL is clicked
-		            totaltxtfield.setText("");     // Ensure it stays empty until TOTAL is clicked
+		                
+		            } catch (NumberFormatException ex) {
+		                JOptionPane.showMessageDialog(null, "Invalid price format!");
+		            }
 		        } else {
 		            JOptionPane.showMessageDialog(null, "Please select a valid service!");
 		        }
 		    }
 		});
+
 
 		
 		JPanel ReceiptPanel = new JPanel();
@@ -359,7 +369,7 @@ public class POS extends JFrame {
 		            String total = totaltxtfield.getText().isEmpty() ? "0.00" : totaltxtfield.getText();
 		            String payment = textField_1.getText().isEmpty() ? "0.00" : textField_1.getText();
 		            String change = textField_2.getText().isEmpty() ? "0.00" : textField_2.getText();
-
+		            saveDataToBackend();
 		            // Check if the total is calculated
 		            if (total.equals("0.00")) {
 		                JOptionPane.showMessageDialog(null, "Please calculate the total and process payment before printing the receipt!");
@@ -417,7 +427,9 @@ public class POS extends JFrame {
 		                public void actionPerformed(ActionEvent evt) {
 		                    try {
 		                        // Print the JTextArea content
+		                    	
 		                        boolean printed = receiptArea.print();
+		                        
 		                        if (printed) {
 		                            JOptionPane.showMessageDialog(null, "Receipt printed successfully!");
 		                        } else {
@@ -430,6 +442,7 @@ public class POS extends JFrame {
 		            });
 		            receiptDialog.getContentPane().add(printButton, "South");
 
+		            
 		            receiptDialog.setVisible(true);
 		        } catch (NumberFormatException ex) {
 		            JOptionPane.showMessageDialog(null, "Invalid numbers detected. Please ensure all inputs are correct!");
@@ -463,7 +476,8 @@ public class POS extends JFrame {
 		            JOptionPane.YES_NO_OPTION
 		        );
 		        if (confirm == JOptionPane.YES_OPTION) {
-		            System.exit(0); // Exit the application
+		            dispose();
+		            new Dashboard();
 		        }
 		    }
 		});
@@ -722,5 +736,40 @@ public class POS extends JFrame {
 	            }
 	        });
 
+	}
+	private void saveDataToBackend() {
+	    try {
+	        // Collect and validate data
+	        String customerName = CustomerNametxtfield.getText();
+	        if (customerName.isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Customer name is required!");
+	            return;
+	        }
+	        
+	        String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+	        String selectedProductsStr = String.join(", ", selectedProducts); 
+	        String selectedServicesStr = String.join(", ", selectedServices);
+	        
+	        if (selectedProducts.isEmpty() && selectedServices.isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "No products or services added!");
+	            return;
+	        }
+	        
+	        double productPrice = addedProductPrices.stream().mapToDouble(Double::doubleValue).sum();
+	        double servicePrice = addedServicePrices.stream().mapToDouble(Double::doubleValue).sum();
+	        double total = Double.parseDouble(totaltxtfield.getText());
+	        int quantity = (int) Qtyspinner.getValue();
+	        
+	        double totalProductPrice = productPrice * quantity;
+	        // Save to backend
+	        
+	        POS_backend backend = new POS_backend(customerName, selectedProductsStr, selectedServicesStr, quantity,productPrice, servicePrice, totalProductPrice, date);
+	        
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(this, "Invalid number format in total!");
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Error sending data to backend: " + ex.getMessage());
+	    }
 	}
 }

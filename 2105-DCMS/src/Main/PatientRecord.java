@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -39,6 +40,7 @@ public class PatientRecord extends JFrame implements ActionListener{
 	private	JTextPane PIDtxtpane;
 	private	JTextPane Nametxtpane;
 	private JButton Deletebtn;
+	private JButton btnBookAppointment;
 	
 
 	/**
@@ -207,7 +209,7 @@ public class PatientRecord extends JFrame implements ActionListener{
         
 		HistoryscrollPane.setViewportView(PatientHistorytable);
 		
-		JLabel PatientHistorylbl = new JLabel("PATIENT HISTORY");
+		JLabel PatientHistorylbl = new JLabel("PATIENT SCHEDULE");
 		PatientHistorylbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		PatientHistorylbl.setBounds(17, 337, 244, 26);
 		panel.add(PatientHistorylbl);
@@ -221,6 +223,14 @@ public class PatientRecord extends JFrame implements ActionListener{
 		lblPatientId.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblPatientId.setBounds(106, 163, 178, 21);
 		panel.add(lblPatientId);
+		
+	    btnBookAppointment = new JButton("Book Appointment");
+		btnBookAppointment.addActionListener(this);
+		btnBookAppointment.setForeground(new Color(194, 192, 192));
+		btnBookAppointment.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnBookAppointment.setBackground(new Color(5, 59, 67));
+		btnBookAppointment.setBounds(27, 289, 234, 34);
+		panel.add(btnBookAppointment);
 		
 		Updatebtn.addActionListener(e -> {
 		    String patientID = PIDtxtpane.getText().trim();
@@ -269,8 +279,9 @@ public class PatientRecord extends JFrame implements ActionListener{
 
 	// Method to populate fields based on patient ID
 	private void populatePatientDetails(String patientID) {
-	    newPatient_Backend backend = new newPatient_Backend();
-	    String[] patientDetails = backend.getPatientByID(patientID);
+	    ApointmentForm_backend backend = new ApointmentForm_backend();
+	    newPatient_Backend patientBackend = new newPatient_Backend();
+	    String[] patientDetails = patientBackend.getPatientByID(patientID);
 
 	    if (patientDetails != null) {
 	        PIDtxtpane.setText(patientDetails[0]);      
@@ -281,6 +292,9 @@ public class PatientRecord extends JFrame implements ActionListener{
 	        EmailtextPane.setText(patientDetails[7]);   
 	        Addresstxtpane.setText(patientDetails[8]);  
 	        Contacttxtpane.setText(patientDetails[9]);  
+
+	        // Load patient history from the appointments backend
+	        loadPatientHistory(patientID, backend);
 	    } else {
 	        JOptionPane.showMessageDialog(this, "No patient data found for ID: " + patientID);
 	    }
@@ -308,6 +322,24 @@ public class PatientRecord extends JFrame implements ActionListener{
 	            deletePatient(patientID);
 	        }
 	    }
+	    else if(e.getSource() == btnBookAppointment)
+	    {
+	    
+	    	    if (e.getSource() == btnBookAppointment) {
+	    	        String fullName = Nametxtpane.getText().trim();
+	    	        String email = EmailtextPane.getText().trim();
+	    	        String phone = Contacttxtpane.getText().trim();
+
+	    	        // Split full name into components
+	    	        String[] nameParts = fullName.split(" ");
+	    	        String firstName = nameParts.length > 0 ? nameParts[0] : "";
+	    	        String middleInitial = nameParts.length > 1 ? nameParts[1] : "";
+	    	        String lastName = nameParts.length > 2 ? nameParts[2] : "";
+
+	    	        // Open the AppointmentForm with these details
+	    	        new AppointmentForm(firstName, middleInitial, lastName, email, phone);
+	    	    }
+	    }
 	}
 
 	private void deletePatient(String patientID) {
@@ -321,6 +353,24 @@ public class PatientRecord extends JFrame implements ActionListener{
 	        JOptionPane.showMessageDialog(this, "Failed to delete patient. Please try again.");
 	    }
 	}
+	
+	
+
+	private void loadPatientHistory(String patientID, ApointmentForm_backend backend) {
+	    DefaultTableModel model = (DefaultTableModel) PatientHistorytable.getModel();
+	    model.setRowCount(0); // Clear existing data
+
+	    List<String[]> historyData = backend.getPatientHistory(patientID);
+
+	    if (historyData.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "No history found for the selected patient.");
+	    } else {
+	        for (String[] record : historyData) {
+	            model.addRow(record);
+	        }
+	    }
+	}
+
 
 
 	

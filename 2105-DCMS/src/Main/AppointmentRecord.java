@@ -40,6 +40,7 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	private JButton btnUpdate;
 	 private String appointmentID;
 	private JButton btnDeleteButton;
+	private JButton addbuton;
 	
 	
 	/**
@@ -86,6 +87,19 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		panel.setBounds(0, 0, 436, 539);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+	    addbuton = new JButton("ADD");
+		addbuton.setForeground(new Color(194, 192, 192));
+		addbuton.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		addbuton.setBackground(new Color(5, 59, 67));
+		addbuton.setBounds(301, 489, 125, 40);
+		addbuton.addActionListener(this);
+		
+		JLabel lblStatus = new JLabel("STATUS:");
+		lblStatus.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblStatus.setBounds(51, 424, 327, 13);
+		panel.add(lblStatus);
+		panel.add(addbuton);
 		
 		JLabel ApptFormLabel = new JLabel("APPOINTMENT ");
 		ApptFormLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
@@ -166,26 +180,26 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		String[] Reason = {"Consultation", "Braces", "Crowns", "Bridges", "Cleaning", "Dentures", "Extraction", "Fillings", "Implants", "Root Canal", "Teeth Whitening", "Veneers", "X-Ray", "Pediatric Dentistry"};
 	    ReasoncomboBox = new JComboBox<>(Reason);
 		ReasoncomboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		ReasoncomboBox.setBounds(51, 408, 333, 27);
+		ReasoncomboBox.setBounds(51, 387, 333, 27);
 		panel.add(ReasoncomboBox);
 		
 		
-		String[] Status = {"In Progress", "Done"};
+		String[] Status = {"In Progress", "Done", "Cancelled"};
 		StatusBox = new JComboBox<>(Status);
 		StatusBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		StatusBox.setBounds(51, 435, 333, 27);
+		StatusBox.setBounds(51, 441, 333, 27);
 		panel.add(StatusBox);
 		
 		JLabel RsnBookingLabel = new JLabel("REASON OF YOUR BOOKING:");
 		RsnBookingLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		RsnBookingLabel.setBounds(51, 385, 327, 13);
+		RsnBookingLabel.setBounds(51, 366, 327, 13);
 		panel.add(RsnBookingLabel);
 		
 	    btnDeleteButton = new JButton("DELETE");
 	    btnDeleteButton.setForeground(new Color(194, 192, 192));
 	    btnDeleteButton.setBackground(new Color(5, 59, 67));
 	    btnDeleteButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
-	    btnDeleteButton.setBounds(71, 464, 125, 40);
+	    btnDeleteButton.setBounds(11, 489, 125, 40);
 	    btnDeleteButton.addActionListener(this);
 		panel.add(btnDeleteButton);
 		
@@ -193,7 +207,7 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		btnUpdate.setForeground(new Color(194, 192, 192));
 		btnUpdate.setBackground(new Color(5, 59, 67));
 		btnUpdate.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnUpdate.setBounds(234, 464, 125, 40);
+		btnUpdate.setBounds(152, 489, 125, 40);
 		btnUpdate.addActionListener(this);
 		panel.add(btnUpdate);
 		
@@ -202,91 +216,100 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		lblNewLabel.setBounds(0, 0, 436, 539);
 		panel.add(lblNewLabel);
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	    if (e.getActionCommand().equals("BOOK APPOINTMENT")) {
-	    	
-	    	String name = NameTxtField.getText();
-	    	String email = EmailTxtField.getText();
-	    	String PhoneNumber = CotactTxtField.getText();
-	    	String reason = (String) ReasoncomboBox.getSelectedItem();
-	    	SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-	    	String date = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()): "Not Selected";
-	        String hour = (String) hourComboBox.getSelectedItem();
-	        String minute = (String) minuteComboBox.getSelectedItem();
-	        String amPm = (String) amPmComboBox.getSelectedItem();
-	        String time = hour + ":" + minute + " " + amPm;
-	      
-		    int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this patient?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+	
 
-		    if (confirm == JOptionPane.YES_OPTION) {
-	        new ApointmentForm_backend(name,email,PhoneNumber,date,time,reason);
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		    if (e.getSource() == addbuton) {
+		        // Collect data from the form
+		        String fullName = NameTxtField.getText().trim();
+		        String[] nameParts = fullName.split(" "); // Split the name based on spaces
+
+		        String firstName = nameParts[0];  // First Name
+		        String middleInitial = nameParts.length > 1 ? nameParts[1] : "";  // Middle Initial
+		        String lastName = nameParts.length > 2 ? nameParts[2] : "";  // Last Name
+
+		        String email = EmailTxtField.getText().trim();
+		        String phone = CotactTxtField.getText().trim();
+		        String reason = (String) ReasoncomboBox.getSelectedItem();
+		        String status = (String) StatusBox.getSelectedItem();
+		        // Format the date
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("yy,MM,dd");
+		        String date = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()) : "Not Selected";
+
+		        // Format time
+		        String hour = (String) hourComboBox.getSelectedItem();
+		        String minute = (String) minuteComboBox.getSelectedItem();
+		        String amPm = (String) amPmComboBox.getSelectedItem();
+		        String time = hour + ":" + minute + " " + amPm;
+
+		        // Confirm before saving the data
+		        int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this appointment?", "Confirm Appointment", JOptionPane.YES_NO_OPTION);
+
+		        if (confirm == JOptionPane.YES_OPTION) {
+		            // Check if the patient already exists based on phone number or email
+		            newPatient_Backend patientBackend = new newPatient_Backend();
+		            String patientID = patientBackend.getPatientIDByContact(phone); // Or use email for lookup
+
+		            // If the patient doesn't exist, add a new patient
+		            if (patientID == null) {
+		                patientID = patientBackend.addNewPatient(firstName, middleInitial, lastName, email, phone);  // Save full patient data
+		            }
+
+		            // Add the appointment
+		            ApointmentForm_backend backend = new ApointmentForm_backend();
+		            boolean appointmentAdded = backend.addNewAppointment(patientID, date, time, reason,status);
+
+		            if (appointmentAdded) {
+		                JOptionPane.showMessageDialog(null, "Appointment booked successfully!");
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Failed to book the appointment. Please try again.");
+		            }
+		        }
 		    }
-		    
-	    }
-	    else if(e.getSource() == btnUpdate)
-	    {
-	    	
-	    	 int confirm = JOptionPane.showConfirmDialog(this, 
-	    	            "Are you sure you want to Ppdate this appointment?", 
-	    	            "Confirm Update", 
-	    	            JOptionPane.YES_NO_OPTION);
+		    // Handle update and delete
+		    else if (e.getSource() == btnUpdate) {
+		        updateAppointmentDetails();
+		    }
+		    else if (e.getSource() == btnDeleteButton) {
+		        deleteAppointment(appointmentID);
+		    }
+		}
 
-	    	        if (confirm == JOptionPane.YES_OPTION) {
-	    	            // Call deleteAppointment function with the current appointmentID
-	    	        	updateAppointmentDetails();
-	    	        }
-
-	        updateAppointmentDetails();
-
-	    }
-	    else if(e.getSource() == btnDeleteButton)
-	    {
-	    	 int confirm = JOptionPane.showConfirmDialog(this, 
-	    	            "Are you sure you want to delete this appointment?", 
-	    	            "Confirm Deletion", 
-	    	            JOptionPane.YES_NO_OPTION);
-
-	    	        if (confirm == JOptionPane.YES_OPTION) {
-	    	            // Call deleteAppointment function with the current appointmentID
-	    	            deleteAppointment(appointmentID);
-	    	        }
-	    	            
-	    }
-	}
 
 	 
 
 	
-	 private void populateAppointmentDetails(String name, String date, String time, 
-             String reason, String phone, String email, String status) {
-try {
-NameTxtField.setText(name);
-EmailTxtField.setText(email);
-CotactTxtField.setText(phone);
+		private void populateAppointmentDetails(String name, String date, String time, 
+	             String reason, String phone, String email, String status) {
+	    try {
+	        NameTxtField.setText(name); // This will be in the form "FirstName MiddleInitial LastName"
+	        EmailTxtField.setText(email);
+	        CotactTxtField.setText(phone);
 
-if (date != null && !date.isEmpty()) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adjust format as needed
-    dateChooser.setDate(dateFormat.parse(date));
-} else {
-    dateChooser.setDate(null); // Clear the field if date is empty
-}
+	        if (date != null && !date.isEmpty()) {
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adjust format as needed
+	            dateChooser.setDate(dateFormat.parse(date));
+	        } else {
+	            dateChooser.setDate(null); // Clear the field if date is empty
+	        }
 
-// Parse and set the time
-if (time != null && !time.isEmpty()) {
-    String[] timeParts = time.split(" ");
-    String[] hourMinute = timeParts[0].split(":");
-    hourComboBox.setSelectedItem(hourMinute[0]); // Hour
-    minuteComboBox.setSelectedItem(hourMinute[1]); // Minute
-    amPmComboBox.setSelectedItem(timeParts[1]); // AM/PM
-}
+	        // Parse and set the time
+	        if (time != null && !time.isEmpty()) {
+	            String[] timeParts = time.split(" ");
+	            String[] hourMinute = timeParts[0].split(":");
+	            hourComboBox.setSelectedItem(hourMinute[0]); // Hour
+	            minuteComboBox.setSelectedItem(hourMinute[1]); // Minute
+	            amPmComboBox.setSelectedItem(timeParts[1]); // AM/PM
+	        }
 
-ReasoncomboBox.setSelectedItem(reason);
-StatusBox.setSelectedItem(status);
-} catch (Exception e) {
-JOptionPane.showMessageDialog(this, "Error parsing appointment details: " + e.getMessage());
-}
-}
+	        ReasoncomboBox.setSelectedItem(reason);
+	        StatusBox.setSelectedItem(status);
+	    } catch (Exception e) {
+	        JOptionPane.showMessageDialog(this, "Error parsing appointment details: " + e.getMessage());
+	    }
+	}
+
 	
 	private void updateAppointmentDetails() {
 	    // Get updated data from fields
@@ -343,9 +366,4 @@ JOptionPane.showMessageDialog(this, "Error parsing appointment details: " + e.ge
 	        JOptionPane.showMessageDialog(this, "Failed to delete appointment. Please try again.");
 	    }
 	}
-	
-	
-
-	
-
 }

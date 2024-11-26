@@ -264,6 +264,48 @@ public class newPatient_Backend
 	    }
 	}
 	
-	
+	public String getPatientIDByContact(String contact) {
+	    String patientID = null;
+	    String query = "SELECT PatientID FROM patientdata WHERE ContactNumber = ?";
+	    try (Connection connection = dcmsConnection.getConnection();
+	         PreparedStatement ps = connection.prepareStatement(query)) {
+	        ps.setString(1, contact);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            patientID = rs.getString("PatientID");
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return patientID;
+	}
 
+	public String addNewPatient(String firstName, String middleInitial, String lastName, String email, String phone) {
+	    String query = "INSERT INTO patientdata (FirstName, MiddleInitial, LastName, Email, ContactNumber) VALUES (?, ?, ?, ?, ?)";
+	    try (Connection connection = dcmsConnection.getConnection();
+	         PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+	        
+	        ps.setString(1, firstName);
+	        ps.setString(2, middleInitial);
+	        ps.setString(3, lastName);
+	        ps.setString(4, email);
+	        ps.setString(5, phone);
+
+	        int rowsAffected = ps.executeUpdate();
+	        if (rowsAffected > 0) {
+	            ResultSet rs = ps.getGeneratedKeys();
+	            if (rs.next()) {
+	                return rs.getString(1);  // Returning the generated PatientID
+	            }
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return null;  // Return null if insertion fails
+	}
+
+
+
+
+	
 	}

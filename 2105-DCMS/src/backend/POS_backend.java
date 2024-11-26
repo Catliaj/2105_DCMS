@@ -15,9 +15,18 @@ public class POS_backend
 {
 	private String CustomerName,Products,Services;
 	private double   ProductPrice, ServicePrice,total;
+	private int productQuantity;
+	public int getProductQuantity() {
+		return productQuantity;
+	}
+	public void setProductQuantity(int productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+
+
 	DB_DCMSConnection dcmsConnection = new DB_DCMSConnection();
 	private Connection connection;
-	public POS_backend(String CustomerName, String Products, String Services,
+	public POS_backend(String CustomerName, String Products, String Services, int Quantity,
 			    	   double ProductPrice,double ServicePrice, double total,String date
 			          )
 	{
@@ -25,23 +34,27 @@ public class POS_backend
 		setProducts(Products);
 		setServices(Services);
 		setProductPrice(ProductPrice);
+		setProductQuantity(Quantity);
 		setServicePrice(ServicePrice);
 		setTotal(total);
 		
-        connection = dcmsConnection.getConnection();
+        
         // Insert into the database
-        try (Connection conn = connection) 
+        String sql = "INSERT INTO billdata ( customername, productname, productprice, quantity,servicename, serviceprice, total, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection connection = dcmsConnection.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) 
         {
-            String sql = "INSERT INTO billdata ( customername, productname, productprice, servicename, serviceprice, total, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            
           
             ps.setString(1, getCustomerName());
             ps.setString(2, getProducts());
             ps.setDouble(3, getProductPrice());
-            ps.setString(4, getServices());
-            ps.setDouble(5, getServicePrice());
-            ps.setDouble(6, getTotal());
-            ps.setDate(7, java.sql.Date.valueOf(date));
+            ps.setInt(4, getProductQuantity());
+            ps.setString(5, getServices());
+            ps.setDouble(6, getServicePrice());
+            ps.setDouble(7, getTotal());
+            ps.setDate(8, java.sql.Date.valueOf(date));
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) 
@@ -136,14 +149,14 @@ public class POS_backend
 	       {
 	            connection = dcmsConnection.getConnection();
 	            Statement statement = connection.createStatement();
-	            String query = "SELECT Bill_ID, ProductName, date,  date,ProductPrice,Total FROM billdata";
+	            String query = "SELECT Bill_ID, ProductName, date,  Quantity,ProductPrice,Total FROM billdata";
 	            ResultSet resultSet = statement.executeQuery(query);
 	            while (resultSet.next()) 
 	            {
 	                String billid = resultSet.getString("Bill_ID");
 	                String ProductName = resultSet.getString("ProductName");
 	                String date = resultSet.getString("date");
-	                String quantity = resultSet.getString("ProductName");
+	                String quantity = resultSet.getString("Quantity");
 	                String ProductPrice = resultSet.getString("ProductPrice");
 	                String total = resultSet.getString("Total");	                
 	                ProductPOS.add(new String[]{billid, ProductName, date, quantity,ProductPrice,total});
@@ -159,5 +172,6 @@ public class POS_backend
 	       }
 	        return ProductPOS;
 	   }
+	
 	
 }
