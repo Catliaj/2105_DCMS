@@ -20,8 +20,8 @@ public class ServiceSales extends JFrame implements ActionListener {
     private JButton btnRefresh;
     private JComboBox<String> sortComboBox;
     private JComboBox<String> monthComboBox; // For month filter
+    private JComboBox<String> yearComboBox; // For year filter
     private TableRowSorter<DefaultTableModel> sorter;
-    private JButton btnGenerateReport;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -116,11 +116,12 @@ public class ServiceSales extends JFrame implements ActionListener {
         monthComboBox.addActionListener(e -> filterTable());
         panel.add(monthComboBox);
 
-        btnGenerateReport = new JButton("GENERATE REPORT");
-        btnGenerateReport.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnGenerateReport.setBackground(new Color(194, 192, 192));
-        btnGenerateReport.setBounds(75, 546, 272, 45);
-        panel.add(btnGenerateReport);
+        // Year ComboBox
+        yearComboBox = new JComboBox<>(new String[] { "All" });
+        yearComboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        yearComboBox.setBounds(550, 75, 150, 25);
+        yearComboBox.addActionListener(e -> filterTable());
+        panel.add(yearComboBox);
 
         JLabel lblNewLabel_1 = new JLabel("");
         lblNewLabel_1.setIcon(new ImageIcon(ServiceSales.class.getResource("/Resources/Background (2).png")));
@@ -128,6 +129,7 @@ public class ServiceSales extends JFrame implements ActionListener {
         panel.add(lblNewLabel_1);
 
         loadServiceBillData();
+        loadYearsIntoComboBox();
     }
 
     @Override
@@ -158,24 +160,60 @@ public class ServiceSales extends JFrame implements ActionListener {
         }
     }
 
+    private void loadYearsIntoComboBox() {
+        POS_backend backend = new POS_backend();
+        List<String[]> serviceData = backend.getServiceBillData();
+        Set<String> years = new HashSet<>();
+
+        for (String[] row : serviceData) {
+            String date = row[2]; // Assuming date is in the 3rd column (index 2)
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate = dateFormat.parse(date);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(parsedDate);
+                years.add(String.valueOf(calendar.get(Calendar.YEAR)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Clear existing items and add "All" followed by sorted years
+        yearComboBox.removeAllItems();
+        yearComboBox.addItem("All");
+        years.stream().sorted().forEach(yearComboBox::addItem);
+    }
+
     private void filterTable() {
         String selectedMonth = (String) monthComboBox.getSelectedItem();
+        String selectedYear = (String) yearComboBox.getSelectedItem();
 
-        RowFilter<DefaultTableModel, Integer> monthFilter = null;
+        RowFilter<DefaultTableModel, Integer> combinedFilter = null;
 
-        // Create the month filter if a specific month is selected
-        if (selectedMonth != null && !"All".equals(selectedMonth)) {
-            monthFilter = new RowFilter<DefaultTableModel, Integer>() {
+        if ((selectedMonth != null && !"All".equals(selectedMonth)) || (selectedYear != null && !"All".equals(selectedYear))) {
+            combinedFilter = new RowFilter<DefaultTableModel, Integer>() {
                 @Override
                 public boolean include(Entry<? extends DefaultTableModel, ? extends Integer> entry) {
                     String date = entry.getStringValue(2); // Assuming the date column is at index 2
                     try {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adjust to your date format
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         Date parsedDate = dateFormat.parse(date);
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(parsedDate);
-                        String rowMonth = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
-                        return rowMonth.equals(selectedMonth);
+
+                        boolean matchesMonth = true;
+                        boolean matchesYear = true;
+
+                        if (selectedMonth != null && !"All".equals(selectedMonth)) {
+                            String rowMonth = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+                            matchesMonth = rowMonth.equals(selectedMonth);
+                        }
+
+                        if (selectedYear != null && !"All".equals(selectedYear)) {
+                            matchesYear = String.valueOf(calendar.get(Calendar.YEAR)).equals(selectedYear);
+                        }
+
+                        return matchesMonth && matchesYear;
                     } catch (Exception e) {
                         e.printStackTrace();
                         return false; // Exclude invalid dates
@@ -184,14 +222,8 @@ public class ServiceSales extends JFrame implements ActionListener {
             };
         }
 
-        // Reset the filters and apply the new filter
-        if (monthFilter != null) {
-            sorter.setRowFilter(monthFilter);
-        } else {
-            sorter.setRowFilter(null); // Show all rows if "All" is selected
-        }
+        sorter.setRowFilter(combinedFilter);
     }
-
 
     private void sortTable() {
         int columnIndex = sortComboBox.getSelectedIndex();

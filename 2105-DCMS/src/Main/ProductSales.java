@@ -1,31 +1,18 @@
 package Main;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import backend.POS_backend;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.RowFilter;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.*;
+
+import backend.POS_backend;
 
 public class ProductSales extends JFrame implements ActionListener {
 
@@ -36,8 +23,8 @@ public class ProductSales extends JFrame implements ActionListener {
     private JButton btnRefresh;
     private JComboBox<String> comboBoxFilter;
     private JComboBox<String> comboBoxSort;
+    private JComboBox<String> comboBoxYear;
     private TableRowSorter<DefaultTableModel> sorter;
-    private JButton btnGenerateReport;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -94,11 +81,6 @@ public class ProductSales extends JFrame implements ActionListener {
         btnBack.setBounds(883, 555, 175, 45);
         panel.add(btnBack);
 
-        JPanel panel_1 = new JPanel();
-        panel_1.setBackground(new Color(5, 59, 67));
-        panel_1.setBounds(77, 96, 981, 431);
-        panel.add(panel_1);
-
         btnRefresh = new JButton("REFRESH");
         btnRefresh.addActionListener(this);
         btnRefresh.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -106,14 +88,12 @@ public class ProductSales extends JFrame implements ActionListener {
         btnRefresh.setBounds(519, 555, 175, 45);
         panel.add(btnRefresh);
 
-        // Filter ComboBox
         comboBoxFilter = new JComboBox<>(new String[]{"All", "January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"});
         comboBoxFilter.setBounds(746, 67, 150, 30);
-        comboBoxFilter.addActionListener(e -> filterTableByMonth((String) comboBoxFilter.getSelectedItem()));
+        comboBoxFilter.addActionListener(e -> applyFilters());
         panel.add(comboBoxFilter);
 
-        // Sort ComboBox
         comboBoxSort = new JComboBox<>(new String[]{"Sort By", "Date Ascending", "Date Descending"});
         comboBoxSort.setBounds(906, 67, 150, 30);
         comboBoxSort.addActionListener(e -> {
@@ -126,11 +106,10 @@ public class ProductSales extends JFrame implements ActionListener {
         });
         panel.add(comboBoxSort);
 
-        btnGenerateReport = new JButton("GENERATE REPORT");
-        btnGenerateReport.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        btnGenerateReport.setBackground(new Color(194, 192, 192));
-        btnGenerateReport.setBounds(77, 555, 271, 45);
-        panel.add(btnGenerateReport);
+        comboBoxYear = new JComboBox<>(new String[]{"All"});
+        comboBoxYear.setBounds(586, 67, 150, 30);
+        comboBoxYear.addActionListener(e -> applyFilters());
+        panel.add(comboBoxYear);
 
         JLabel lblNewLabel_1 = new JLabel("");
         lblNewLabel_1.setIcon(new ImageIcon(ProductSales.class.getResource("/Resources/Background (2).png")));
@@ -138,6 +117,7 @@ public class ProductSales extends JFrame implements ActionListener {
         panel.add(lblNewLabel_1);
 
         loadProductBillData();
+        populateYearComboBox();
         addSortingCapability();
     }
 
@@ -154,36 +134,78 @@ public class ProductSales extends JFrame implements ActionListener {
 
     private void loadProductBillData() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0); // Clear existing data
+        model.setRowCount(0);
 
         POS_backend backend = new POS_backend();
-        List<String[]> ProductBillData = backend.getProductBillData();
+        List<String[]> productBillData = backend.getProductBillData();
 
-        if (ProductBillData.isEmpty()) {
+        if (productBillData.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No product data found.");
             return;
         }
 
-        for (String[] row : ProductBillData) {
+        for (String[] row : productBillData) {
             model.addRow(row);
         }
     }
 
-    private void filterTableByMonth(String selectedMonth) {
-        RowFilter<DefaultTableModel, Integer> monthFilter = null;
+    private void populateYearComboBox() {
+        Set<String> years = new HashSet<>();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-        if (selectedMonth != null && !"All".equals(selectedMonth)) {
-            monthFilter = new RowFilter<DefaultTableModel, Integer>() {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String date = (String) model.getValueAt(i, 2);
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate = dateFormat.parse(date);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(parsedDate);
+                years.add(String.valueOf(calendar.get(Calendar.YEAR)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        List<String> sortedYears = new ArrayList<>(years);
+        sortedYears.sort(Comparator.naturalOrder());
+
+        for (String year : sortedYears) {
+            comboBoxYear.addItem(year);
+        }
+    }
+
+    private void applyFilters() {
+        String selectedMonth = (String) comboBoxFilter.getSelectedItem();
+        String selectedYear = (String) comboBoxYear.getSelectedItem();
+
+        RowFilter<DefaultTableModel, Integer> combinedFilter = null;
+
+        if ((selectedMonth != null && !"All".equals(selectedMonth)) ||
+                (selectedYear != null && !"All".equals(selectedYear))) {
+            combinedFilter = new RowFilter<DefaultTableModel, Integer>() {
                 @Override
                 public boolean include(Entry<? extends DefaultTableModel, ? extends Integer> entry) {
-                    String date = entry.getStringValue(2); // Assuming the "DATE" column is at index 2
+                    String date = entry.getStringValue(2);
                     try {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         Date parsedDate = dateFormat.parse(date);
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(parsedDate);
-                        String rowMonth = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
-                        return rowMonth.equals(selectedMonth);
+
+                        boolean matchesMonth = true;
+                        boolean matchesYear = true;
+
+                        if (selectedMonth != null && !"All".equals(selectedMonth)) {
+                            String rowMonth = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+                            matchesMonth = rowMonth.equals(selectedMonth);
+                        }
+
+                        if (selectedYear != null && !"All".equals(selectedYear)) {
+                            int rowYear = calendar.get(Calendar.YEAR);
+                            matchesYear = String.valueOf(rowYear).equals(selectedYear);
+                        }
+
+                        return matchesMonth && matchesYear;
                     } catch (Exception e) {
                         e.printStackTrace();
                         return false;
@@ -192,11 +214,7 @@ public class ProductSales extends JFrame implements ActionListener {
             };
         }
 
-        if (monthFilter != null) {
-            sorter.setRowFilter(monthFilter);
-        } else {
-            sorter.setRowFilter(null);
-        }
+        sorter.setRowFilter(combinedFilter);
     }
 
     private void addSortingCapability() {
