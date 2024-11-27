@@ -236,30 +236,29 @@ populateAppointmentDetails(name, date, time, reason, phone, email, status);
 		        String phone = CotactTxtField.getText().trim();
 		        String reason = (String) ReasoncomboBox.getSelectedItem();
 		        String status = (String) StatusBox.getSelectedItem();
-		        // Format the date
+		       
 		        SimpleDateFormat dateFormat = new SimpleDateFormat("yy,MM,dd");
 		        String date = (dateChooser.getDate() != null) ? dateFormat.format(dateChooser.getDate()) : "Not Selected";
 
-		        // Format time
 		        String hour = (String) hourComboBox.getSelectedItem();
 		        String minute = (String) minuteComboBox.getSelectedItem();
 		        String amPm = (String) amPmComboBox.getSelectedItem();
 		        String time = hour + ":" + minute + " " + amPm;
 
-		        // Confirm before saving the data
+		        
 		        int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this appointment?", "Confirm Appointment", JOptionPane.YES_NO_OPTION);
 
 		        if (confirm == JOptionPane.YES_OPTION) {
-		            // Check if the patient already exists based on phone number or email
+		           
 		            newPatient_Backend patientBackend = new newPatient_Backend();
-		            String patientID = patientBackend.getPatientIDByContact(phone); // Or use email for lookup
+		            String patientID = patientBackend.getPatientIDByContact(phone); 
 
-		            // If the patient doesn't exist, add a new patient
+		           
 		            if (patientID == null) {
-		                patientID = patientBackend.addNewPatient(firstName, middleInitial, lastName, email, phone);  // Save full patient data
+		                patientID = patientBackend.addNewPatient(firstName, middleInitial, lastName, email, phone);  
 		            }
 
-		            // Add the appointment
+		            
 		            ApointmentForm_backend backend = new ApointmentForm_backend();
 		            boolean appointmentAdded = backend.addNewAppointment(patientID, date, time, reason,status);
 

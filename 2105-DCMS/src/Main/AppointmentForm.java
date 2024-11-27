@@ -36,8 +36,6 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	private JComboBox<String> minuteComboBox;
 	private JComboBox<String> amPmComboBox;
 	private JComboBox<String> ReasoncomboBox;
-	
-	
 	/**
 	 * Launch the application.
 	 */
@@ -190,11 +188,11 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	    if (e.getActionCommand().equals("BOOK APPOINTMENT")) {
 	        // Collect data from the form
 	        String fullName = NameTxtField.getText().trim();
-	        String[] nameParts = fullName.split(" "); // Split the name based on spaces
+	        String[] nameParts = fullName.split(" "); 
 
-	        String firstName = nameParts[0];  // First Name
-	        String middleInitial = nameParts.length > 1 ? nameParts[1] : "";  // Middle Initial
-	        String lastName = nameParts.length > 2 ? nameParts[2] : "";  // Last Name
+	        String firstName = nameParts[0];  
+	        String middleInitial = nameParts.length > 1 ? nameParts[1] : "";  
+	        String lastName = nameParts.length > 2 ? nameParts[2] : "";  
 
 	        String email = EmailTxtField.getText().trim();
 	        String phone = CotactTxtField.getText().trim();
@@ -210,20 +208,18 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	        String amPm = (String) amPmComboBox.getSelectedItem();
 	        String time = hour + ":" + minute + " " + amPm;
 
-	        // Confirm before saving the data
+	      
 	        int confirm = JOptionPane.showConfirmDialog(null, "Do you want to book this appointment?", "Confirm Appointment", JOptionPane.YES_NO_OPTION);
 
 	        if (confirm == JOptionPane.YES_OPTION) {
-	            // Check if the patient already exists based on phone number or email
+	            
 	            newPatient_Backend patientBackend = new newPatient_Backend();
-	            String patientID = patientBackend.getPatientIDByContact(phone); // Or use email for lookup
+	            String patientID = patientBackend.getPatientIDByContact(phone);
 
-	            // If the patient doesn't exist, add a new patient
+	           
 	            if (patientID == null) {
-	                patientID = patientBackend.addNewPatient(firstName, middleInitial, lastName, email, phone);  // Save full patient data
+	                patientID = patientBackend.addNewPatient(firstName, middleInitial, lastName, email, phone);  
 	            }
-
-	            // Add the appointment
 	            ApointmentForm_backend backend = new ApointmentForm_backend();
 	            String status = "In Progress";
 	            boolean appointmentAdded = backend.addNewAppointment(patientID, date, time,reason ,status);
@@ -235,11 +231,5 @@ public class AppointmentForm extends JFrame implements ActionListener{
 	            }
 	        }
 	    }
-	    
-	
 	}
-
-	
-	
-
 }

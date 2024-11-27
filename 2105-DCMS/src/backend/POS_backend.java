@@ -39,7 +39,7 @@ public class POS_backend
 		setTotal(total);
 		
         
-        // Insert into the database
+        
         String sql = "INSERT INTO billdata ( customername, productname, productprice, quantity,servicename, serviceprice, total, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection connection = dcmsConnection.getConnection();
@@ -173,5 +173,24 @@ public class POS_backend
 	        return ProductPOS;
 	   }
 	
+	public List<String[]> fetchProducts() {
+	    List<String[]> products = new ArrayList<>();
+	    try (Connection connection = dcmsConnection.getConnection();
+	         Statement statement = connection.createStatement()) {
+	        String query = "SELECT ProductName, Price FROM products";
+	        ResultSet resultSet = statement.executeQuery(query);
+
+	        while (resultSet.next()) {
+	            String name = resultSet.getString("ProductName");
+	            String price = resultSet.getString("Price");
+	            products.add(new String[]{name, price});
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Error fetching products: " + ex.getMessage());
+	    }
+	    return products;
+	}
+
 	
 }

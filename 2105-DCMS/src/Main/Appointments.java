@@ -275,25 +275,6 @@ public class Appointments extends JFrame implements ActionListener{
         lblNewLabel_1.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/Background (2).png")));
         lblNewLabel_1.setBounds(0, 71, 1286, 743);
         panel.add(lblNewLabel_1);
-        JComboBox<String> monthComboBox = new JComboBox<>(new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
-        JComboBox<Integer> yearComboBox = new JComboBox<>(new Integer[]{2023, 2024, 2025});
-        int selectedMonth = monthComboBox.getSelectedIndex() + 1; // Convert to 1-based index for SQL
-        int selectedYear = (int) yearComboBox.getSelectedItem();
-        JButton filterByMonthButton = new JButton("Filter by Month");
-        filterByMonthButton.addActionListener(e -> {
-            filterAppointmentsByMonth(selectedMonth, selectedYear);
-        });
-        
-         
-         
-         JPanel filterPanel = new JPanel();
-         filterPanel.setBounds(262, 236, 400, 30);
-         panel.add(filterPanel);
-         filterPanel.add(new JLabel("Month:"));
-         filterPanel.add(monthComboBox);
-         filterPanel.add(new JLabel("Year:"));
-         filterPanel.add(yearComboBox);
-         filterPanel.add(filterByMonthButton);
          
 
 

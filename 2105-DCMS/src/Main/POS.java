@@ -52,6 +52,8 @@ public class POS extends JFrame {
 	List<Double> productPrices = new ArrayList<>();
 	List<String> selectedServices = new ArrayList<>();
 	List<Double> servicePrices = new ArrayList<>();
+	private Map<String, Double> productPricesMap = new HashMap<>();
+	JComboBox<String> Productcombobox;
 	// Declare lists to store prices of products and services
 	List<Double> addedProductPrices = new ArrayList<>();
 	List<Double> addedServicePrices = new ArrayList<>();
@@ -145,10 +147,19 @@ public class POS extends JFrame {
 		ProductPanel.add(Productslbl);
 
 		
-		JComboBox<String> Productcombobox = new JComboBox<>(new String[] {
-		"", "Colgate Optic White", "Oral-B Pro Health", "Oral-B Toothbrush", "Colgate Plax Mouthwash", "Oral-B Floss Sticks", "Colgate Optic White Teeth Whitening Pen", "Colgate Kids Toothpaste", "Oral-B Pro 1000 Electric Toothbrush"});
+		Productcombobox = new JComboBox<>();
 		Productcombobox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		Productcombobox.setBounds(61, 154, 276, 40);
+		 Productcombobox.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		            String selectedProduct = (String) Productcombobox.getSelectedItem();
+		            if (selectedProduct != null && productPricesMap.containsKey(selectedProduct)) {
+		                Productprice.setText(String.valueOf(productPricesMap.get(selectedProduct)));
+		            }
+		        }
+		    });
+
+		  
 		ProductPanel.add(Productcombobox);
 		
 		
@@ -735,7 +746,9 @@ public class POS extends JFrame {
 	                }
 	            }
 	        });
-
+	       
+	        populateProductComboBox();
+	        
 	}
 	private void saveDataToBackend() {
 	    try {
@@ -772,4 +785,21 @@ public class POS extends JFrame {
 	        JOptionPane.showMessageDialog(this, "Error sending data to backend: " + ex.getMessage());
 	    }
 	}
+	
+	private void populateProductComboBox() {
+	    POS_backend backend = new POS_backend();
+	    List<String[]> products = backend.fetchProducts();
+
+	    for (String[] product : products) {
+	        String name = product[0];
+	        double price = Double.parseDouble(product[1]);
+	        productPricesMap.put(name, price);
+	        Productcombobox.addItem(name); // Add product names to the combo box
+	    }
+	}
+
+	
+
+
 }
+

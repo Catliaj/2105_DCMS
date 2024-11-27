@@ -135,7 +135,7 @@ public class ApointmentForm_backend extends newPatient_Backend
 	        while (resultSet.next()) {
 	            String appointmentid = resultSet.getString("AppointmentID");
 	            String name = resultSet.getString("Name");
-	            String date = resultSet.getString("Date");  // This will now reference the correct column
+	            String date = resultSet.getString("Date");  
 	            String time = resultSet.getString("Time");
 	            String reason = resultSet.getString("Service");
 	            String contactNumber = resultSet.getString("ContactNumber");
@@ -170,14 +170,14 @@ public class ApointmentForm_backend extends newPatient_Backend
 	            dbColumn = "p.FirstName, p.LastName";
 	            break;
 	        case "DATE":
-	            dbColumn = "a.AppointmentDate"; // Correct column name
+	            dbColumn = "a.AppointmentDate"; 
 	            break;
 	        case "STATUS":
 	        	dbColumn = "a.Status";
 	        case "SERVICE":
 	        	dbColumn = "a.Service";
 	        default:
-	            dbColumn = "a.AppointmentID"; // Default sorting by AppointmentID
+	            dbColumn = "a.AppointmentID"; 
 	    }
 
 	    String query = "SELECT a.AppointmentID, CONCAT(p.FirstName, ' ', p.LastName) AS Name, " +
@@ -261,9 +261,9 @@ public class ApointmentForm_backend extends newPatient_Backend
 	         PreparedStatement ps = connection.prepareStatement(query)) {
 
 	        String searchKeyword = "%" + keyword + "%";
-	        ps.setString(1, searchKeyword); // For AppointmentDate
-	        ps.setString(2, searchKeyword); // For FirstName
-	        ps.setString(3, searchKeyword); // For LastName
+	        ps.setString(1, searchKeyword); 
+	        ps.setString(2, searchKeyword); 
+	        ps.setString(3, searchKeyword); 
 
 	        ResultSet rs = ps.executeQuery();
 
@@ -332,13 +332,13 @@ public class ApointmentForm_backend extends newPatient_Backend
 		    try {
 		        connection = dcmsConnection.getConnection();
 		        PreparedStatement ps = connection.prepareStatement(query);
-		        ps.setString(1, appointmentID); // Set the AppointmentID in the query
+		        ps.setString(1, appointmentID);
 
 		        int rowsAffected = ps.executeUpdate();
 		        ps.close();
 		        connection.close();
 
-		        return rowsAffected > 0; // Return true if the deletion was successful
+		        return rowsAffected > 0; 
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		        JOptionPane.showMessageDialog(null, "Error deleting appointment: " + e.getMessage());
@@ -349,10 +349,10 @@ public class ApointmentForm_backend extends newPatient_Backend
 	 public List<String[]> getTodaysAppointments() {
 		    List<String[]> todaysAppointments = new ArrayList<>();
 		    try {
-		        // Establish connection to the database
+		       
 		        connection = dcmsConnection.getConnection();
 		        
-		        // SQL query to fetch today's appointments
+		        
 		        String query = "SELECT AppointmentID, AppointmentDate, Time, Service, Status FROM appointments WHERE DATE(AppointmentDate) = CURDATE()";  // Filters today's date
 
 		        PreparedStatement ps = connection.prepareStatement(query);
