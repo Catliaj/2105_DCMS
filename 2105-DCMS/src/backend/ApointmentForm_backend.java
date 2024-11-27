@@ -172,6 +172,10 @@ public class ApointmentForm_backend extends newPatient_Backend
 	        case "DATE":
 	            dbColumn = "a.AppointmentDate"; // Correct column name
 	            break;
+	        case "STATUS":
+	        	dbColumn = "a.Status";
+	        case "SERVICE":
+	        	dbColumn = "a.Service";
 	        default:
 	            dbColumn = "a.AppointmentID"; // Default sorting by AppointmentID
 	    }
@@ -205,6 +209,8 @@ public class ApointmentForm_backend extends newPatient_Backend
 
 	    return sortedAppointments;
 	}
+
+
 
 
 
@@ -492,11 +498,33 @@ public class ApointmentForm_backend extends newPatient_Backend
 
 
 
+	    public boolean updateAppointment(String appointmentID, String date, String time, String reason, String status) {
+	        String query = "UPDATE appointments SET AppointmentDate = ?, Time = ?, Service = ?, Status = ? WHERE AppointmentID = ?";
+	        try (Connection connection = dcmsConnection.getConnection();
+	             PreparedStatement ps = connection.prepareStatement(query)) {
+
+	            ps.setString(1, date);        // AppointmentDate
+	            ps.setString(2, time);        // Time
+	            ps.setString(3, reason);      // Service/Reason
+	            ps.setString(4, status);      // Status
+	            ps.setString(5, appointmentID); // AppointmentID
+
+	            int rowsAffected = ps.executeUpdate();
+	            return rowsAffected > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            JOptionPane.showMessageDialog(null, "Error updating appointment: " + e.getMessage());
+	            return false;
+	        }
+	    }
 
 
 
 
-	    
+
+
+
+	   
 
 	    
 

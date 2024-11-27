@@ -62,12 +62,13 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	ApointmentForm_backend backend =new ApointmentForm_backend();
-    public AppointmentRecord(String appointmentID, String name, String date, String time, 
+	public AppointmentRecord(String appointmentID, String name, String date, String time, 
             String reason, String phone, String email, String status) {
-    	this(); // Call default constructor to set up UI
-	this.appointmentID = appointmentID; // Set appointment ID
-	populateAppointmentDetails(name, date, time, reason, phone, email, status);
+this(); // Call default constructor
+this.appointmentID = appointmentID; // Set the ID
+populateAppointmentDetails(name, date, time, reason, phone, email, status);
 }
+
 	
 	public AppointmentRecord() {
 		setResizable(false);
@@ -107,6 +108,7 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		panel.add(ApptFormLabel);
 		
 		NameTxtField = new JTextField();
+		NameTxtField.setEditable(false);
 		NameTxtField.setBounds(51, 114, 333, 27);
 		panel.add(NameTxtField);
 		NameTxtField.setColumns(10);
@@ -117,6 +119,7 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		panel.add(NameLabel);
 		
 		EmailTxtField = new JTextField();
+		EmailTxtField.setEditable(false);
 		EmailTxtField.setColumns(10);
 		EmailTxtField.setBounds(51, 187, 333, 27);
 		panel.add(EmailTxtField);
@@ -272,7 +275,11 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 		        updateAppointmentDetails();
 		    }
 		    else if (e.getSource() == btnDeleteButton) {
+		    	  int confirm = JOptionPane.showConfirmDialog(null, "Do you want to Delete this appointment?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+
+			        if (confirm == JOptionPane.YES_OPTION) {
 		        deleteAppointment(appointmentID);
+			        }
 		    }
 		}
 
@@ -311,49 +318,29 @@ public class AppointmentRecord extends JFrame implements ActionListener{
 	}
 
 	
-	private void updateAppointmentDetails() {
-	    // Get updated data from fields
-	    String name = NameTxtField.getText().trim();
-	    String email = EmailTxtField.getText().trim();
-	    String phoneNumber = CotactTxtField.getText().trim();
-	    String reason = (String) ReasoncomboBox.getSelectedItem();
-	    String status = (String) StatusBox.getSelectedItem();
-	    
-	    // Format date
-	    String date = "";
-	    try {
-	        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-	        date = dateFormat.format(dateChooser.getDate());
-	    } catch (Exception e) {
-	        JOptionPane.showMessageDialog(this, "Please select a valid date.");
-	        return;
-	    }
+		private void updateAppointmentDetails() {
+		    // Collect updated data from fields
+		    String reason = (String) ReasoncomboBox.getSelectedItem();
+		    String status = (String) StatusBox.getSelectedItem();
 
-	    // Format time
-	    String hour = (String) hourComboBox.getSelectedItem();
-	    String minute = (String) minuteComboBox.getSelectedItem();
-	    String amPm = (String) amPmComboBox.getSelectedItem();
-	    String time = hour + ":" + minute + " " + amPm;
+		    // Format date and time
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    String date = dateFormat.format(dateChooser.getDate());
+		    String time = hourComboBox.getSelectedItem() + ":" + minuteComboBox.getSelectedItem() + " " + amPmComboBox.getSelectedItem();
 
-	    // Validate input fields
-	    if (name.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || reason.isEmpty() || date.isEmpty() || time.isEmpty() || status.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "All fields are required.");
-	        return;
-	    }
+		    // Update in backend
+		    ApointmentForm_backend backend = new ApointmentForm_backend();
+		    boolean isUpdated = backend.updateAppointment(appointmentID, date, time, reason, status);
 
-	    // Update in the backend
-	    ApointmentForm_backend backend = new ApointmentForm_backend();
-	    
-	    
-     boolean isUpdated = backend.updateAppointment(appointmentID, name, email, phoneNumber, date, time, reason,status);
+		    if (isUpdated) {
+		        JOptionPane.showMessageDialog(this, "Appointment updated successfully!");
+		        dispose();
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Failed to update appointment. Please try again.");
+		    }
+		}
 
-	    if (isUpdated) {
-	        JOptionPane.showMessageDialog(this, "Appointment updated successfully!");
-	        dispose(); // Close the form
-	    } else {
-	        JOptionPane.showMessageDialog(this, "Failed to update appointment. Please try again.");
-	    }
-	}
+
 
 	private void deleteAppointment(String appointmentID) {
 	    ApointmentForm_backend backend = new ApointmentForm_backend();

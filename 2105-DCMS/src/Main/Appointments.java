@@ -1,6 +1,7 @@
 package Main;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +23,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
+import java.util.Calendar;
 import backend.ApointmentForm_backend;
 import javax.swing.border.BevelBorder;
 import javax.swing.JComboBox;
+import com.toedter.calendar.JDateChooser;
 
 public class Appointments extends JFrame implements ActionListener{
 
@@ -251,7 +253,7 @@ public class Appointments extends JFrame implements ActionListener{
         panel_2.add(lblNewLabel_6);
         lblNewLabel_6.setIcon(new ImageIcon(Appointments.class.getResource("/Resources/people.png")));
         
-        JComboBox<String> SortcomboBox = new JComboBox<>(new String[]{"Name", "Date", "Reason", "Status"});
+        JComboBox<String> SortcomboBox = new JComboBox<>(new String[]{"ID","Name", "Date"});
 
         SortcomboBox.setBackground(new Color(194, 192, 192));
         SortcomboBox.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -292,9 +294,11 @@ public class Appointments extends JFrame implements ActionListener{
          filterPanel.add(new JLabel("Year:"));
          filterPanel.add(yearComboBox);
          filterPanel.add(filterByMonthButton);
+         
+
 
         loadAppointments();
-        getCurrentDateTime() ;
+       
     }
 
     // Method to get the current date and time with day and full month name
@@ -422,7 +426,8 @@ public class Appointments extends JFrame implements ActionListener{
 	    String sortBy = switch (criterion) {
 	        case "Name" -> "Name";
 	        case "AppointmentDate" -> "AppointmentDate";
-	        case "Service" -> "Service";
+	        case "ID"  -> "AppointmentID"; 
+	        case "Reason" -> "Service";
 	        case "Status" -> "Status";
 	        default -> "Date"; // Default to Date
 	    };
@@ -472,6 +477,7 @@ public class Appointments extends JFrame implements ActionListener{
 	    }
 	}
 
+	
 
 
 }

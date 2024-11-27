@@ -306,6 +306,27 @@ public class newPatient_Backend
 
 
 
+    public boolean updatePatientDetails(String patientID, String firstName, String middleName, String lastName, String email, String phoneNumber) {
+        String query = "UPDATE patientdata SET FirstName = ?, MiddleInitial = ?, LastName = ?, Email = ?, ContactNumber = ? WHERE PatientID = ?";
+        try (Connection connection = dcmsConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, firstName);
+            ps.setString(2, middleName);
+            ps.setString(3, lastName);
+            ps.setString(4, email);
+            ps.setString(5, phoneNumber);
+            ps.setString(6, patientID);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0; // Return true if update was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error updating patient details: " + e.getMessage());
+            return false;
+        }
+    }
+
 
 	
 	}
