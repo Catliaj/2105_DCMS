@@ -233,67 +233,76 @@ public class ProductAdmin extends JFrame {
 		btnAdd.setBounds(8, 10, 117, 31);
 		panel_6.add(btnAdd);
 		btnAdd.setBackground(new Color(203, 201, 201));
+		
 		btnAdd.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        // Get input data
-		        String productName = textFieldProdName.getText();
-		        String price = textFieldPrice.getText();
-		        String quantity = textField_4.getText();
+		        // Show confirmation dialog
+		        int confirm = JOptionPane.showConfirmDialog(null, 
+		            "Do you want to add this product?", 
+		            "Confirm Add", 
+		            JOptionPane.YES_NO_OPTION);
 
-		        // Validate input fields
-		        if (productName.isEmpty() || price.isEmpty() || quantity.isEmpty() || lblIMAGE.getIcon() == null) {
-		            JOptionPane.showMessageDialog(null, "Please fill all fields and upload an image!");
-		            return;
-		        }
+		        // Check user's response
+		        if (confirm == JOptionPane.YES_OPTION) {
+		            // Get input data
+		            String productName = textFieldProdName.getText();
+		            String price = textFieldPrice.getText();
+		            String quantity = textField_4.getText();
 
-		        // Convert ImageIcon to byte array
-		        byte[] imageBytes = null;
-		        try {
-		            Image image = ((ImageIcon) lblIMAGE.getIcon()).getImage();
-		            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-		            Graphics2D g2d = bufferedImage.createGraphics();
-		            g2d.drawImage(image, 0, 0, null);
-		            g2d.dispose();
-
-		            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		            ImageIO.write(bufferedImage, "jpg", baos);
-		            imageBytes = baos.toByteArray();
-		        } catch (IOException ex) {
-		            ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Error converting image: " + ex.getMessage());
-		            return;
-		        }
-
-		        // Insert into the database
-		        String query = "INSERT INTO products (ProductName, Price, Quantity, Image) VALUES (?, ?, ?, ?)";
-		        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "root", "");
-		             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-		            preparedStatement.setString(1, productName);
-		            preparedStatement.setDouble(2, Double.parseDouble(price));
-		            preparedStatement.setInt(3, Integer.parseInt(quantity));
-		            preparedStatement.setBytes(4, imageBytes);
-
-		            int rowsInserted = preparedStatement.executeUpdate();
-		            if (rowsInserted > 0) {
-		                JOptionPane.showMessageDialog(null, "Product added successfully!");
-		                textFieldProdName.setText("");
-		                textFieldPrice.setText("");
-		                textField_4.setText("");
-		                lblIMAGE.setIcon(null);
-		                
-		            } else {
-		                JOptionPane.showMessageDialog(null, "Error adding the product.");
+		            // Validate input fields
+		            if (productName.isEmpty() || price.isEmpty() || quantity.isEmpty() || lblIMAGE.getIcon() == null) {
+		                JOptionPane.showMessageDialog(null, "Please fill all fields and upload an image!");
+		                return;
 		            }
-		        } catch (Exception ex) {
-		            ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+
+		            // Convert ImageIcon to byte array
+		            byte[] imageBytes = null;
+		            try {
+		                Image image = ((ImageIcon) lblIMAGE.getIcon()).getImage();
+		                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		                Graphics2D g2d = bufferedImage.createGraphics();
+		                g2d.drawImage(image, 0, 0, null);
+		                g2d.dispose();
+
+		                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		                ImageIO.write(bufferedImage, "jpg", baos);
+		                imageBytes = baos.toByteArray();
+		            } catch (IOException ex) {
+		                ex.printStackTrace();
+		                JOptionPane.showMessageDialog(null, "Error converting image: " + ex.getMessage());
+		                return;
+		            }
+
+		            // Insert into the database
+		            String query = "INSERT INTO products (ProductName, Price, Quantity, Image) VALUES (?, ?, ?, ?)";
+		            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "root", "");
+		                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+		                preparedStatement.setString(1, productName);
+		                preparedStatement.setDouble(2, Double.parseDouble(price));
+		                preparedStatement.setInt(3, Integer.parseInt(quantity));
+		                preparedStatement.setBytes(4, imageBytes);
+
+		                int rowsInserted = preparedStatement.executeUpdate();
+		                if (rowsInserted > 0) {
+		                    JOptionPane.showMessageDialog(null, "Product added successfully!");
+		                    textFieldProdName.setText("");
+		                    textFieldPrice.setText("");
+		                    textField_4.setText("");
+		                    lblIMAGE.setIcon(null);
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Error adding the product.");
+		                }
+		            } catch (Exception ex) {
+		                ex.printStackTrace();
+		                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Product addition canceled.");
 		        }
 		    }
 		});
-		
-		
-		
+
 		
 		
 				btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -309,79 +318,94 @@ public class ProductAdmin extends JFrame {
 				btnUpdate.setBounds(8, 10, 117, 31);
 				panel_6_1.add(btnUpdate);
 				btnUpdate.setBackground(new Color(203, 201, 201));
+				
 				btnUpdate.addActionListener(new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
-				        String productId = textFieldProdID.getText().trim();
-				        String productName = textFieldProdName.getText().trim();
-				        String price = textFieldPrice.getText().trim();
-				        String quantity = textField_4.getText().trim();
+				        // Show confirmation dialog
+				        int confirm = JOptionPane.showConfirmDialog(
+				            null,
+				            "Do you want to update this product?",
+				            "Confirm Update",
+				            JOptionPane.YES_NO_OPTION
+				        );
 
-				        if (productId.isEmpty()) {
-				            JOptionPane.showMessageDialog(null, "Please provide the Product ID to update.");
-				            return;
-				        }
+				        // Check user's response
+				        if (confirm == JOptionPane.YES_OPTION) {
+				            String productId = textFieldProdID.getText().trim();
+				            String productName = textFieldProdName.getText().trim();
+				            String price = textFieldPrice.getText().trim();
+				            String quantity = textField_4.getText().trim();
 
-				        StringBuilder queryBuilder = new StringBuilder("UPDATE products SET ");
-				        boolean hasUpdates = false;
+				            if (productId.isEmpty()) {
+				                JOptionPane.showMessageDialog(null, "Please provide the Product ID to update.");
+				                return;
+				            }
 
-				        if (!productName.isEmpty()) {
-				            queryBuilder.append("ProductName = ?, ");
-				            hasUpdates = true;
-				        }
-				        if (!price.isEmpty()) {
-				            queryBuilder.append("Price = ?, ");
-				            hasUpdates = true;
-				        }
-				        if (!quantity.isEmpty()) {
-				            queryBuilder.append("Quantity = ?, ");
-				            hasUpdates = true;
-				        }
-				        if (lblIMAGE.getIcon() != null) {
-				            queryBuilder.append("Image = ?, ");
-				            hasUpdates = true;
-				        }
+				            StringBuilder queryBuilder = new StringBuilder("UPDATE products SET ");
+				            boolean hasUpdates = false;
 
-				        if (!hasUpdates) {
-				            JOptionPane.showMessageDialog(null, "No updates provided. Please fill at least one field.");
-				            return;
-				        }
-
-				        queryBuilder.setLength(queryBuilder.length() - 2); // Remove trailing comma
-				        queryBuilder.append(" WHERE ProductID = ?");
-
-				        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "root", "");
-				             PreparedStatement preparedStatement = connection.prepareStatement(queryBuilder.toString())) {
-
-				            int index = 1;
-				            if (!productName.isEmpty()) preparedStatement.setString(index++, productName);
-				            if (!price.isEmpty()) preparedStatement.setDouble(index++, Double.parseDouble(price));
-				            if (!quantity.isEmpty()) preparedStatement.setInt(index++, Integer.parseInt(quantity));
+				            if (!productName.isEmpty()) {
+				                queryBuilder.append("ProductName = ?, ");
+				                hasUpdates = true;
+				            }
+				            if (!price.isEmpty()) {
+				                queryBuilder.append("Price = ?, ");
+				                hasUpdates = true;
+				            }
+				            if (!quantity.isEmpty()) {
+				                queryBuilder.append("Quantity = ?, ");
+				                hasUpdates = true;
+				            }
 				            if (lblIMAGE.getIcon() != null) {
-				                Image image = ((ImageIcon) lblIMAGE.getIcon()).getImage();
-				                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-				                Graphics2D g2d = bufferedImage.createGraphics();
-				                g2d.drawImage(image, 0, 0, null);
-				                g2d.dispose();
-
-				                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				                ImageIO.write(bufferedImage, "jpg", baos);
-				                preparedStatement.setBytes(index++, baos.toByteArray());
+				                queryBuilder.append("Image = ?, ");
+				                hasUpdates = true;
 				            }
 
-				            preparedStatement.setString(index, productId);
-
-				            int rowsUpdated = preparedStatement.executeUpdate();
-				            if (rowsUpdated > 0) {
-				                JOptionPane.showMessageDialog(null, "Product updated successfully!");
-				            } else {
-				                JOptionPane.showMessageDialog(null, "Product not found.");
+				            if (!hasUpdates) {
+				                JOptionPane.showMessageDialog(null, "No updates provided. Please fill at least one field.");
+				                return;
 				            }
-				        } catch (Exception ex) {
-				            ex.printStackTrace();
-				            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+
+				            queryBuilder.setLength(queryBuilder.length() - 2); // Remove trailing comma
+				            queryBuilder.append(" WHERE ProductID = ?");
+
+				            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dcfdentalclinicdb", "root", "");
+				                 PreparedStatement preparedStatement = connection.prepareStatement(queryBuilder.toString())) {
+
+				                int index = 1;
+				                if (!productName.isEmpty()) preparedStatement.setString(index++, productName);
+				                if (!price.isEmpty()) preparedStatement.setDouble(index++, Double.parseDouble(price));
+				                if (!quantity.isEmpty()) preparedStatement.setInt(index++, Integer.parseInt(quantity));
+				                if (lblIMAGE.getIcon() != null) {
+				                    Image image = ((ImageIcon) lblIMAGE.getIcon()).getImage();
+				                    BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+				                    Graphics2D g2d = bufferedImage.createGraphics();
+				                    g2d.drawImage(image, 0, 0, null);
+				                    g2d.dispose();
+
+				                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				                    ImageIO.write(bufferedImage, "jpg", baos);
+				                    preparedStatement.setBytes(index++, baos.toByteArray());
+				                }
+
+				                preparedStatement.setString(index, productId);
+
+				                int rowsUpdated = preparedStatement.executeUpdate();
+				                if (rowsUpdated > 0) {
+				                    JOptionPane.showMessageDialog(null, "Product updated successfully!");
+				                } else {
+				                    JOptionPane.showMessageDialog(null, "Product not found.");
+				                }
+				            } catch (Exception ex) {
+				                ex.printStackTrace();
+				                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+				            }
+				        } else {
+				            JOptionPane.showMessageDialog(null, "Product update canceled.");
 				        }
 				    }
 				});
+
 				
 				
 						btnUpdate.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -408,39 +432,51 @@ public class ProductAdmin extends JFrame {
 						            return;
 						        }
 
-						        // Database connection variables
-						        String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Change to your database name
-						        String username = "root"; // Change to your MySQL username
-						        String password = ""; // Change to your MySQL password
+						        // Show confirmation dialog
+						        int confirm = JOptionPane.showConfirmDialog(
+						            null,
+						            "Are you sure you want to delete this product?",
+						            "Confirm Delete",
+						            JOptionPane.YES_NO_OPTION
+						        );
 
-						        // SQL delete query
-						        String query = "DELETE FROM products WHERE ProductID = ?";
+						        // Check user's response
+						        if (confirm == JOptionPane.YES_OPTION) {
+						            // Database connection variables
+						            String url = "jdbc:mysql://localhost:3306/dcfdentalclinicdb"; // Change to your database name
+						            String username = "root"; // Change to your MySQL username
+						            String password = ""; // Change to your MySQL password
 
-						        try (
-						            java.sql.Connection connection = java.sql.DriverManager.getConnection(url, username, password);
-						            java.sql.PreparedStatement preparedStatement = connection.prepareStatement(query)
-						        ) {
-						            // Set the ProductID parameter
-						            preparedStatement.setString(1, productId);
+						            // SQL delete query
+						            String query = "DELETE FROM products WHERE ProductID = ?";
 
-						            // Execute the query
-						            int rowsDeleted = preparedStatement.executeUpdate();
+						            try (
+						                java.sql.Connection connection = java.sql.DriverManager.getConnection(url, username, password);
+						                java.sql.PreparedStatement preparedStatement = connection.prepareStatement(query)
+						            ) {
+						                // Set the ProductID parameter
+						                preparedStatement.setString(1, productId);
 
-						            if (rowsDeleted > 0) {
-						                JOptionPane.showMessageDialog(null, "Product deleted successfully!");
-						                // Optionally, clear the input fields
-						                textFieldProdID.setText("");
-						            } else {
-						                JOptionPane.showMessageDialog(null, "Product not found. Please check the Product ID.");
+						                // Execute the query
+						                int rowsDeleted = preparedStatement.executeUpdate();
+
+						                if (rowsDeleted > 0) {
+						                    JOptionPane.showMessageDialog(null, "Product deleted successfully!");
+						                    // Optionally, clear the input fields
+						                    textFieldProdID.setText("");
+						                } else {
+						                    JOptionPane.showMessageDialog(null, "Product not found. Please check the Product ID.");
+						                }
+						            } catch (Exception ex) {
+						                ex.printStackTrace();
+						                JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
 						            }
-						            
-									
-						        } catch (Exception ex) {
-						            ex.printStackTrace();
-						            JOptionPane.showMessageDialog(null, "Database connection error: " + ex.getMessage());
+						        } else {
+						            JOptionPane.showMessageDialog(null, "Product deletion canceled.");
 						        }
 						    }
 						});
+
 						
 								btnDelete.setFont(new Font("Segoe UI", Font.BOLD, 13));
 	        
