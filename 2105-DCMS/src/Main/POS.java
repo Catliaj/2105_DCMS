@@ -113,25 +113,12 @@ public class POS extends JFrame {
 		CustomerNamelbl.setBounds(10, 19, 250, 34);
 		TopPanel.add(CustomerNamelbl);
 		
-
-		
-		JLabel Datelbl = new JLabel("DATE");
-		Datelbl.setForeground(new Color(194, 192, 192));
-		Datelbl.setFont(new Font("Segoe UI", Font.BOLD, 25));
-		Datelbl.setBounds(515, 19, 84, 34);
-		TopPanel.add(Datelbl);
-		
 		
 		CustomerNametxtfield = new JTextField();
 		CustomerNametxtfield.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		CustomerNametxtfield.setColumns(10);
-		CustomerNametxtfield.setBounds(243, 15, 231, 45);
+		CustomerNametxtfield.setBounds(243, 15, 516, 45);
 		TopPanel.add(CustomerNametxtfield);
-		
-		JDateChooser Datefield = new JDateChooser();
-		Datefield.setBounds(604, 15, 165, 45);
-		TopPanel.add(Datefield);
-		Datefield.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		
 		JPanel ProductPanel = new JPanel();
 		ProductPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
